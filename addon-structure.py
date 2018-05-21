@@ -3,7 +3,7 @@ import bpy, bmesh, os, sys
 import neuroml
 import neuroml.loaders as loaders
 
-from network.Cell import Cell
+from network.CellNeuroML2 import CellNeuroML2
 
 cell_dict = {}
 
@@ -11,7 +11,7 @@ def load_cells(includes):
     for include in includes:
         cell = loaders.NeuroMLLoader.load('examples/' + include.href)
         for c in cell.cells:
-            tmp = Cell(c)
+            tmp = CellNeuroML2(c)
             cell_dict[tmp.id] = tmp
 
 if __name__ == '__main__':
