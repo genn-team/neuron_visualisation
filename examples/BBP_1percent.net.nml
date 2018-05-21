@@ -3,7 +3,7 @@
     <include href="test_files/ampa.synapse.nml"></include>
     <include href="test_files/gaba.synapse.nml"></include>
     <include href="test_files/inputs.nml"></include>
-    <include href="test_files/hhcell.cell.nml"></include>
+    <include href="hhcell.cell.nml"></include>
     <network id="Example5_bbpNet">
         <notes>Network read in from BBP connectome: /home/padraig/git/NetworkShorthand/proposal/test_files/cons_locs_pathways_mc0_Column.h5</notes>
         <population id="L23_BTC" component="hhcell" size="1" type="populationList">

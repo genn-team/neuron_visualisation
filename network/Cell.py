@@ -1,6 +1,4 @@
-import bpy, bmesh, os, sys
-import neuroml
-import neuroml.loaders as loaders
+import bpy
 
 class Cell():
     '''
@@ -18,8 +16,11 @@ class Cell():
             # Save the referrence
             self.blender_obj = bpy.context.object
         else:
-            self.blender_obj = Cell.generated_models[id]
+            self.blender_obj = Cell.generated_models[id].copy()
         print("Cell " + self.id + " is created")
 
-    def update_location(self, location):
+    def setLocation(self, location):
         self.blender_obj.location = location
+
+    def getLocation(self):
+        return self.blender_obj.location

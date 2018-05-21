@@ -1,0 +1,20 @@
+import bpy, neuroml
+from network.Cell import Cell
+from network.Population import Population
+
+class PopulationNeuroML2(Population):
+    '''
+    This class represents a population of brain cells in the network
+    '''
+    def __init__(self, population):
+        Population.__init__(self,
+                            population.id,
+                            len(population.instances), 
+                            population.component)
+        i = 0
+        for instance in population.instances:
+            x = instance.location.x / 100.0
+            y = instance.location.y / 100.0
+            z = instance.location.z / 100.0
+            self.cells[i].setLocation((x,y,z))
+            i += 1
