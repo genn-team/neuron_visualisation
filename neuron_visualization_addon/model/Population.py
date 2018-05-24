@@ -1,5 +1,5 @@
 import bpy
-from network.Cell import Cell
+from neuron_visualization_addon.model.Cell import Cell
 
 class Population():
     '''

@@ -1,7 +1,7 @@
 import bpy, bmesh, os, sys
 import neuroml
 import neuroml.loaders as loaders
-from network.Cell import Cell
+from neuron_visualization_addon.model.Cell import Cell
 
 class CellNeuroML2(Cell):
     '''
@@ -9,12 +9,13 @@ class CellNeuroML2(Cell):
     '''
     def __init__(self, cell):
         Cell.__init__(self, cell.id)
-        if id not in Cell.generated_models:
-            # Remove the dummy soma
-            self.blender_obj.select = True
-            bpy.ops.object.delete()
-            # Parse new model
-            self.parse_model(cell)
+        #if id not in Cell.generated_models:
+        # Remove the dummy soma
+        self.blender_obj.select = True
+        bpy.ops.object.delete()
+        # Parse new model
+        self.parse_model(cell)
+        print(self.id + " model is parsed")
 
     def parse_model(self, cell):
         '''
@@ -29,6 +30,7 @@ class CellNeuroML2(Cell):
             if segment.parent == None:
                 # Parent object (soma)
                 d = segment.distal.diameter / 100.0
+                print(d)
                 bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=d, location=cell_dict[segment.id])
                 # Name object as cell
                 bpy.context.object.name = self.id
@@ -36,6 +38,7 @@ class CellNeuroML2(Cell):
                 self.blender_obj = bpy.context.object
             elif segment.distal.diameter > 2.0:
                 d = segment.distal.diameter / 100.0
+                print(d)
                 bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=d, location=cell_dict[segment.id])
                 bpy.context.object.parent = bpy.data.objects[self.id]
             else:
@@ -51,4 +54,4 @@ class CellNeuroML2(Cell):
                 bmesh.update_edit_mesh(obj.data)
                 bpy.ops.object.editmode_toggle()
 
-        Cell.generated_models[self.id] = self.blender_obj
+        #Cell.generated_models[self.id] = self.blender_obj

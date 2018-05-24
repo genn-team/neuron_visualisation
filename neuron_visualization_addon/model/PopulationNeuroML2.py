@@ -1,6 +1,6 @@
 import bpy, neuroml
-from network.Cell import Cell
-from network.Population import Population
+from neuron_visualization_addon.model.Cell import Cell
+from neuron_visualization_addon.model.Population import Population
 
 class PopulationNeuroML2(Population):
     '''
