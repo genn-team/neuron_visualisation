@@ -63,7 +63,6 @@ class Cell():
         # Create bevel object
         bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
         cu.bevel_object = bpy.context.object
-        #cu.dimensions = '3D'
 
         # Control points for axon
         destination = destination - self.getLocation()
