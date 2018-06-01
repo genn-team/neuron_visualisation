@@ -1,5 +1,6 @@
 import bpy, bmesh, os, sys
 import neuroml
+import mathutils
 import neuroml.loaders as loaders
 from neuron_visualization_addon.model.Cell import Cell
 
@@ -41,7 +42,8 @@ class CellNeuroML2(Cell):
                 bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=d, location=cell_dict[segment.id])
                 bpy.context.object.parent = bpy.data.objects[self.id]
             elif segment.parent.segments + 1 == segment.id:
-                axon.append(cell_dict[segment.id] - self.getLocation())
+                #print(type(self.getLocation()))
+                axon.append(mathutils.Vector(cell_dict[segment.id])) #- self.getLocation())
             else:
                 # Create curve, curve object and set Cell as a parent
                 cu = bpy.data.curves.new('AxonCurve', 'CURVE')

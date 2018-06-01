@@ -1,7 +1,7 @@
 import bpy
 from neuron_visualization_addon.model.Projection import Projection
 
-class Cell():
+class Cell(object):
     '''
     This class represents a brain cell in the network
     '''

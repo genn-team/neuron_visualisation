@@ -1,7 +1,7 @@
 import bpy
 from neuron_visualization_addon.model.Cell import Cell
 
-class Population():
+class Population(object):
     '''
     This class represents a population of brain cells in the network
     '''

@@ -1,6 +1,6 @@
 import bpy
 
-class Projection():
+class Projection(object):
     '''
     This class represents a projection between neurons in the network
     '''
@@ -64,8 +64,21 @@ class Projection():
             (self.object.location, self.object.location, self.object.location),
             (destination , destination, destination)
         ]
-        print(axon)
         # Create spline and set Bezier control points
         self.curve.splines.new('BEZIER')
         self.updateProjectionCurve(axon)
+        self.object.select = False
+
+    def makeProjection(self, weight, projection):
+        # Create bevel object
+        bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
+        self.bevel_object = bpy.context.object
+        self.curve.bevel_object = self.bevel_object
+        self.bevel_object.hide = True
+
+        self.object.hide = False
+
+        # Create spline and set Bezier control points
+        self.curve.splines.new('BEZIER')
+        self.updateProjectionCurve(projection)
         self.object.select = False

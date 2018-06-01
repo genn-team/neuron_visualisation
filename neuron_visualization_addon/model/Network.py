@@ -1,7 +1,7 @@
 import bpy
 from neuron_visualization_addon.model.Population import Population
 
-class Network():
+class Network(object):
     '''
     This class represents a network
     '''
