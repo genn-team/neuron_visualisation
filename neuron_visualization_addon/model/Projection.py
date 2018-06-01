@@ -15,7 +15,7 @@ class Projection():
 
         # --- Taper curve ---
         self.curve_taper = bpy.data.curves.new('TaperCurve', 'CURVE')
-        self.taper = bpy.data.objects.new('TaperObject', cu_taper)
+        self.taper = bpy.data.objects.new('TaperObject', self.curve_taper)
         bpy.context.scene.objects.link(self.taper)
         self.taper.hide = True
 
@@ -32,22 +32,23 @@ class Projection():
 
     def updateTaperCurve(self, taper_points):
         spline_taper = self.curve_taper.splines[0]
-        diff = len(taper_points) - len(spline_taper)
+        diff = len(taper_points) - len(spline_taper.bezier_points)
         spline_taper.bezier_points.add(diff)
         for n in range(len(taper_points)):
             bpt = spline_taper.bezier_points[n]
             (bpt.co, bpt.handle_left, bpt.handle_right) = taper_points[n]
 
+
     def updateProjectionCurve(self, projection_points):
         spline_axon = self.curve.splines[0]
-        diff = len(projection_points) - len(spline_axon)
+        diff = len(projection_points) - len(spline_axon.bezier_points)
         spline_axon.bezier_points.add(diff)
         for n in range(len(projection_points)):
             bpt = spline_axon.bezier_points[n]
             (bpt.co, bpt.handle_left, bpt.handle_right) = projection_points[n]
 
 
-    def makeSimpleProjection(self, weight=0.2 , destination):
+    def makeSimpleProjection(self, weight, destination):
         # Create bevel object
         bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
         self.bevel_object = bpy.context.object
@@ -57,12 +58,14 @@ class Projection():
         self.object.hide = False
 
         # Control points for axon
-        destination = destination - self.getLocation()
+        #start = self.object.parent.location
+        destination = destination - self.object.parent.location
         axon = [
+            (self.object.location, self.object.location, self.object.location),
             (destination , destination, destination)
         ]
-
+        print(axon)
         # Create spline and set Bezier control points
         self.curve.splines.new('BEZIER')
         self.updateProjectionCurve(axon)
-        ob.select = False
+        self.object.select = False
