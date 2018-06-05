@@ -37,4 +37,5 @@ class Cell(object):
 
     def drawAxon(self, weight, destination):
         projection = Projection(self.blender_obj)
-        projection.makeSimpleProjection(weight, destination)
+        projection.makeSimpleProjection(destination, weight)
+        return projection

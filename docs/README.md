@@ -3,7 +3,7 @@
 ##### Projection
 - [X] Add volume
 - [X] Simple projections
-- [ ] Add rondomization to simple projections
+- [ ] Add randomization to simple projections
 - [ ] Complex projections
 ##### Cell
 - [ ] Fix CellNeuroML2.py
@@ -20,4 +20,4 @@
 
 ### View
 #### Blender AddOn
-- [ ] Initial prototype 
+- [ ] Initial prototype
