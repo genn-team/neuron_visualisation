@@ -42,6 +42,9 @@ if __name__ == '__main__':
         load_cells(network_file.includes)
 
     network = NetworkNeuroML2(network_file.networks[0])
+    population = network.populations['L6_UTPC']
+    print(population)
+    print(population.getLocation())
 
     # --- Render a png ---
     #bpy.data.scenes['Scene'].render.filepath ='./text.png'

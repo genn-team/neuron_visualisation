@@ -1,4 +1,5 @@
 import bpy
+import mathutils
 from neuron_visualization_addon.model.Cell import Cell
 
 class Population(object):
@@ -18,4 +19,7 @@ class Population(object):
         self.blender_obj.location = location
 
     def getLocation(self):
-        return self.blender_obj.location
+        location_sum = mathutils.Vector((0,0,0))
+        for cell in self.cells:
+            location_sum += cell.getLocation()
+        return location_sum / len(self.cells)
