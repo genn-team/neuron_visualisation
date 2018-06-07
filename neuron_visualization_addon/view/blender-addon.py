@@ -8,7 +8,7 @@ bl_info = {
 }
 
 import bpy
-from bpy.props import StringProperty, PointerProperty
+from bpy.props import BoolProperty, StringProperty, PointerProperty
 from bpy.types import Panel, Operator, PropertyGroup
 
 from neuron_visualization_addon.controller.Parser import Parser
@@ -22,6 +22,12 @@ class PanelSettings(PropertyGroup):
         subtype ='FILE_PATH'
         )
 
+    populationHighlight = BoolProperty(
+        name="Highlight populations",
+        description="A bool property",
+        default = False
+        )
+
 class ParseOperator(bpy.types.Operator):
     bl_idname = "wm.parser"
     bl_label = "Parse"
@@ -29,7 +35,7 @@ class ParseOperator(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         mytool = scene.my_tool
-        Parser().parse(mytool.networkFileUpload)
+        Parser().parse(mytool.networkFileUpload, mytool.populationHighlight)
         return {'FINISHED'}
 
 class MainPanel(Panel):
@@ -44,12 +50,12 @@ class MainPanel(Panel):
         mytool = scene.my_tool
 
         layout.prop(mytool, "networkFileUpload")
+        layout.prop(mytool, "populationHighlight")
         layout.operator("wm.parser")
 
 
 def register():
     bpy.utils.register_module(__name__)
-    #bpy.utils.register_class(MainPanel)
     bpy.types.Scene.my_tool = PointerProperty(type=PanelSettings)
 
 def unregister():

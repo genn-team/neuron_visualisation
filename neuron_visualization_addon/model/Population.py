@@ -16,6 +16,7 @@ class Population(object):
         print("Population " + self.id + " is created")
 
     def setLocation(self, location):
+        # TODO
         self.blender_obj.location = location
 
     def getLocation(self):
@@ -23,3 +24,9 @@ class Population(object):
         for cell in self.cells:
             location_sum += cell.getLocation()
         return location_sum / len(self.cells)
+
+    def setColor(self, color=(0.0,0.0,0.0)):
+        material = bpy.data.materials.new("Color")
+        material.diffuse_color = color
+        for cell in self.cells:
+            cell.blender_obj.active_material = material

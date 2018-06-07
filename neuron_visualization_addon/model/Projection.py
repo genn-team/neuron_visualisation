@@ -82,3 +82,9 @@ class Projection(object):
         self.curve.splines.new('BEZIER')
         self.updateProjectionCurve(projection)
         self.object.select = False
+
+    def setColor(self, color=(0.0,0.0,0.0)):
+        # Color the axon in color
+        material = bpy.data.materials.new("Color")
+        material.diffuse_color = color
+        self.object.active_material = material
