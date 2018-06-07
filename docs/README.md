@@ -1,5 +1,6 @@
 ### Model
 - [X] Initial prototype
+- [ ] Fix coordinates transformation
 ##### Projection
 - [X] Add volume
 - [X] Simple projections
@@ -9,6 +10,7 @@
 - [ ] Fix CellNeuroML2.py
 ##### Population
 - [ ] Center of mass
+- [ ] Toggle features (e.g. color)
 ##### Network
 - [ ] Separate connections between populations from within population
 
@@ -20,4 +22,6 @@
 
 ### View
 #### Blender AddOn
-- [ ] Initial prototype
+- [X] Initial prototype: file upload and parse button
+- [ ] Cells / Populations / Networks modes
+- [ ] Pop-ups
