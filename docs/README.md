@@ -1,3 +1,5 @@
+- [ ] Make a cleaner separation into Model-View-Controller pattern
+
 ### Model
 - [X] Initial prototype
 - [ ] Fix coordinates transformation
