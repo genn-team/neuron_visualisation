@@ -3,29 +3,34 @@ bl_info = {
     "description": "Converts neural network description files into ",
     "author": "",
     "blender": (2, 70, 0),
-    "location": "3D View > Tools",
+    "location": "3D View > Tools Props",
     "category": "Development"
 }
 
 import bpy
-from bpy.props import BoolProperty, StringProperty, PointerProperty
+from bpy.props import *
 from bpy.types import Panel, Operator, PropertyGroup
 
 from neuron_visualization_addon.controller.Parser import Parser
 
 class PanelSettings(PropertyGroup):
-
     networkFileUpload = StringProperty(
         name="File Path",
         description="Provide description file",
         default="",
         subtype ='FILE_PATH'
         )
-
     populationHighlight = BoolProperty(
         name="Highlight populations",
         description="A bool property",
         default = False
+        )
+    populationsDropdown = EnumProperty(
+        name="Highlight populations",
+        description="Select poplations to highlight",
+        items=[ ('None', "None", ""),
+                ('All', "All", "")
+               ]
         )
 
 class ParseOperator(bpy.types.Operator):
@@ -34,9 +39,22 @@ class ParseOperator(bpy.types.Operator):
 
     def execute(self, context):
         scene = context.scene
-        mytool = scene.my_tool
-        Parser().parse(mytool.networkFileUpload, mytool.populationHighlight)
+        inputs = scene.panelSettings
+        parser = Parser()
+        parser.parse(inputs.networkFileUpload)
+        self.updateDropdown(parser.getPopulations())
+        bpy.context.scene['fileParsed'] = True
         return {'FINISHED'}
+
+    def updateDropdown(self, populations):
+        enumProp, panelSettings = PanelSettings.populationsDropdown
+        for p in populations:
+            panelSettings['items'].append((p, p, ""))
+        PanelSettings.populationsDropdown = EnumProperty(
+            name="Highlight populations",
+            description="Select poplations to highlight",
+            items=panelSettings['items']
+            )
 
 class MainPanel(Panel):
     bl_idname = "MainPanel"
@@ -47,20 +65,26 @@ class MainPanel(Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        mytool = scene.my_tool
+        inputs = scene.panelSettings
 
-        layout.prop(mytool, "networkFileUpload")
-        layout.prop(mytool, "populationHighlight")
+        layout.prop(inputs, "networkFileUpload")
         layout.operator("wm.parser")
+        if bpy.context.scene['fileParsed']:
+            layout.prop(inputs, "populationsDropdown", text="")
 
+def initSceneProperties(scene):
+    bpy.types.Scene.fileParsed = BoolProperty(name='fileParsed',description='')
+    scene['fileParsed'] = False
+    return
 
 def register():
     bpy.utils.register_module(__name__)
-    bpy.types.Scene.my_tool = PointerProperty(type=PanelSettings)
+    bpy.types.Scene.panelSettings = PointerProperty(type=PanelSettings)
 
 def unregister():
     bpy.utils.unregister_module(__name__)
-    del bpy.types.Scene.my_tool
+    del bpy.types.Scene.panelSettings
 
 if __name__ == "__main__":
+    initSceneProperties(bpy.context.scene)
     register()
