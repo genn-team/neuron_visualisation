@@ -13,6 +13,12 @@ from bpy.types import Panel, Operator, PropertyGroup
 
 from neuron_visualization_addon.controller.Parser import Parser
 
+def populationHighlight(self, context):
+    scene = context.scene
+    inputs = scene.panelSettings
+    inputs.parser.highlightPopulation(inputs.populationsDropdown)
+    return None
+
 class PanelSettings(PropertyGroup):
     networkFileUpload = StringProperty(
         name="File Path",
@@ -27,11 +33,12 @@ class PanelSettings(PropertyGroup):
         )
     populationsDropdown = EnumProperty(
         name="Highlight populations",
-        description="Select poplations to highlight",
+        description="Select populations to highlight",
         items=[ ('None', "None", ""),
                 ('All', "All", "")
                ]
         )
+    parser = Parser()
 
 class ParseOperator(bpy.types.Operator):
     bl_idname = "wm.parser"
@@ -40,9 +47,8 @@ class ParseOperator(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         inputs = scene.panelSettings
-        parser = Parser()
-        parser.parse(inputs.networkFileUpload)
-        self.updateDropdown(parser.getPopulations())
+        inputs.parser.parse(inputs.networkFileUpload)
+        self.updateDropdown(inputs.parser.getPopulations())
         bpy.context.scene['fileParsed'] = True
         return {'FINISHED'}
 
@@ -52,8 +58,9 @@ class ParseOperator(bpy.types.Operator):
             panelSettings['items'].append((p, p, ""))
         PanelSettings.populationsDropdown = EnumProperty(
             name="Highlight populations",
-            description="Select poplations to highlight",
-            items=panelSettings['items']
+            description="Select populations to highlight",
+            items=panelSettings['items'],
+            update=populationHighlight
             )
 
 class MainPanel(Panel):

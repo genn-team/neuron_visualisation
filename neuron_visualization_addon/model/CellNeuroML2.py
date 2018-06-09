@@ -16,7 +16,6 @@ class CellNeuroML2(Cell):
         bpy.ops.object.delete()
         # Parse new model
         self.parse_model(cell)
-        print(self.id + " model is parsed")
 
     def parse_model(self, cell):
         '''

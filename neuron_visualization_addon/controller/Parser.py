@@ -8,14 +8,14 @@ from neuron_visualization_addon.model.NetworkNeuroML2 import NetworkNeuroML2
 from neuron_visualization_addon.model.Cell import Cell
 
 class Parser(object):
-    def parse(self, filepath, populationHighlight):
-        print(filepath)
+    def parse(self, filepath):
         if filepath[-8:] == '.net.nml':
+            # TODO
             network_file = loaders.NeuroMLLoader.load(filepath)
             if len(network_file.includes) != 0:
                 self.loadCellsNeuroML2(network_file.includes)
 
-        network = NetworkNeuroML2(network_file.networks[0], populationHighlight)
+        self.network = NetworkNeuroML2(network_file.networks[0])
 
     def loadCellsNeuroML2(self, includes):
         cell_dict = {}
@@ -27,3 +27,9 @@ class Parser(object):
                 tmp = CellNeuroML2(c)
                 cell_dict[tmp.id] = tmp
         return cell_dict
+
+    def getPopulations(self):
+        return self.network.populations.keys()
+
+    def highlightPopulation(self, populationID):
+        self.network.highlightPopulation(populationID)

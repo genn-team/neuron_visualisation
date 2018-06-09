@@ -27,7 +27,6 @@ class Cell(object):
     #    else:
     #        Cell.generated_models[id].duplicate()
     #        self.blender_obj = bpy.context.object
-        print("Cell " + self.id + " is created")
 
     def setLocation(self, location):
         self.blender_obj.location = location
