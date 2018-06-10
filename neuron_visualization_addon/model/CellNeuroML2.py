@@ -22,6 +22,7 @@ class CellNeuroML2(Cell):
         Parse cell into a blender object
         '''
         # Dictionary of segment ids and locations
+        # TODO fix measuremt units
         cell_dict = {}
         axon = []
         for segment in cell.morphology.segments:

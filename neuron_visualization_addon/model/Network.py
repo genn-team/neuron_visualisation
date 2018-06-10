@@ -15,4 +15,5 @@ class Network(object):
         random_color = (random.randint(0,255),
                         random.randint(0,255),
                         random.randint(0,255))
+        print(random_color)
         self.populations[population_id].setColor(random_color)
