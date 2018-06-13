@@ -12,8 +12,8 @@ class Network(object):
 
     def highlightPopulation(self, population_id):
         # TODO: Error handling
-        random_color = (random.randint(0,255),
-                        random.randint(0,255),
-                        random.randint(0,255))
+        random_color = (random.random(),
+                        random.random(),
+                        random.random() )
         print(random_color)
         self.populations[population_id].setColor(random_color)

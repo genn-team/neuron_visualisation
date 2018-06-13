@@ -26,7 +26,8 @@ class Population(object):
         return location_sum / len(self.cells)
 
     def setColor(self, color=(0.0,0.0,0.0)):
-        material = bpy.data.materials.new("Color")
+        print(bpy.data.materials[0].name)
+        material = bpy.data.materials.new("PopulationColor")
         material.diffuse_color = color
         for cell in self.cells:
             cell.blender_obj.active_material = material
