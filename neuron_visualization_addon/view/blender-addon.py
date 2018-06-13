@@ -63,6 +63,17 @@ class ParseOperator(bpy.types.Operator):
             update=populationHighlight
             )
 
+class ClearOperator(bpy.types.Operator):
+    bl_idname = "wm.clear"
+    bl_label = "Clear All"
+
+    def execute(self, context):
+        bpy.ops.object.select_by_type(type='MESH')
+        bpy.ops.object.delete()
+        bpy.ops.object.select_by_type(type='CURVE')
+        bpy.ops.object.delete()
+        return {'FINISHED'}
+
 class MainPanel(Panel):
     bl_idname = "MainPanel"
     bl_label = "Network Visualization"
@@ -76,6 +87,7 @@ class MainPanel(Panel):
 
         layout.prop(inputs, "networkFileUpload")
         layout.operator("wm.parser")
+        layout.operator("wm.clear")
         if bpy.context.scene['fileParsed']:
             layout.prop(inputs, "populationsDropdown", text="")
 
