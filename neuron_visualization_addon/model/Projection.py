@@ -88,3 +88,8 @@ class Projection(object):
         material = bpy.data.materials.new("Color")
         material.diffuse_color = color
         self.object.active_material = material
+
+    def updateDestination(self, destination):
+        point = self.curve.splines[0].bezier_points[-1]
+        destination = destination - self.object.parent.location
+        point.co = point.handle_left = point.handle_right = destination

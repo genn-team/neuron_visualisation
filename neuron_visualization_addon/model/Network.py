@@ -15,5 +15,5 @@ class Network(object):
         random_color = (random.random(),
                         random.random(),
                         random.random() )
-        print(random_color)
-        self.populations[population_id].setColor(random_color)
+        #self.populations[population_id].setColor(random_color)
+        self.populations[population_id].pullTogether()

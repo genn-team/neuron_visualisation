@@ -10,9 +10,10 @@
 - [ ] Complex projections
 ##### Cell
 - [ ] Fix CellNeuroML2.py
+- [X] Update axons positions when the cell is moved
 ##### Population
 - [ ] Center of mass
-- [ ] Toggle features (e.g. color)
+- [X] Toggle features (e.g. color)
 ##### Network
 - [ ] Separate connections between populations from within population
 
@@ -25,5 +26,6 @@
 ### View
 #### Blender AddOn
 - [X] Initial prototype: file upload and parse button
+- [X] Dynamic dropdown
 - [ ] Cells / Populations / Networks modes
 - [ ] Pop-ups

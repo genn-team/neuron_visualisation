@@ -10,19 +10,18 @@ class NetworkNeuroML2(Network):
         Network.__init__(self, network.id)
         for population in network.populations:
             self.populations[population.id] = PopulationNeuroML2(population)
-        print(self.populations)
         for projection in network.projections:
             firstPopulationID = projection.presynaptic_population
             secondPopulationID = projection.postsynaptic_population
             for connection in projection.connection_wds:
                 # Precell
                 pre_cell_adress = connection.pre_cell_id.split('/')
-                pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-1])]
+                pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
                 # Postcell
                 post_cell_adress = connection.post_cell_id.split('/')
-                post_cell = self.populations[secondPopulationID].cells[int(post_cell_adress[-1])]
+                post_cell = self.populations[secondPopulationID].cells[int(post_cell_adress[-2])]
                 # Sort the projections
-                projection = pre_cell.drawAxon(post_cell.getLocation(),0.2)
+                projection = pre_cell.drawAxon(0.2, post_cell)
 
                 if (firstPopulationID,secondPopulationID) not in self.projections:
                     self.projections[(firstPopulationID,secondPopulationID)] = [projection]

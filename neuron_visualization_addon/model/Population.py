@@ -25,8 +25,13 @@ class Population(object):
             location_sum += cell.getLocation()
         return location_sum / len(self.cells)
 
+    def pullTogether(self):
+        centerOfMass = self.getLocation()
+        for cell in self.cells:
+            cellLocation = cell.getLocation()
+            cell.setLocation(cellLocation + 1/10 * (centerOfMass - cellLocation))
+
     def setColor(self, color=(0.0,0.0,0.0)):
-        print(bpy.data.materials[0].name)
         material = bpy.data.materials.new("PopulationColor")
         material.diffuse_color = color
         for cell in self.cells:

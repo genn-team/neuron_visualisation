@@ -72,6 +72,7 @@ class ClearOperator(bpy.types.Operator):
         bpy.ops.object.delete()
         bpy.ops.object.select_by_type(type='CURVE')
         bpy.ops.object.delete()
+
         return {'FINISHED'}
 
 class MainPanel(Panel):
