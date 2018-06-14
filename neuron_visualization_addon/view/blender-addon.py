@@ -39,6 +39,11 @@ class PanelSettings(PropertyGroup):
                ]
         )
     parser = Parser()
+    pullProjections = BoolProperty(
+        name = "Pull projections",
+        description = "Pull projections together between populations",
+        default = False
+        )
 
 class ParseOperator(bpy.types.Operator):
     bl_idname = "wm.parser"
@@ -72,7 +77,14 @@ class ClearOperator(bpy.types.Operator):
         bpy.ops.object.delete()
         bpy.ops.object.select_by_type(type='CURVE')
         bpy.ops.object.delete()
-
+        PanelSettings.populationsDropdown = EnumProperty(
+            name="Highlight populations",
+            description="Select populations to highlight",
+            items=[ ('None', "None", ""),
+                    ('All', "All", "")
+                   ],
+            update=populationHighlight
+            )
         return {'FINISHED'}
 
 class MainPanel(Panel):
@@ -91,6 +103,7 @@ class MainPanel(Panel):
         layout.operator("wm.clear")
         if bpy.context.scene['fileParsed']:
             layout.prop(inputs, "populationsDropdown", text="")
+            layout.prop(inputs, "pullProjections")
 
 def initSceneProperties(scene):
     bpy.types.Scene.fileParsed = BoolProperty(name='fileParsed',description='')

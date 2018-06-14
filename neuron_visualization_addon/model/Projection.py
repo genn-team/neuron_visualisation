@@ -93,3 +93,12 @@ class Projection(object):
         point = self.curve.splines[0].bezier_points[-1]
         destination = destination - self.object.parent.location
         point.co = point.handle_left = point.handle_right = destination
+
+    def getStart(self):
+        return self.object.location
+
+    def getDestination(self):
+        return self.curve.splines[0].bezier_points[-1].co
+
+    def getMiddle(self):
+        return 1/2 * (self.getStart() + self.getDestination())
