@@ -4,7 +4,7 @@ bl_info = {
     "author": "",
     "blender": (2, 70, 0),
     "location": "3D View > Tools Props",
-    "category": "Development"
+    "category": "3D View"
 }
 
 import bpy
