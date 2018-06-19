@@ -10,6 +10,7 @@ bl_info = {
 import bpy
 from bpy.props import *
 from bpy.types import Panel, Operator, PropertyGroup
+from bpy.app.handlers import persistent
 
 from neuron_visualization_addon.controller.Parser import Parser
 
@@ -105,12 +106,16 @@ class MainPanel(Panel):
             layout.prop(inputs, "populationsDropdown", text="")
             layout.prop(inputs, "pullProjections")
 
+@persistent
 def initSceneProperties(scene):
+    bpy.app.handlers.scene_update_pre.remove(initSceneProperties)
     bpy.types.Scene.fileParsed = BoolProperty(name='fileParsed',description='')
     scene['fileParsed'] = False
     return
 
 def register():
+    print("REGISTER")
+    bpy.app.handlers.scene_update_pre.append(initSceneProperties)
     bpy.utils.register_module(__name__)
     bpy.types.Scene.panelSettings = PointerProperty(type=PanelSettings)
 
@@ -119,5 +124,6 @@ def unregister():
     del bpy.types.Scene.panelSettings
 
 if __name__ == "__main__":
+    print("MAIN")
     initSceneProperties(bpy.context.scene)
     register()
