@@ -13,16 +13,16 @@ class Parser(object):
             # TODO
             network_file = loaders.NeuroMLLoader.load(filepath)
             if len(network_file.includes) != 0:
-                self.loadCellsNeuroML2(network_file.includes)
+                self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes)
 
         self.network = NetworkNeuroML2(network_file.networks[0])
 
-    def loadCellsNeuroML2(self, includes):
+    def loadCellsNeuroML2(self, dirpath, includes):
         cell_dict = {}
         for include in includes:
             if include.href[-9:] != '.cell.nml':
                 continue
-            cell = loaders.NeuroMLLoader.load('examples/' + include.href)
+            cell = loaders.NeuroMLLoader.load(os.path.join(dirpath,include.href))
             for c in cell.cells:
                 tmp = CellNeuroML2(c)
                 cell_dict[tmp.id] = tmp
@@ -32,7 +32,10 @@ class Parser(object):
         return self.network.populations.keys()
 
     def highlightPopulation(self, populationID):
-        self.network.highlightPopulation(populationID)
+        if populationID == 'All':
+            self.network.highlightPopulationsAll()
+        else:
+            self.network.highlightPopulation(populationID)
 
     def pullProjections(self):
-        self.network.pullProjections('CellGroupA','CellGroupB')
+        self.network.pullProjectionsAll()

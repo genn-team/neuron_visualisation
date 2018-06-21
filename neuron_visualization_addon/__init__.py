@@ -49,7 +49,8 @@ class PanelSettings(PropertyGroup):
     pullProjections = BoolProperty(
         name = "Pull projections",
         description = "Pull projections together between populations",
-        default = False
+        default = False,
+        update = pullProjections
         )
 
 class ParseOperator(bpy.types.Operator):
