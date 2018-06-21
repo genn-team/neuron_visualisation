@@ -95,10 +95,20 @@ class Projection(object):
         point.co = point.handle_left = point.handle_right = destination
 
     def getStart(self):
-        return self.object.location
+        return self.object.location + self.object.parent.location
 
     def getDestination(self):
-        return self.curve.splines[0].bezier_points[-1].co
+        return self.curve.splines[0].bezier_points[-1].co + self.object.parent.location
 
     def getMiddle(self):
         return 1/2 * (self.getStart() + self.getDestination())
+
+    def pullCenterTo(self, destination):
+        # TODO: complex axons
+        start = self.curve.splines[0].bezier_points[0]
+        end = point = self.curve.splines[0].bezier_points[-1]
+        destination = destination - self.object.parent.location
+        axon = [(start.co, start.handle_left, destination),
+                #(destination, destination, destination),
+                (end.co, destination, end.handle_right)]
+        self.updateProjectionCurve(axon)

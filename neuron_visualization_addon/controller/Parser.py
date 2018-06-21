@@ -33,3 +33,6 @@ class Parser(object):
 
     def highlightPopulation(self, populationID):
         self.network.highlightPopulation(populationID)
+
+    def pullProjections(self):
+        self.network.pullProjections('CellGroupA','CellGroupB')

@@ -1,4 +1,5 @@
 import bpy, random
+import mathutils
 from neuron_visualization_addon.model.Population import Population
 
 class Network(object):
@@ -17,3 +18,12 @@ class Network(object):
                         random.random() )
         self.populations[population_id].setColor(random_color)
         #self.populations[population_id].pullTogether()
+
+    def pullProjections(self, populationID_1, populationID_2):
+        # TODO: Error handling
+        projections = self.projections[(populationID_1,populationID_2)]
+        middle = mathutils.Vector((0,0,0))
+        for p in projections:
+            middle += p.getMiddle()
+        for p in projections:
+            p.pullCenterTo(middle / len(projections))
