@@ -14,7 +14,7 @@ class PopulationNeuroML2(Population):
         i = 0
         for instance in population.instances:
             x = instance.location.x / 100
-            y = instance.location.y / 100
-            z = instance.location.z / 100
+            z = instance.location.y / 100
+            y = instance.location.z / 100
             self.cells[i].setLocation((x,y,z))
             i += 1

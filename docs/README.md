@@ -2,20 +2,21 @@
 
 ### Model
 - [X] Initial prototype
-- [ ] Fix coordinates transformation
+- [X] Fix coordinates transformation
 ##### Projection
 - [X] Add volume
 - [X] Simple projections
 - [ ] Add randomization to simple projections
 - [ ] Complex projections
+- [X] Pull to the center of mass
 ##### Cell
 - [ ] Fix CellNeuroML2.py
 - [X] Update axons positions when the cell is moved
 ##### Population
-- [ ] Center of mass
+- [X] Center of mass
 - [X] Toggle features (e.g. color)
 ##### Network
-- [ ] Separate connections between populations from within population
+- [X] Separate connections between populations from within population
 
 #### Parser
 - [X] NeuroML2
