@@ -32,7 +32,11 @@ class Population(object):
             cell.setLocation(cellLocation + 1/10 * (centerOfMass - cellLocation))
 
     def setColor(self, color=(0.0,0.0,0.0)):
-        material = bpy.data.materials.new("PopulationColor")
+        material = bpy.data.materials.new("PopulationColor_"+self.id)
         material.diffuse_color = color
         for cell in self.cells:
             cell.blender_obj.active_material = material
+
+    def removeColor(self):
+        for cell in self.cells:
+            cell.blender_obj.active_material = None

@@ -22,13 +22,16 @@ class Network(object):
                         random.random() )
         self.populations[population_id].setColor(random_color)
 
+    def removeHighlightAll(self):
+        for _,population in self.populations.items():
+            population.removeColor()
+
     def pullProjectionsAll(self):
         for id1, id2 in self.projections:
             if id1 != id2:
                 self.pullProjections(id1, id2)
 
     def pullProjections(self, populationID_1, populationID_2):
-        print(populationID_1 + " " + populationID_2)
         # TODO: Error handling
         projections = self.projections[(populationID_1,populationID_2)]
         middle = mathutils.Vector((0,0,0))

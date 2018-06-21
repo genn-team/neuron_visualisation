@@ -34,6 +34,8 @@ class Parser(object):
     def highlightPopulation(self, populationID):
         if populationID == 'All':
             self.network.highlightPopulationsAll()
+        elif populationID == 'None':
+            self.network.removeHighlightAll()
         else:
             self.network.highlightPopulation(populationID)
 

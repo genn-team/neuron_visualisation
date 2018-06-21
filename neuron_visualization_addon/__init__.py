@@ -93,6 +93,7 @@ class ClearOperator(bpy.types.Operator):
                    ],
             update=populationHighlight
             )
+        bpy.context.scene['fileParsed'] = False
         return {'FINISHED'}
 
 class MainPanel(Panel):

@@ -47,3 +47,8 @@ class Cell(object):
 
     def projectTo(self, projection):
         self.receivesFrom.append(projection)
+
+    def setColor(self, color=(0.0,0.0,0.0)):
+        material = bpy.data.materials.new("CellColor")
+        material.diffuse_color = color
+        self.blender_obj.active_material = material
