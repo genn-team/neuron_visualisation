@@ -20,6 +20,12 @@ def populationHighlight(self, context):
     inputs.parser.highlightPopulation(inputs.populationsDropdown)
     return None
 
+def pullProjections(self, context):
+    scene = context.scene
+    inputs = scene.panelSettings
+    inputs.parser.pullProjections()
+    return None
+
 class PanelSettings(PropertyGroup):
     networkFileUpload = StringProperty(
         name="File Path",
