@@ -17,6 +17,32 @@ class CellNeuroML2(Cell):
         # Parse new model
         self.parse_model(cell)
 
+    def make_soma(self, size, location):
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=size, location=location)
+        # Name object as cell
+        bpy.context.object.name = self.id
+        # Save referrence
+        self.blender_obj = bpy.context.object
+
+    def draw_segment(self, size, bezier):
+        # Create curve, curve object and set Cell as a parent
+        cu = bpy.data.curves.new('AxonCurve', 'CURVE')
+        ob = bpy.data.objects.new('AxonObject', cu)
+        bpy.context.scene.objects.link(ob)
+        ob.parent = self.blender_obj
+
+        # Create bevel object
+        bpy.ops.curve.primitive_bezier_circle_add(radius=size)
+        cu.bevel_object = bpy.context.object
+
+        # Create spline and set Bezier control points
+        spline_axon = cu.splines.new('BEZIER')
+        spline_axon.bezier_points[0].co = spline_axon.bezier_points[0].handle_left = spline_axon.bezier_points[0].handle_right = bezier[0]
+        spline_axon.bezier_points.add(len(bezier) - 1)
+        for n in range(len(bezier)-1):
+            bpt = spline_axon.bezier_points[n+1]
+            bpt.co = bpt.handle_left = bpt.handle_right = bezier[n+1]
+
     def parse_model(self, cell):
         '''
         Parse cell into a blender object
@@ -24,54 +50,40 @@ class CellNeuroML2(Cell):
         # Dictionary of segment ids and locations
         # TODO fix measuremt units
         cell_dict = {}
+        axon = []
+        parent_found = False
         for segment in cell.morphology.segments:
-            if(len(cell_dict) > 1500):
+            if(len(cell_dict) > 500):
                 break
-            cell_dict[segment.id] = mathutils.Vector((segment.distal.x, segment.distal.y, segment.distal.z)) / 10.0
+            cell_dict[segment.id] = segment
             if segment.parent == None:
-                # Parent object (soma)
-                d = segment.distal.diameter / 10.0
-                bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=d, location=cell_dict[segment.id])
-                # Name object as cell
-                bpy.context.object.name = self.id
-                # Save referrence
-                self.blender_obj = bpy.context.object
+                # Read parameters
+                distal_vector = segment.distal
+                size = distal_vector.diameter / 10.0
+                location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
+                # Make soma
+                self.make_soma(size, location)
             elif segment.proximal == None:
-                # Create curve, curve object and set Cell as a parent
-                cu = bpy.data.curves.new('AxonCurve', 'CURVE')
-                ob = bpy.data.objects.new(str(segment.id), cu)
-                bpy.context.scene.objects.link(ob)
-                ob.parent = self.blender_obj
-
-                # Create bevel object
-                bpy.ops.curve.primitive_bezier_circle_add(radius=segment.distal.diameter/ 10.0)
-                cu.bevel_object = bpy.context.object
-
-                # Create spline and set Bezier control points
-                spline_axon = cu.splines.new('BEZIER')
-                spline_axon.bezier_points[0].co = spline_axon.bezier_points[0].handle_left = spline_axon.bezier_points[0].handle_right = cell_dict[segment.parent.segments]
-                axon = [(cell_dict[segment.id])]
-                spline_axon.bezier_points.add(len(axon))
-                for n in range(len(axon)):
-                    bpt = spline_axon.bezier_points[n+1]
-                    bpt.co = bpt.handle_left = bpt.handle_right = axon[n]
+                # Read cell parameters
+                distal_vector = segment.distal
+                size = distal_vector.diameter / 10.0
+                cell_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
+                # Read parent parameters
+                distal_parent = cell_dict[segment.parent.segments].distal
+                parent_location = mathutils.Vector((distal_parent.x, distal_parent.y, distal_parent.z)) / 10.0
+                # Construct the bezier curve
+                axon = [parent_location, cell_location]
+                # Draw the segment
+                self.draw_segment(size,axon)
             else:
-                # Create curve, curve object and set Cell as a parent
-                cu = bpy.data.curves.new('AxonCurve', 'CURVE')
-                ob = bpy.data.objects.new(str(segment.id), cu)
-                bpy.context.scene.objects.link(ob)
-                ob.parent = self.blender_obj
-
-                # Create bevel object
-                bpy.ops.curve.primitive_bezier_circle_add(radius=segment.distal.diameter/ 10.0)
-                cu.bevel_object = bpy.context.object
-
-                # Create spline and set Bezier control points
-                spline_axon = cu.splines.new('BEZIER')
-                spline_axon.bezier_points[0].co = spline_axon.bezier_points[0].handle_left = spline_axon.bezier_points[0].handle_right = cell_dict[segment.id]
-                axon = [(segment.proximal.x / 10.0, segment.proximal.y / 10.0, segment.proximal.z / 10.0) ]
-                spline_axon.bezier_points.add(len(axon))
-                for n in range(len(axon)):
-                    bpt = spline_axon.bezier_points[n+1]
-                    bpt.co = bpt.handle_left = bpt.handle_right = axon[n]
-        #Cell.generated_models[self.id] = self.blender_obj
+                # Read cell parameters
+                distal_vector = segment.distal
+                size = distal_vector.diameter / 10.0
+                distal_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
+                # Read parent parameters
+                proximal_vector = segment.proximal
+                proximal_location = mathutils.Vector((proximal_vector.x, proximal_vector.y, proximal_vector.z)) / 10.0
+                # Construct the bezier curve
+                axon = [proximal_location, distal_location]
+                # Draw the segment
+                self.draw_segment(size,axon)
