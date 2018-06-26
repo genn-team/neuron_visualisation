@@ -53,37 +53,35 @@ class CellNeuroML2(Cell):
         axon = []
         parent_found = False
         for segment in cell.morphology.segments:
-            if(len(cell_dict) > 500):
+            if(len(cell_dict) > 900):
                 break
+
+            # Cell dictionary
             cell_dict[segment.id] = segment
+            # Read parameters
+            distal_vector = segment.distal
+            size = distal_vector.diameter / 10.0
+            distal_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
+
             if segment.parent == None:
-                # Read parameters
-                distal_vector = segment.distal
-                size = distal_vector.diameter / 10.0
-                location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
-                # Make soma
-                self.make_soma(size, location)
-            elif segment.proximal == None:
-                # Read cell parameters
-                distal_vector = segment.distal
-                size = distal_vector.diameter / 10.0
-                cell_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
-                # Read parent parameters
-                distal_parent = cell_dict[segment.parent.segments].distal
-                parent_location = mathutils.Vector((distal_parent.x, distal_parent.y, distal_parent.z)) / 10.0
-                # Construct the bezier curve
-                axon = [parent_location, cell_location]
-                # Draw the segment
-                self.draw_segment(size,axon)
+                # Soma
+                self.make_soma(size, distal_location)
             else:
-                # Read cell parameters
-                distal_vector = segment.distal
-                size = distal_vector.diameter / 10.0
-                distal_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
-                # Read parent parameters
-                proximal_vector = segment.proximal
-                proximal_location = mathutils.Vector((proximal_vector.x, proximal_vector.y, proximal_vector.z)) / 10.0
-                # Construct the bezier curve
-                axon = [proximal_location, distal_location]
+                # Segment
+                vector = None
+                if segment.proximal == None:
+                    # Get parent vector
+                    vector = cell_dict[segment.parent.segments].distal
+                else:
+                    # Get proximal vector
+                    vector = segment.proximal
+                # Extract location
+                location = mathutils.Vector((vector.x, vector.y, vector.z)) / 10.0
+
+                if len(axon) == 0 or axon[-1] != location:
+                    axon = [location, distal_location]
+                else:
+                    axon.append(distal_location)
+
                 # Draw the segment
                 self.draw_segment(size,axon)
