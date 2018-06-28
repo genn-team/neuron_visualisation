@@ -9,12 +9,11 @@ from neuron_visualization_addon.model.Cell import Cell
 
 class Parser(object):
     def parse(self, filepath):
-        if filepath[-8:] == '.net.nml':
-            # TODO
-            network_file = loaders.NeuroMLLoader.load(filepath)
-            if len(network_file.includes) != 0:
-                self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes)
-
+        #if filepath[-8:] == '.net.nml':
+        # TODO
+        network_file = loaders.NeuroMLLoader.load(filepath)
+        if len(network_file.includes) != 0:
+            self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes)
         self.network = NetworkNeuroML2(network_file.networks[0])
 
     def loadCellsNeuroML2(self, dirpath, includes):

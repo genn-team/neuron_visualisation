@@ -13,12 +13,12 @@ class Cell(object):
     # --- ID for the cell ---
     count = 0
 
-    def __init__(self, id):
+    def __init__(self, id, location=(0,0,0)):
         self.id = id + str(Cell.count)
         Cell.count += 1
     #    if id not in Cell.generated_models:
         # Create some placeholder
-        bpy.ops.mesh.primitive_uv_sphere_add( segments=64, ring_count=32, size=0.1, location=(0,0,0))
+        bpy.ops.mesh.primitive_uv_sphere_add( segments=64, ring_count=32, size=0.1, location=location)
         # Name the object as the cell
         bpy.context.object.name = self.id
         # Save the referrence

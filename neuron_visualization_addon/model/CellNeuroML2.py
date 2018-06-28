@@ -47,11 +47,12 @@ class CellNeuroML2(Cell):
         '''
         Parse cell into a blender object
         '''
-        # Dictionary of segment ids and locations
         # TODO fix measuremt units
+
+        # Dictionary of segment ids and locations
         cell_dict = {}
         axon = []
-        parent_found = False
+
         for segment in cell.morphology.segments:
             if(len(cell_dict) > 900):
                 break

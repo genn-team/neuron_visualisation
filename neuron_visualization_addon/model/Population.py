@@ -10,9 +10,7 @@ class Population(object):
         self.id = id
         self.size = size
         self.cell_type = cell_type
-        self.cells = []
-        for i in range(self.size):
-            self.cells.append(Cell(self.cell_type))
+        self.cells = {}
         print("Population " + self.id + " is created")
 
     def setLocation(self, location):
@@ -34,7 +32,8 @@ class Population(object):
     def setColor(self, color=(0.0,0.0,0.0)):
         material = bpy.data.materials.new("PopulationColor_"+self.id)
         material.diffuse_color = color
-        for cell in self.cells:
+        for key,cell in self.cells.items():
+            print(cell)
             cell.blender_obj.active_material = material
 
     def removeColor(self):

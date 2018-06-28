@@ -11,10 +11,8 @@ class PopulationNeuroML2(Population):
                             population.id,
                             len(population.instances),
                             population.component)
-        i = 0
         for instance in population.instances:
-            x = instance.location.x / 100
-            z = instance.location.y / 100
-            y = instance.location.z / 100
-            self.cells[i].setLocation((x,y,z))
-            i += 1
+            x = instance.location.x / 10
+            z = instance.location.y / 10
+            y = instance.location.z / 10
+            self.cells[instance.id] = Cell(self.cell_type, (x,y,z))
