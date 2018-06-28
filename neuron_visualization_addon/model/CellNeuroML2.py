@@ -18,7 +18,7 @@ class CellNeuroML2(Cell):
         self.parse_model(cell)
 
     def make_soma(self, size, location):
-        bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=size, location=location)
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=8, ring_count=8, size=size, location=location)
         # Name object as cell
         bpy.context.object.name = self.id
         # Save referrence
@@ -34,6 +34,8 @@ class CellNeuroML2(Cell):
         # Create bevel object
         bpy.ops.curve.primitive_bezier_circle_add(radius=size)
         cu.bevel_object = bpy.context.object
+        cu.bevel_object.hide = True
+        cu.bevel_resolution = 1
 
         # Create spline and set Bezier control points
         spline_axon = cu.splines.new('BEZIER')
@@ -42,6 +44,18 @@ class CellNeuroML2(Cell):
         for n in range(len(bezier)-1):
             bpt = spline_axon.bezier_points[n+1]
             bpt.co = bpt.handle_left = bpt.handle_right = bezier[n+1]
+
+        # Change context to console
+        old_context = bpy.context.area.type
+        bpy.context.area.type = 'CONSOLE'
+        # Convert curve to mesh
+        ob.select = True
+        bpy.ops.object.convert(target='MESH')
+        # Apply decimate modifier
+        ob.modifiers.new('MyDecimate','DECIMATE')
+        ob.modifiers[0].ratio = 0.01
+        # Change context back
+        bpy.context.area.type = old_context
 
     def parse_model(self, cell):
         '''
@@ -54,7 +68,7 @@ class CellNeuroML2(Cell):
         axon = []
 
         for segment in cell.morphology.segments:
-            if(len(cell_dict) > 900):
+            if(len(cell_dict) > 200):
                 break
 
             # Cell dictionary
@@ -86,3 +100,13 @@ class CellNeuroML2(Cell):
 
                 # Draw the segment
                 self.draw_segment(size,axon)
+
+        # Change context to console
+        old_context = bpy.context.area.type
+        bpy.context.area.type = 'CONSOLE'
+        # Join everything together
+        self.blender_obj.select = True
+        bpy.ops.object.select_hierarchy(direction='CHILD')
+        bpy.ops.object.join()
+        # Change back
+        bpy.context.area.type = old_context
