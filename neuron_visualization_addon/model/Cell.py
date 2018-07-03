@@ -14,7 +14,7 @@ class Cell(object):
     count = 0
 
     def __init__(self, id, location=(0,0,0)):
-        self.id = id + str(Cell.count)
+        self.id = id #+ str(Cell.count)
         Cell.count += 1
     #    if id not in Cell.generated_models:
         # Create some placeholder
@@ -52,3 +52,16 @@ class Cell(object):
         material = bpy.data.materials.new("CellColor")
         material.diffuse_color = color
         self.blender_obj.active_material = material
+
+    def spike(self, time):
+        material = bpy.data.materials.new("CellColor")
+        self.blender_obj.active_material = material
+        print(self.blender_obj.active_material)
+        material.diffuse_color = (0.0,0.0,0.0)
+        material.keyframe_insert(data_path="diffuse_color", frame = 0)
+        material.diffuse_color = (0.0,0.0,0.0)
+        material.keyframe_insert(data_path="diffuse_color", frame = time-1)
+        material.diffuse_color = (1.0,1.0,1.0)
+        material.keyframe_insert(data_path="diffuse_color", frame = time)
+        material.diffuse_color = (0.0,0.0,0.0)
+        material.keyframe_insert(data_path="diffuse_color", frame = time+1)

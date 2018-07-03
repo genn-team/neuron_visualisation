@@ -15,4 +15,4 @@ class PopulationNeuroML2(Population):
             x = instance.location.x / 10
             z = instance.location.y / 10
             y = instance.location.z / 10
-            self.cells[instance.id] = Cell(self.cell_type, (x,y,z))
+            self.cells[instance.id] = Cell(str(instance.id), (x,y,z))

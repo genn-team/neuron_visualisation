@@ -26,6 +26,18 @@ def pullProjections(self, context):
     inputs.parser.pullProjections()
     return None
 
+class MessageBox(bpy.types.Operator):
+    bl_idname = "message.messagebox"
+    bl_label = ""
+
+    def execute(self, context):
+        self.report({'INFO'}, self.message)
+        print(self.message)
+        return {'FINISHED'}
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_props_dialog(self, width = 400)
+
 class PanelSettings(PropertyGroup):
     networkFileUpload = StringProperty(
         name="File Path",
@@ -60,9 +72,10 @@ class ParseOperator(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         inputs = scene.panelSettings
-        inputs.parser.parse(inputs.networkFileUpload)
-        self.updateDropdown(inputs.parser.getPopulations())
-        bpy.context.scene['fileParsed'] = True
+        file_type = inputs.parser.parse(inputs.networkFileUpload)
+        if file_type == "network":
+            self.updateDropdown(inputs.parser.getPopulations())
+            bpy.context.scene['fileParsed'] = True
         return {'FINISHED'}
 
     def updateDropdown(self, populations):
@@ -111,8 +124,11 @@ class MainPanel(Panel):
         layout.operator("wm.parser")
         layout.operator("wm.clear")
         if bpy.context.scene['fileParsed']:
+            layout.label(text="Model manipulation")
             layout.prop(inputs, "populationsDropdown", text="")
             layout.prop(inputs, "pullProjections")
+            layout.label(text="Animation")
+            layout.prop(inputs, "networkFileUpload")
 
 @persistent
 def initSceneProperties(scene):
@@ -126,6 +142,7 @@ def register():
     bpy.app.handlers.scene_update_pre.append(initSceneProperties)
     bpy.utils.register_module(__name__)
     bpy.types.Scene.panelSettings = PointerProperty(type=PanelSettings)
+    bpy.utils.register_class(MessageBox)
 
 def unregister():
     bpy.utils.unregister_module(__name__)

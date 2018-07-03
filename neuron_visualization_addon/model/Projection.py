@@ -108,7 +108,7 @@ class Projection(object):
         start = self.curve.splines[0].bezier_points[0]
         end = point = self.curve.splines[0].bezier_points[-1]
         destination = destination - self.object.parent.location
+        destination.normalize()
         axon = [(start.co, start.handle_left, destination),
-                #(destination, destination, destination),
-                (end.co, destination, end.handle_right)]
+                (end.co, end.handle_left, destination)]
         self.updateProjectionCurve(axon)

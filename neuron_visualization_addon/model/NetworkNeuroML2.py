@@ -13,33 +13,34 @@ class NetworkNeuroML2(Network):
         for projection in network.projections:
             firstPopulationID = projection.presynaptic_population
             secondPopulationID = projection.postsynaptic_population
+            if len(projection.connection_wds) > 0:
+                for connection in projection.connection_wds:
+                    # Precell
+                    pre_cell_adress = connection.pre_cell_id.split('/')
+                    pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
+                    # Postcell
+                    post_cell_adress = connection.post_cell_id.split('/')
+                    post_cell = self.populations[secondPopulationID].cells[int(post_cell_adress[-2])]
+                    # Sort the projections
+                    projection = pre_cell.drawAxon(0.2, post_cell)
 
-            for connection in projection.connection_wds:
-                # Precell
-                pre_cell_adress = connection.pre_cell_id.split('/')
-                pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
-                # Postcell
-                post_cell_adress = connection.post_cell_id.split('/')
-                post_cell = self.populations[secondPopulationID].cells[int(post_cell_adress[-2])]
-                # Sort the projections
-                projection = pre_cell.drawAxon(0.2, post_cell)
+                    if (firstPopulationID,secondPopulationID) not in self.projections:
+                        self.projections[(firstPopulationID,secondPopulationID)] = [projection]
+                    else:
+                        self.projections[(firstPopulationID,secondPopulationID)].append(projection)
 
-                if (firstPopulationID,secondPopulationID) not in self.projections:
-                    self.projections[(firstPopulationID,secondPopulationID)] = [projection]
-                else:
-                    self.projections[(firstPopulationID,secondPopulationID)].append(projection)
+            if len(projection.connections) > 0:
+                for connection in projection.connections:
+                    # Precell
+                    pre_cell_adress = connection.pre_cell_id.split('/')
+                    pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
+                    # Postcell
+                    post_cell_adress = connection.post_cell_id.split('/')
+                    post_cell = self.populations[secondPopulationID].cells[int(post_cell_adress[-2])]
+                    # Sort the projections
+                    projection = pre_cell.drawAxon(0.2, post_cell)
 
-            for connection in projection.connections:
-                # Precell
-                pre_cell_adress = connection.pre_cell_id.split('/')
-                pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
-                # Postcell
-                post_cell_adress = connection.post_cell_id.split('/')
-                post_cell = self.populations[secondPopulationID].cells[int(post_cell_adress[-2])]
-                # Sort the projections
-                projection = pre_cell.drawAxon(0.2, post_cell)
-
-                if (firstPopulationID,secondPopulationID) not in self.projections:
-                    self.projections[(firstPopulationID,secondPopulationID)] = [projection]
-                else:
-                    self.projections[(firstPopulationID,secondPopulationID)].append(projection)
+                    if (firstPopulationID,secondPopulationID) not in self.projections:
+                        self.projections[(firstPopulationID,secondPopulationID)] = [projection]
+                    else:
+                        self.projections[(firstPopulationID,secondPopulationID)].append(projection)

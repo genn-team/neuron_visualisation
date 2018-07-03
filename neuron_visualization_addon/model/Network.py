@@ -39,3 +39,10 @@ class Network(object):
             middle += p.getMiddle()
         for p in projections:
             p.pullCenterTo(middle / len(projections))
+
+    def animateSpikes(self, spikes):
+        for key, time in spikes.items():
+            for _,population in self.populations.items():
+                if key in population.cells:
+                    population.cells[key].spike(time/10)
+                    continue

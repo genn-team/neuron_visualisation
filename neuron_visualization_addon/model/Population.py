@@ -33,9 +33,11 @@ class Population(object):
         material = bpy.data.materials.new("PopulationColor_"+self.id)
         material.diffuse_color = color
         for key,cell in self.cells.items():
-            print(cell)
             cell.blender_obj.active_material = material
 
     def removeColor(self):
         for cell in self.cells:
             cell.blender_obj.active_material = None
+
+    def cellSpike(self, id):
+        self.cells[id].spike()
