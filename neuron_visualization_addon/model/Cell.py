@@ -53,15 +53,21 @@ class Cell(object):
         material.diffuse_color = color
         self.blender_obj.active_material = material
 
-    def spike(self, time):
+    def setSpikes(self, spikes):
+        '''material = bpy.data.materials.new("CellColor")
+        self.blender_obj.active_material = material
+        material.diffuse_color = (0.8,0.8,0.8)
+        material.keyframe_insert(data_path="diffuse_color", frame = time-2)
+        material.diffuse_color = (intensity,intensity,intensity)
+        material.keyframe_insert(data_path="diffuse_color", frame = time)
+        material.diffuse_color = (0.8,0.8,0.8)
+        material.keyframe_insert(data_path="diffuse_color", frame = time+2)'''
         material = bpy.data.materials.new("CellColor")
         self.blender_obj.active_material = material
-        print(self.blender_obj.active_material)
-        material.diffuse_color = (0.0,0.0,0.0)
-        material.keyframe_insert(data_path="diffuse_color", frame = 0)
-        material.diffuse_color = (0.0,0.0,0.0)
-        material.keyframe_insert(data_path="diffuse_color", frame = time-1)
-        material.diffuse_color = (1.0,1.0,1.0)
-        material.keyframe_insert(data_path="diffuse_color", frame = time)
-        material.diffuse_color = (0.0,0.0,0.0)
-        material.keyframe_insert(data_path="diffuse_color", frame = time+1)
+        for (time,intensity) in spikes:
+            material.diffuse_color = (0.5,0.5,0.5)
+            material.keyframe_insert(data_path="diffuse_color", frame = time-2)
+            material.diffuse_color = (intensity,intensity,intensity)
+            material.keyframe_insert(data_path="diffuse_color", frame = time)
+            material.diffuse_color = (0.5,0.5,0.5)
+            material.keyframe_insert(data_path="diffuse_color", frame = time+2)

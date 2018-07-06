@@ -21,7 +21,23 @@ class Parser(object):
             spikes = {}
             for line in activation_file.read().splitlines():
                 words = line.split(" ")
-                spikes[int(words[1])] = float(words[0])
+                if not int(words[1]) in spikes:
+                    spikes[int(words[1])] = [(float(words[0]),1.0)]
+                else:
+                    spikes[int(words[1])].append((float(words[0]),1.0))
+            self.network.animateSpikes(spikes)
+            return "activation"
+        elif filepath[-4:] == '.cmp':
+            activation_file = open(filepath)
+            spikes = {}
+            for line in activation_file.read().splitlines():
+                words = line.split(" ")
+                if not spikes:
+                    for i in range(len(words) - 1):
+                        spikes[i] = [(i,int(words[i+1]))]
+                else:
+                    for i in range(len(words) - 1):
+                        spikes[i].append((i,int(words[i+1])))
             self.network.animateSpikes(spikes)
             return "activation"
 
