@@ -18,7 +18,7 @@ class Cell(object):
         Cell.count += 1
     #    if id not in Cell.generated_models:
         # Create some placeholder
-        bpy.ops.mesh.primitive_uv_sphere_add( segments=64, ring_count=32, size=0.1, location=location)
+        bpy.ops.mesh.primitive_uv_sphere_add( segments=64, ring_count=32, size=0.05, location=location)
         # Name the object as the cell
         bpy.context.object.name = self.id
         # Save the referrence
@@ -54,17 +54,10 @@ class Cell(object):
         self.blender_obj.active_material = material
 
     def setSpikes(self, spikes):
-        '''material = bpy.data.materials.new("CellColor")
-        self.blender_obj.active_material = material
-        material.diffuse_color = (0.8,0.8,0.8)
-        material.keyframe_insert(data_path="diffuse_color", frame = time-2)
-        material.diffuse_color = (intensity,intensity,intensity)
-        material.keyframe_insert(data_path="diffuse_color", frame = time)
-        material.diffuse_color = (0.8,0.8,0.8)
-        material.keyframe_insert(data_path="diffuse_color", frame = time+2)'''
         material = bpy.data.materials.new("CellColor")
         self.blender_obj.active_material = material
-        for (time,intensity) in spikes:
+        print(spikes.shape)
+        for [time,intensity] in spikes:
             material.diffuse_color = (0.5,0.5,0.5)
             material.keyframe_insert(data_path="diffuse_color", frame = time-2)
             material.diffuse_color = (intensity,intensity,intensity)

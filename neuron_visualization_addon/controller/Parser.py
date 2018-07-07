@@ -1,5 +1,5 @@
 import bpy, bmesh, os, sys
-
+import numpy as np
 import neuroml
 import neuroml.loaders as loaders
 
@@ -17,27 +17,24 @@ class Parser(object):
             self.network = NetworkNeuroML2(network_file.networks[0])
             return "network"
         elif filepath[-3:] == '.st':
-            activation_file = open(filepath)
+            activation_file = np.loadtxt(filepath)
             spikes = {}
-            for line in activation_file.read().splitlines():
-                words = line.split(" ")
-                if not int(words[1]) in spikes:
-                    spikes[int(words[1])] = [(float(words[0]),1.0)]
+            for line in activation_file:
+                if not line[1] in spikes:
+                    spikes[line[1]] = np.array([[line[0],1.0]])
                 else:
-                    spikes[int(words[1])].append((float(words[0]),1.0))
+                    spikes[line[1]] = np.append(spikes[line[1]],[[line[0],1.0]],axis=0)
+            print(spikes)
             self.network.animateSpikes(spikes)
             return "activation"
         elif filepath[-4:] == '.cmp':
-            activation_file = open(filepath)
-            spikes = {}
-            for line in activation_file.read().splitlines():
-                words = line.split(" ")
-                if not spikes:
-                    for i in range(len(words) - 1):
-                        spikes[i] = [(i,int(words[i+1]))]
-                else:
-                    for i in range(len(words) - 1):
-                        spikes[i].append((i,int(words[i+1])))
+            activation_file = np.loadtxt(filepath)
+            voltages = activation_file[:,1:]
+            print(voltages)
+            activation_file[:,1:] = (voltages - np.min(voltages)) / (np.max(voltages) - np.min(voltages))
+            spikes = {i: np.transpose(np.append([activation_file[:,0]],[activation_file[:,i+1]],axis=0)) for i in range(len(activation_file[0])-1)}
+            print(spikes)
+            print(spikes[0].shape)
             self.network.animateSpikes(spikes)
             return "activation"
 
