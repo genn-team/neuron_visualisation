@@ -9,9 +9,14 @@
 - [ ] Add randomization to simple projections
 - [ ] Complex projections
 - [X] Pull to the center of mass
+- [ ] Fix the bug with "sand-clock" form
+- [ ] Add 'synanse' at the end 
 ##### Cell
-- [ ] Fix CellNeuroML2.py
+- [X] Fix CellNeuroML2.py
 - [X] Update axons positions when the cell is moved
+- [X] Cell keyframe color toggle
+- [ ] Cell color to jet color map
+- [ ] Cell keyfram swelling
 ##### Population
 - [X] Center of mass
 - [X] Toggle features (e.g. color)

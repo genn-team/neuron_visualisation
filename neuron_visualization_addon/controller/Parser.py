@@ -30,11 +30,8 @@ class Parser(object):
         elif filepath[-4:] == '.cmp':
             activation_file = np.loadtxt(filepath)
             voltages = activation_file[:,1:]
-            print(voltages)
             activation_file[:,1:] = (voltages - np.min(voltages)) / (np.max(voltages) - np.min(voltages))
             spikes = {i: np.transpose(np.append([activation_file[:,0]],[activation_file[:,i+1]],axis=0)) for i in range(len(activation_file[0])-1)}
-            print(spikes)
-            print(spikes[0].shape)
             self.network.animateSpikes(spikes)
             return "activation"
 
