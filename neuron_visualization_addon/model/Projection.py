@@ -10,6 +10,7 @@ class Projection(object):
         self.curve = bpy.data.curves.new('AxonCurve', 'CURVE')
         self.object = bpy.data.objects.new('AxonObject_' + str(parent_object.name), self.curve)
         bpy.context.scene.objects.link(self.object)
+        self.curve.dimensions = '3D'
         self.object.parent = parent_object
         self.object.hide = True
 
@@ -50,10 +51,10 @@ class Projection(object):
 
     def makeSimpleProjection(self, weight, destination):
         # Create bevel object
-        '''bpy.ops.curve.primitive_bezier_circle_add(radius=weight,rotation=(0,90,0))
+        bpy.ops.curve.primitive_bezier_circle_add(radius=weight,rotation=(0,90,0))
         self.bevel_object = bpy.context.object
         self.curve.bevel_object = self.bevel_object
-        self.bevel_object.hide = True'''
+        self.bevel_object.hide = True
 
         self.object.hide = False
 
