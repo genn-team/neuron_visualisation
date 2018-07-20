@@ -8,7 +8,7 @@ class Projection(object):
         # --- Axon ---
         # Create curve, curve object and set Cell as a parent
         self.curve = bpy.data.curves.new('AxonCurve', 'CURVE')
-        self.object = bpy.data.objects.new('AxonObject', self.curve)
+        self.object = bpy.data.objects.new('AxonObject_' + str(parent_object.name), self.curve)
         bpy.context.scene.objects.link(self.object)
         self.object.parent = parent_object
         self.object.hide = True
@@ -50,19 +50,20 @@ class Projection(object):
 
     def makeSimpleProjection(self, weight, destination):
         # Create bevel object
-        bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
+        '''bpy.ops.curve.primitive_bezier_circle_add(radius=weight,rotation=(0,90,0))
         self.bevel_object = bpy.context.object
         self.curve.bevel_object = self.bevel_object
-        self.bevel_object.hide = True
+        self.bevel_object.hide = True'''
 
         self.object.hide = False
 
         # Control points for axon
-        #start = self.object.parent.location
+        start = self.object.location
         destination = destination - self.object.parent.location
+        middle = (start + destination) / 2
         axon = [
-            (self.object.location, self.object.location, self.object.location),
-            (destination , destination, destination)
+            (start, middle, 2 * middle - start),
+            (destination , middle, 2 * middle - destination)
         ]
         # Create spline and set Bezier control points
         self.curve.splines.new('BEZIER')
@@ -108,7 +109,8 @@ class Projection(object):
         start = self.curve.splines[0].bezier_points[0]
         end = point = self.curve.splines[0].bezier_points[-1]
         destination = destination - self.object.parent.location
-        destination.normalize()
-        axon = [(start.co, start.handle_left, destination),
-                (end.co, end.handle_left, destination)]
+        axon = [(start.co, destination, 2*destination-start.co),
+                (end.co, destination, 2*destination-end.co)]
+        start.handle_left_type = 'VECTOR'
+        start.handle_right_type = 'VECTOR'
         self.updateProjectionCurve(axon)

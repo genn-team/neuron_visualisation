@@ -8,7 +8,8 @@ from neuron_visualization_addon.model.Population import Population
 class Network(object):
 
     ## The constructor
-    # @param id   The network ID
+    # @type id: string
+    # @param id: The network ID
     def __init__(self, id):
         self.id = id
         self.populations = {}
@@ -20,7 +21,8 @@ class Network(object):
             self.highlightPopulation(population)
 
     ## Highlights a population with a random color
-    # @param population_id   ID of a population
+    # @type population_id: string
+    # @param population_id: ID of a population
     def highlightPopulation(self, population_id):
         # TODO: Error handling
         random_color = (random.random(),
@@ -40,8 +42,10 @@ class Network(object):
                 self.pullProjections(id1, id2)
 
     ## Pull projections between two populations
-    # @param populationID_1   First population ID
-    # @param populationID_2   Second population ID
+    # @type populationID_1: string
+    # @param populationID_1: First population ID
+    # @type populationID_2: string
+    # @param populationID_2: Second population ID
     def pullProjections(self, populationID_1, populationID_2):
         # TODO: Error handling
         projections = self.projections[(populationID_1,populationID_2)]
@@ -54,7 +58,8 @@ class Network(object):
             p.pullCenterTo(middle / len(projections))
 
     ## Animate network
-    # @param spikes   Dictionary of cell IDs and a tupple of time and intensity
+    # @type spikes: dict
+    # @param spikes: Dictionary of cell IDs and a tupple of time and intensity
     def animateSpikes(self, spikes):
         for cell_id in spikes:
             for _, population in self.populations.items():

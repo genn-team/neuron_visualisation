@@ -13,12 +13,15 @@ class Cell(object):
     # --- ID for the cell ---
     count = 0
 
+    ## The constructor
+    # @param id         The cell ID as String
+    # @param location   Cell location
     def __init__(self, id, location=(0,0,0)):
         self.id = id #+ str(Cell.count)
         Cell.count += 1
     #    if id not in Cell.generated_models:
         # Create some placeholder
-        bpy.ops.mesh.primitive_uv_sphere_add( segments=64, ring_count=32, size=0.05, location=location)
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=0.05, location=location)
         # Name the object as the cell
         bpy.context.object.name = self.id
         # Save the referrence
@@ -30,24 +33,43 @@ class Cell(object):
     #        Cell.generated_models[id].duplicate()
     #        self.blender_obj = bpy.context.object
 
+    ## Set location of the cell
+    # @type location: Vector|tupple
+    # @param location: Cell location
     def setLocation(self, location):
         self.blender_obj.location = location
         for axon in self.receivesFrom:
             axon.updateDestination(location)
 
+    ## Get current cell location
+    # @rtype: Vector|tupel
+    # @return: Returns current location
     def getLocation(self):
         return self.blender_obj.location
 
+    ## Draw axon between this cell and destination cell
+    # @type weight: float
+    # @param weight: The weight of a connection
+    # @type destinationCell: Cell
+    # @param destinationCell: Projection destionation cell
+    # @rtype: Vector|tupel
+    # @return: Returns current location
     def drawAxon(self, weight, destinationCell):
         projection = Projection(self.blender_obj)
         projection.makeSimpleProjection(weight, destinationCell.getLocation())
         self.projectsTo.append(projection)
-        destinationCell.projectTo(projection)
+        destinationCell.isProjectedTo(projection)
         return projection
 
-    def projectTo(self, projection):
+    ## Add projections from which the input is received
+    # @type projection: Projection
+    # @param projection: Projection to be added
+    def isProjectedTo(self, projection):
         self.receivesFrom.append(projection)
 
+    ## Set color
+    # @type color: tupple
+    # @param color: Color
     def setColor(self, color=(0.0,0.0,0.0)):
         material = bpy.data.materials.new("CellColor")
         material.diffuse_color = color
