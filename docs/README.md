@@ -15,8 +15,8 @@
 - [X] Fix CellNeuroML2.py
 - [X] Update axons positions when the cell is moved
 - [X] Cell keyframe color toggle
-- [ ] Cell color to jet color map
-- [ ] Create ColorMap class
+- [X] Cell color to jet color map
+- [X] Create ColorMap class
 - [ ] Cell keyfram swelling
 ##### Population
 - [X] Center of mass
