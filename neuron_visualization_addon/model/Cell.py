@@ -3,23 +3,22 @@ from neuron_visualization_addon.model.Projection import Projection
 from neuron_visualization_addon.model.JetColorMap import JetColorMap
 
 class Cell(object):
-    '''
+    """
     This class represents a brain cell in the network
-    '''
-    # ------------------------------------------------------------------------
-    # Declaring static variables
-    # ------------------------------------------------------------------------
+    """
+
     # --- Dictionary of generated models ---
     # generated_models = {}
-    # --- ID for the cell ---
-    count = 0
 
-    ## The constructor
-    # @param id         The cell ID as String
-    # @param location   Cell location
     def __init__(self, id, location=(0,0,0)):
-        self.id = id #+ str(Cell.count)
-        Cell.count += 1
+        """The constructor.
+
+        :param id: The cell ID
+        :type id: String
+        :param location: Cell location
+        :type location: Vector|tuple
+        """
+        self.id = id
     #    if id not in Cell.generated_models:
         # Create some placeholder
         bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=0.05, location=location)
@@ -28,55 +27,70 @@ class Cell(object):
         # Save the referrence
         self.blender_obj = bpy.context.object
         self.blender_obj.select = False
+        # Initialization
         self.projectsTo = []
         self.receivesFrom = []
     #    else:
     #        Cell.generated_models[id].duplicate()
     #        self.blender_obj = bpy.context.object
 
-    ## Set location of the cell
-    # @type location: Vector|tupple
-    # @param location: Cell location
-    def setLocation(self, location):
+    @property
+    def location(self):
+        """Location of the cell.
+
+        :type location: Vector
+
+        """
+        return self.blender_obj.location
+
+    @location.setter
+    def location(self, location):
+        """Location setter"""
         self.blender_obj.location = location
         for axon in self.receivesFrom:
             axon.updateDestination(location)
 
-    ## Get current cell location
-    # @rtype: Vector|tupel
-    # @return: Returns current location
-    def getLocation(self):
-        return self.blender_obj.location
-
-    ## Draw axon between this cell and destination cell
-    # @type weight: float
-    # @param weight: The weight of a connection
-    # @type destinationCell: Cell
-    # @param destinationCell: Projection destionation cell
-    # @rtype: Vector|tupel
-    # @return: Returns current location
     def drawAxon(self, weight, destinationCell):
+        """Draw an axon between this cell and destination cell.
+
+        :param weight: The weight of a connection.
+        :type weight: float
+        :param destinationCell: Projection destionation cell.
+        :type destinationCell: Cell
+
+        :returns: Projection -- Created projection
+        """
+        # Create projection
         projection = Projection(self.blender_obj)
-        projection.makeSimpleProjection(weight, destinationCell.getLocation())
+        projection.makeSimpleProjection(weight, destinationCell.location)
+        # Save it
         self.projectsTo.append(projection)
         destinationCell.isProjectedTo(projection)
+
         return projection
 
-    ## Add projections from which the input is received
-    # @type projection: Projection
-    # @param projection: Projection to be added
     def isProjectedTo(self, projection):
+        """Add projections from which the input is received.
+
+        :param projection: Projection to be added
+        :type projection: Projection
+
+        """
         self.receivesFrom.append(projection)
 
-    ## Set color
-    # @type color: tupple
-    # @param color: Color
     def setColor(self, color=(0.0,0.0,0.0)):
+        """Set color
+
+        :param color: RGB color
+        :type color: tuple
+
+        """
         material = bpy.data.materials.new("CellColor")
         material.diffuse_color = color
         self.blender_obj.active_material = material
 
     def setSpikes(self, spikes):
+        # TODO: Clean up
         material = bpy.data.materials.new("CellColor")
         self.blender_obj.active_material = material
         for [time,intensity] in spikes:

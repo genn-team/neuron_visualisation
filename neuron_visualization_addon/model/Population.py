@@ -3,41 +3,70 @@ import mathutils
 from neuron_visualization_addon.model.Cell import Cell
 
 class Population(object):
-    '''
+    """
     This class represents a population of brain cells in the network
-    '''
+    """
+
     def __init__(self, id, size, cell_type):
+        """The constructor.
+
+        :param id: The population ID.
+        :type id: string
+        :param size: Population size
+        :type size: int
+        :param cell_type: Cell type of the population
+        :type cell_type: string
+        """
         self.id = id
         self.size = size
         self.cell_type = cell_type
         self.cells = {}
         print("Population " + self.id + " is created")
 
-    def setLocation(self, location):
-        # TODO
-        self.blender_obj.location = location
+    @property
+    def location(self):
+        """Location of the center of mass.
 
-    def getLocation(self):
+        :type location: Vector
+
+        """
         location_sum = mathutils.Vector((0,0,0))
         for cell in self.cells:
             location_sum += cell.getLocation()
         return location_sum / len(self.cells)
 
+    @location.setter
+    def location(self, location):
+        self.blender_obj.location = location
+
     def pullTogether(self):
-        centerOfMass = self.getLocation()
+        """Pull cells towards the center of mass."""
+        centerOfMass = self.location
         for cell in self.cells:
-            cellLocation = cell.getLocation()
-            cell.setLocation(cellLocation + 1/10 * (centerOfMass - cellLocation))
+            cell.location = cell.location + 1/10 * (centerOfMass - cell.location)
 
     def setColor(self, color=(0.0,0.0,0.0)):
+        """Set coloring of the whole population
+
+        :param color: RGB color
+        :type color: tuple
+
+        """
         material = bpy.data.materials.new("PopulationColor_"+self.id)
         material.diffuse_color = color
         for key,cell in self.cells.items():
             cell.blender_obj.active_material = material
 
     def removeColor(self):
+        """Remove coloring from the population."""
         for cell in self.cells:
             cell.blender_obj.active_material = None
 
     def cellSpike(self, id):
+        """Set a specific cell to spike.
+
+        :param id: Cell ID
+        :type id: string
+
+        """
         self.cells[id].spike()

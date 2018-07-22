@@ -8,7 +8,6 @@ bl_info = {
 }
 
 import bpy
-from bpy.props import *
 from bpy.types import Panel, Operator, PropertyGroup
 from bpy.app.handlers import persistent
 
@@ -39,18 +38,18 @@ class MessageBox(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width = 400)
 
 class PanelSettings(PropertyGroup):
-    networkFileUpload = StringProperty(
+    networkFileUpload = bpy.props.StringProperty(
         name="File Path",
         description="Provide description file",
         default="",
         subtype ='FILE_PATH'
         )
-    populationHighlight = BoolProperty(
+    populationHighlight = bpy.props.BoolProperty(
         name="Highlight populations",
         description="A bool property",
         default = False
         )
-    populationsDropdown = EnumProperty(
+    populationsDropdown = bpy.props.EnumProperty(
         name="Highlight populations",
         description="Select populations to highlight",
         items=[ ('None', "None", ""),
@@ -58,7 +57,7 @@ class PanelSettings(PropertyGroup):
                ]
         )
     parser = Parser()
-    pullProjections = BoolProperty(
+    pullProjections = bpy.props.BoolProperty(
         name = "Pull projections",
         description = "Pull projections together between populations",
         default = False,
@@ -98,7 +97,7 @@ class ClearOperator(bpy.types.Operator):
         bpy.ops.object.delete()
         bpy.ops.object.select_by_type(type='CURVE')
         bpy.ops.object.delete()
-        PanelSettings.populationsDropdown = EnumProperty(
+        PanelSettings.populationsDropdown = bpy.props.EnumProperty(
             name="Highlight populations",
             description="Select populations to highlight",
             items=[ ('None', "None", ""),
@@ -133,7 +132,7 @@ class MainPanel(Panel):
 @persistent
 def initSceneProperties(scene):
     bpy.app.handlers.scene_update_pre.remove(initSceneProperties)
-    bpy.types.Scene.fileParsed = BoolProperty(name='fileParsed',description='')
+    bpy.types.Scene.fileParsed = bpy.props.BoolProperty(name='fileParsed',description='')
     scene['fileParsed'] = False
     return
 
@@ -141,7 +140,7 @@ def register():
     print("REGISTER")
     bpy.app.handlers.scene_update_pre.append(initSceneProperties)
     bpy.utils.register_module(__name__)
-    bpy.types.Scene.panelSettings = PointerProperty(type=PanelSettings)
+    bpy.types.Scene.panelSettings = bpy.props.PointerProperty(type=PanelSettings)
     bpy.utils.register_class(MessageBox)
 
 def unregister():

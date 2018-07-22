@@ -33,7 +33,7 @@ class NetworkNeuroML2(Network):
                     else:
                         self.projections[(firstPopulationID,secondPopulationID)].append(projection)
             # If connections are given
-            '''if len(projection.connections) > 0:
+            if len(projection.connections) > 0:
                 for connection in projection.connections:
                     # Precell
                     pre_cell_adress = connection.pre_cell_id.split('/')
@@ -47,4 +47,4 @@ class NetworkNeuroML2(Network):
                     if (firstPopulationID,secondPopulationID) not in self.projections:
                         self.projections[(firstPopulationID,secondPopulationID)] = [projection]
                     else:
-                        self.projections[(firstPopulationID,secondPopulationID)].append(projection)'''
+                        self.projections[(firstPopulationID,secondPopulationID)].append(projection)

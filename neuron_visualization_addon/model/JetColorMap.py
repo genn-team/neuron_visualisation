@@ -6,9 +6,11 @@ class JetColorMap(ColorMap):
 
     def getColor(intensity):
         """Calculates jet color based on firing intensity
+
         :param intensity: Firing intensity between 0 and 1
         :type intensity: float
-        :returns: tuple -- rgb color 
+        
+        :returns: tuple -- rgb color
         """
         red = green = blue = 1.0
         if intensity < 0.25:
