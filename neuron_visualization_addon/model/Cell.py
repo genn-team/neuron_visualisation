@@ -1,6 +1,6 @@
 import bpy
 from neuron_visualization_addon.model.Projection import Projection
-from neuron_visualization_addon.model.JetColorMap import JetColorMap
+from neuron_visualization_addon.model.ColorMap import ColorMap
 
 class Cell(object):
     """
@@ -79,7 +79,7 @@ class Cell(object):
         self.receivesFrom.append(projection)
 
     def setColor(self, color=(0.0,0.0,0.0)):
-        """Set color
+        """Set RGB color
 
         :param color: RGB color
         :type color: tuple
@@ -89,32 +89,20 @@ class Cell(object):
         material.diffuse_color = color
         self.blender_obj.active_material = material
 
-    def setSpikes(self, spikes):
+    def setSpikes(self, spikes, colorMap='jet'):
         # TODO: Clean up
         material = bpy.data.materials.new("CellColor")
         self.blender_obj.active_material = material
         for [time,intensity] in spikes:
-            material.diffuse_color = JetColorMap.getColor(0.0)
-            material.keyframe_insert(data_path="diffuse_color", frame = time-8)
-            self.blender_obj.scale = (1., 1., 1.)
-            self.blender_obj.keyframe_insert(data_path="scale", frame = time-8)
-            material.diffuse_color = JetColorMap.getColor(intensity / 4)
-            material.keyframe_insert(data_path="diffuse_color", frame = time-6)
-            material.diffuse_color = JetColorMap.getColor(intensity / 2)
-            material.keyframe_insert(data_path="diffuse_color", frame = time-4)
-            material.diffuse_color = JetColorMap.getColor(intensity * 3 / 4)
-            material.keyframe_insert(data_path="diffuse_color", frame = time-2)
-            material.diffuse_color = JetColorMap.getColor(intensity)
-            material.keyframe_insert(data_path="diffuse_color", frame = time)
-            self.blender_obj.scale = (1.0, 1.0, 1.0)
-            self.blender_obj.keyframe_insert(data_path="scale", frame = time)
-            material.diffuse_color = JetColorMap.getColor(intensity * 3 / 4)
-            material.keyframe_insert(data_path="diffuse_color", frame = time + 2)
-            material.diffuse_color = JetColorMap.getColor(intensity / 2)
-            material.keyframe_insert(data_path="diffuse_color", frame = time + 4)
-            material.diffuse_color = JetColorMap.getColor(intensity / 4)
-            material.keyframe_insert(data_path="diffuse_color", frame = time + 6)
-            material.diffuse_color = JetColorMap.getColor(0.0)
-            material.keyframe_insert(data_path="diffuse_color", frame = time + 8)
-            self.blender_obj.scale = (1., 1., 1.)
-            self.blender_obj.keyframe_insert(data_path="scale", frame = time + 8)
+            multiplier = 0.0
+            time_step = 8
+            for _ in range(4):
+                print(intensity * multiplier)
+                material.diffuse_color = ColorMap.getColor(intensity * multiplier, colorMap)
+                material.keyframe_insert(data_path="diffuse_color", frame = time - time_step)
+                material.keyframe_insert(data_path="diffuse_color", frame = time + time_step)
+                self.blender_obj.scale = (1. + multiplier/4, 1. + multiplier/4, 1. + multiplier/4)
+                self.blender_obj.keyframe_insert(data_path="scale", frame = time - time_step)
+                self.blender_obj.keyframe_insert(data_path="scale", frame = time + time_step)
+                multiplier = multiplier + 0.25
+                time_step = time_step - 2

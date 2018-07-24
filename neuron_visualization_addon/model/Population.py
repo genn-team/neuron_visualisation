@@ -46,7 +46,7 @@ class Population(object):
             cell.location = cell.location + 1/10 * (centerOfMass - cell.location)
 
     def setColor(self, color=(0.0,0.0,0.0)):
-        """Set coloring of the whole population
+        """Set RGB color to the whole population
 
         :param color: RGB color
         :type color: tuple

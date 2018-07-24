@@ -2,11 +2,16 @@ import bpy, neuroml
 from neuron_visualization_addon.model.Cell import Cell
 from neuron_visualization_addon.model.Population import Population
 
-## This class represents a population of brain cells in the network
 class PopulationNeuroML2(Population):
+    """This class represents a population of brain cells in the network based on NeuroML2"""
 
-    ## The constructor
     def __init__(self, population):
+        """The constructor.
+
+        :param population: Population from the parser
+        :type population: neuroml.population
+
+        """
         # Call super constructor
         Population.__init__(self,
                             population.id,

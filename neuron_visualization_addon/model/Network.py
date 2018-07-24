@@ -4,8 +4,7 @@ from neuron_visualization_addon.model.Population import Population
 
 class Network(object):
     """
-    Network class.
-    Network consists of populations and projections between them.
+    This class represents a network. Network consists of populations and projections between them.
     """
 
     def __init__(self, id):

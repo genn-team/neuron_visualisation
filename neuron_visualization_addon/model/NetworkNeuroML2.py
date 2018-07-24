@@ -2,11 +2,14 @@ import bpy
 from neuron_visualization_addon.model.Network import Network
 from neuron_visualization_addon.model.PopulationNeuroML2 import PopulationNeuroML2
 
-## This class represents a network read from NeuroML file
-class NetworkNeuroML2(Network):
 
-    ## The constructor
+class NetworkNeuroML2(Network):
+    """ This class represents a network read from NeuroML file.
+    """
+
     def __init__(self, network):
+        """The constructor.
+        """
         # Call parent class constructor
         Network.__init__(self, network.id)
         # Create populations
@@ -33,6 +36,7 @@ class NetworkNeuroML2(Network):
                     else:
                         self.projections[(firstPopulationID,secondPopulationID)].append(projection)
             # If connections are given
+            # TODO
             if len(projection.connections) > 0:
                 for connection in projection.connections:
                     # Precell
