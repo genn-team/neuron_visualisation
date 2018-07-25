@@ -1,8 +1,25 @@
 class ColorMap(object):
     """Color map for the animation
+
+    :param mapsList: list of available maps
+    :type mapsList: list
     """
+    mapsList = ['jet']
 
     def getColor(intensity,colorMap='jet'):
+        """Return the color that corresponds to the intensity
+        in a specified color map
+
+        :param intensity: Firing intensity between 0 and 1
+        :type intensity: float
+        :param colorMap: color map
+        :type colorMap: string
+
+        :returns: tuple -- rgb color
+        """
+        #TODO: check input
+        if not colorMap in mapsList:
+            raise ValueError   
         if colorMap == 'jet':
             return ColorMap.jetColor(intensity)
 

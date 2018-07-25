@@ -62,7 +62,7 @@ class Network(object):
         # Calculate the center of mass
         middle = mathutils.Vector((0,0,0))
         for p in projections:
-            middle += p.getMiddle()
+            middle += p.middle
         # Set the center
         for p in projections:
             p.pullCenterTo(middle / len(projections))

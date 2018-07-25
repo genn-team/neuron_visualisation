@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Network Visualization",
-    "description": "Converts neural network description files into ",
+    "description": "Converts neural network description files into 3D models",
     "author": "",
     "blender": (2, 70, 0),
     "location": "3D View > Tools Props",
@@ -56,6 +56,11 @@ class PanelSettings(PropertyGroup):
                 ('All', "All", "")
                ]
         )
+    """colorMapDropdown = bpy.props.EnumProperty(
+        name="Color Map",
+        description="Select color map for animation",
+        items=[]
+        )"""
     parser = Parser()
     pullProjections = bpy.props.BoolProperty(
         name = "Pull projections",
@@ -73,19 +78,27 @@ class ParseOperator(bpy.types.Operator):
         inputs = scene.panelSettings
         file_type = inputs.parser.parse(inputs.networkFileUpload)
         if file_type == "network":
-            self.updateDropdown(inputs.parser.getPopulations())
+            self.updateDropdowns(inputs.parser)
             bpy.context.scene['fileParsed'] = True
         return {'FINISHED'}
 
-    def updateDropdown(self, populations):
-        enumProp, panelSettings = PanelSettings.populationsDropdown
-        for p in populations:
+    def updateDropdowns(self, parser):
+        # Population dropdown
+        _, panelSettings = PanelSettings.populationsDropdown
+        for p in parser.populations:
             panelSettings['items'].append((p, p, ""))
-        PanelSettings.populationsDropdown = EnumProperty(
+        PanelSettings.populationsDropdown = bpy.props.EnumProperty(
             name="Highlight populations",
             description="Select populations to highlight",
             items=panelSettings['items'],
             update=populationHighlight
+            )
+        # Color map dropdown
+        items = [(i,i,'') for i in parser.colorMaps]
+        PanelSettings.colorMapDropdown = bpy.props.EnumProperty(
+            name="Color map",
+            description="Select color map for animation",
+            items=items
             )
 
 class ClearOperator(bpy.types.Operator):
@@ -128,6 +141,8 @@ class MainPanel(Panel):
             layout.prop(inputs, "pullProjections")
             layout.label(text="Animation")
             layout.prop(inputs, "networkFileUpload")
+            layout.prop(inputs, "colorMapDropdown", text="")
+            layout.operator("wm.parser")
 
 @persistent
 def initSceneProperties(scene):

@@ -16,7 +16,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to neuron_visualization’s documentation!" href="index.html" />
+    <link rel="prev" title="Welcome to Neural Network Visualization’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -42,8 +42,7 @@
 <dt id="neuron_visualization_addon.model.Network.Network">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.Network.</code><code class="descname">Network</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Network.html#Network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Network.Network" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Network class.
-Network consists of populations and projections between them.</p>
+<p>This class represents a network. Network consists of populations and projections between them.</p>
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Network.Network.animateSpikes">
 <code class="descname">animateSpikes</code><span class="sig-paren">(</span><em>spikes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Network.html#Network.animateSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Network.Network.animateSpikes" title="Permalink to this definition">¶</a></dt>
@@ -156,7 +155,7 @@ Network consists of populations and projections between them.</p>
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Population.Population.setColor">
 <code class="descname">setColor</code><span class="sig-paren">(</span><em>color=(0.0</em>, <em>0.0</em>, <em>0.0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Population.html#Population.setColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Population.Population.setColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set coloring of the whole population</p>
+<dd><p>Set RGB color to the whole population</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -203,7 +202,7 @@ Network consists of populations and projections between them.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>projection</strong> (<em>Projection</em>) – Projection to be added</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>projection</strong> (<a class="reference internal" href="#neuron_visualization_addon.model.Projection.Projection" title="neuron_visualization_addon.model.Projection.Projection"><em>Projection</em></a>) – Projection to be added</td>
 </tr>
 </tbody>
 </table>
@@ -224,7 +223,7 @@ Network consists of populations and projections between them.</p>
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Cell.Cell.setColor">
 <code class="descname">setColor</code><span class="sig-paren">(</span><em>color=(0.0</em>, <em>0.0</em>, <em>0.0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Cell.html#Cell.setColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Cell.Cell.setColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set color</p>
+<dd><p>Set RGB color</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -237,25 +236,240 @@ Network consists of populations and projections between them.</p>
 
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Cell.Cell.setSpikes">
-<code class="descname">setSpikes</code><span class="sig-paren">(</span><em>spikes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Cell.html#Cell.setSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Cell.Cell.setSpikes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">setSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap='jet'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Cell.html#Cell.setSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Cell.Cell.setSpikes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set cell to spike at a time with a specific intensity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>spikes</strong> (<em>array</em>) – Array with times is ms and spike intensities</li>
+<li><strong>colorMap</strong> (<em>string</em>) – Color map for intensities Visualization</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="neuron_visualization_addon.model.Projection.Projection">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.Projection.</code><code class="descname">Projection</code><span class="sig-paren">(</span><em>parent_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class represents a projection between neurons in the network</p>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.Projection.Projection.destination">
+<code class="descname">destination</code><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.destination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destination of the projection (receiving soma)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.makeProjection">
+<code class="descname">makeProjection</code><span class="sig-paren">(</span><em>weight</em>, <em>projection</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.makeProjection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.makeProjection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make projection from defined bezier curve.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>weight</strong> (<em>array</em>) – Weight of the connection</li>
+<li><strong>projection</strong> – Array of bezier points</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.makeSimpleProjection">
+<code class="descname">makeSimpleProjection</code><span class="sig-paren">(</span><em>weight</em>, <em>destination</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.makeSimpleProjection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.makeSimpleProjection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make simple projection: straight line between parent object and destination object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>weight</strong> (<em>float</em>) – Weight of the connection</li>
+<li><strong>weight</strong> – Weight of the connection</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.Projection.Projection.middle">
+<code class="descname">middle</code><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.middle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Middle of the projection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.pullCenterTo">
+<code class="descname">pullCenterTo</code><span class="sig-paren">(</span><em>destination</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.pullCenterTo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.pullCenterTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull center of the projection to a specific position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>destination</strong> – Where to pull project to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.setColor">
+<code class="descname">setColor</code><span class="sig-paren">(</span><em>color=(0.0</em>, <em>0.0</em>, <em>0.0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.setColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.setColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set RGB color.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>tuple</em>) – RGB color</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.Projection.Projection.start">
+<code class="descname">start</code><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start of the projection (soma).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.updateProjectionCurve">
+<code class="descname">updateProjectionCurve</code><span class="sig-paren">(</span><em>projection_points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.updateProjectionCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.updateProjectionCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates projection curve (axon).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>projection_points</strong> (<em>array</em>) – Array of points that define a bezier curve</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.updateTaperCurve">
+<code class="descname">updateTaperCurve</code><span class="sig-paren">(</span><em>taper_points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.updateTaperCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.updateTaperCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates taper curve (shape curve).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>taper_points</strong> (<em>array</em>) – Array of points that define a bezier curve</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="neuroml2-model">
 <h2>NeuroML2 model<a class="headerlink" href="#neuroml2-model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.NetworkNeuroML2.</code><code class="descname">NetworkNeuroML2</code><span class="sig-paren">(</span><em>network</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/NetworkNeuroML2.html#NetworkNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Network.Network" title="neuron_visualization_addon.model.Network.Network"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Network.Network</span></code></a></p>
+<p>This class represents a network read from NeuroML file.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="neuron_visualization_addon.model.PopulationNeuroML2.PopulationNeuroML2">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.PopulationNeuroML2.</code><code class="descname">PopulationNeuroML2</code><span class="sig-paren">(</span><em>population</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/PopulationNeuroML2.html#PopulationNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.PopulationNeuroML2.PopulationNeuroML2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Population.Population" title="neuron_visualization_addon.model.Population.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Population.Population</span></code></a></p>
+<p>This class represents a population of brain cells in the network based on NeuroML2</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.CellNeuroML2.</code><code class="descname">CellNeuroML2</code><span class="sig-paren">(</span><em>cell</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Cell.Cell" title="neuron_visualization_addon.model.Cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Cell.Cell</span></code></a></p>
+<p>This class represents brain cells in the network</p>
+<dl class="method">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment">
+<code class="descname">draw_segment</code><span class="sig-paren">(</span><em>size</em>, <em>bezier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.draw_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.make_soma">
+<code class="descname">make_soma</code><span class="sig-paren">(</span><em>size</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.make_soma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.make_soma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.parse_model">
+<code class="descname">parse_model</code><span class="sig-paren">(</span><em>cell</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.parse_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.parse_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse cell into a blender object</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="helper-classes">
 <h2>Helper classes<a class="headerlink" href="#helper-classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="neuron_visualization_addon.model.JetColorMap.JetColorMap">
-<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.JetColorMap.</code><code class="descname">JetColorMap</code><a class="reference internal" href="_modules/neuron_visualization_addon/model/JetColorMap.html#JetColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.JetColorMap.JetColorMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.ColorMap.ColorMap</span></code></p>
-<p>Jet color map class.</p>
+<dt id="neuron_visualization_addon.model.ColorMap.ColorMap">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.ColorMap.</code><code class="descname">ColorMap</code><a class="reference internal" href="_modules/neuron_visualization_addon/model/ColorMap.html#ColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Color map for the animation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapsList</strong> (<em>list</em>) – list of available maps</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
-<dt id="neuron_visualization_addon.model.JetColorMap.JetColorMap.getColor">
-<code class="descname">getColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/JetColorMap.html#JetColorMap.getColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.JetColorMap.JetColorMap.getColor" title="Permalink to this definition">¶</a></dt>
+<dt id="neuron_visualization_addon.model.ColorMap.ColorMap.getColor">
+<code class="descname">getColor</code><span class="sig-paren">(</span><em>colorMap='jet'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/ColorMap.html#ColorMap.getColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.getColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the color that corresponds to the intensity
+in a specified color map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>intensity</strong> (<em>float</em>) – Firing intensity between 0 and 1</li>
+<li><strong>colorMap</strong> (<em>string</em>) – color map</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple – rgb color</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.ColorMap.ColorMap.jetColor">
+<code class="descname">jetColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/ColorMap.html#ColorMap.jetColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.jetColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates jet color based on firing intensity</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -267,6 +481,94 @@ Network consists of populations and projections between them.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.ColorMap.ColorMap.mapsList">
+<code class="descname">mapsList</code><em class="property"> = ['jet']</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="view">
+<h1>View<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="blender-add-on">
+<h2>Blender Add-on<a class="headerlink" href="#blender-add-on" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="controller">
+<h1>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="parser">
+<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="neuron_visualization_addon.controller.Parser.Parser">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.controller.Parser.</code><code class="descname">Parser</code><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class represents a brain cell in the network</p>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.colorMaps">
+<code class="descname">colorMaps</code><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.colorMaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of color maps</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.highlightPopulation">
+<code class="descname">highlightPopulation</code><span class="sig-paren">(</span><em>populationID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.highlightPopulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.highlightPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hightlight a population</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>populationID</strong> (<em>string</em>) – population ID which to be highlighted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.loadCellsNeuroML2">
+<code class="descname">loadCellsNeuroML2</code><span class="sig-paren">(</span><em>dirpath</em>, <em>includes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.loadCellsNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.loadCellsNeuroML2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load cells from neuroml2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dirpath</strong> (<em>string</em>) – path to include directory</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict – dictionary of Cell objects</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses nml files (TODO: extend)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) – file to be parsed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">string – indicate what was parsed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.populations">
+<code class="descname">populations</code><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.populations" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of IDs of all populations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.pullProjections">
+<code class="descname">pullProjections</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.pullProjections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.pullProjections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull projections</p>
 </dd></dl>
 
 </dd></dl>
@@ -299,13 +601,21 @@ Network consists of populations and projections between them.</p>
 <li class="toctree-l2"><a class="reference internal" href="#helper-classes">Helper classes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#view">View</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#blender-add-on">Blender Add-on</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#controller">Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parser">Parser</a></li>
+</ul>
+</li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to neuron_visualization’s documentation!</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Neural Network Visualization’s documentation!</a></li>
   </ul></li>
 </ul>
 </div>

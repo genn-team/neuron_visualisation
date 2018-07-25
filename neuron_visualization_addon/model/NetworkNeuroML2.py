@@ -20,7 +20,7 @@ class NetworkNeuroML2(Network):
             firstPopulationID = projection.presynaptic_population
             secondPopulationID = projection.postsynaptic_population
             # If connections_wd are given
-            if len(projection.connection_wds) > 0:
+            if 'connection_wds' in projection.__dict__ and len(projection.connection_wds) > 0:
                 for connection in projection.connection_wds:
                     # Precell
                     pre_cell_adress = connection.pre_cell_id.split('/')
@@ -36,8 +36,7 @@ class NetworkNeuroML2(Network):
                     else:
                         self.projections[(firstPopulationID,secondPopulationID)].append(projection)
             # If connections are given
-            # TODO
-            if len(projection.connections) > 0:
+            if 'connections' in projection.__dict__ and len(projection.connections) > 0:
                 for connection in projection.connections:
                     # Precell
                     pre_cell_adress = connection.pre_cell_id.split('/')

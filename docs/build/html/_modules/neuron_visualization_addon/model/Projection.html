@@ -1,0 +1,287 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>neuron_visualization_addon.model.Projection &#8212; Neural Network Visualization with Blender  documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for neuron_visualization_addon.model.Projection</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">bpy</span>
+
+<div class="viewcode-block" id="Projection"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection">[docs]</a><span class="k">class</span> <span class="nc">Projection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class represents a projection between neurons in the network</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The constructor.</span>
+
+<span class="sd">        :param parent_object: Parent object - soma</span>
+<span class="sd">        :type parent_object: Cell</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Axon ---</span>
+        <span class="c1"># Create curve, curve object and set Cell as a parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;AxonCurve&#39;</span><span class="p">,</span> <span class="s1">&#39;CURVE&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;AxonObject_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">parent_object</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="s1">&#39;3D&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent_object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># --- Taper curve ---</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;TaperCurve&#39;</span><span class="p">,</span> <span class="s1">&#39;CURVE&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taper</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;TaperObject&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">taper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taper</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># TODO</span>
+        <span class="n">taper_points</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">((</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="o">-</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)),</span>
+            <span class="p">((</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0026</span><span class="p">,</span> <span class="mf">0.2423</span><span class="p">,</span> <span class="mf">0.2013</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.9536</span><span class="p">,</span> <span class="mf">0.2317</span><span class="p">,</span> <span class="mf">0.1925</span><span class="p">))</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Create spline</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span><span class="o">.</span><span class="n">splines</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;BEZIER&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateTaperCurve</span><span class="p">(</span><span class="n">taper_points</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">taper_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper</span>
+
+
+<div class="viewcode-block" id="Projection.updateTaperCurve"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection.updateTaperCurve">[docs]</a>    <span class="k">def</span> <span class="nf">updateTaperCurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taper_points</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates taper curve (shape curve).</span>
+
+<span class="sd">        :param taper_points: Array of points that define a bezier curve</span>
+<span class="sd">        :type taper_points: array</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spline_taper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Add more points to the curve</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">taper_points</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">spline_taper</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">)</span>
+        <span class="n">spline_taper</span><span class="o">.</span><span class="n">bezier_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="c1"># Update the curve</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">taper_points</span><span class="p">)):</span>
+            <span class="n">bpt</span> <span class="o">=</span> <span class="n">spline_taper</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="p">(</span><span class="n">bpt</span><span class="o">.</span><span class="n">co</span><span class="p">,</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_left</span><span class="p">,</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_right</span><span class="p">)</span> <span class="o">=</span> <span class="n">taper_points</span><span class="p">[</span><span class="n">n</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Projection.updateProjectionCurve"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection.updateProjectionCurve">[docs]</a>    <span class="k">def</span> <span class="nf">updateProjectionCurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">projection_points</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates projection curve (axon).</span>
+
+<span class="sd">        :param projection_points: Array of points that define a bezier curve</span>
+<span class="sd">        :type projection_points: array</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spline_axon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Add more points to the curve</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">projection_points</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">)</span>
+        <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="c1"># Update the curve</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">projection_points</span><span class="p">)):</span>
+            <span class="n">bpt</span> <span class="o">=</span> <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="p">(</span><span class="n">bpt</span><span class="o">.</span><span class="n">co</span><span class="p">,</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_left</span><span class="p">,</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_right</span><span class="p">)</span> <span class="o">=</span> <span class="n">projection_points</span><span class="p">[</span><span class="n">n</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Projection.makeSimpleProjection"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection.makeSimpleProjection">[docs]</a>    <span class="k">def</span> <span class="nf">makeSimpleProjection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make simple projection: straight line between parent object and destination object.</span>
+
+<span class="sd">        :param weight: Weight of the connection</span>
+<span class="sd">        :type weight: float</span>
+<span class="sd">        :param weight: Weight of the connection</span>
+<span class="sd">        :type weight: float</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create bevel object</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span><span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Unhide the curve object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># Control points for axon</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">location</span>
+        <span class="n">destination</span> <span class="o">=</span> <span class="n">destination</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">location</span> <span class="c1"># Switch to local coordinates</span>
+        <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">destination</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">axon</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">middle</span> <span class="o">-</span> <span class="n">start</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">destination</span> <span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">middle</span> <span class="o">-</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="c1"># Create spline and set Bezier control points</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;BEZIER&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateProjectionCurve</span><span class="p">(</span><span class="n">axon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Projection.makeProjection"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection.makeProjection">[docs]</a>    <span class="k">def</span> <span class="nf">makeProjection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">projection</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make projection from defined bezier curve.</span>
+
+<span class="sd">        :param weight: Weight of the connection</span>
+<span class="sd">        :type weight: float</span>
+<span class="sd">        :param projection: Array of bezier points</span>
+<span class="sd">        :type weight: array</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create bevel object</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Unhide the curve object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># Create spline and set Bezier control points</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;BEZIER&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateProjectionCurve</span><span class="p">(</span><span class="n">projection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Projection.setColor"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection.setColor">[docs]</a>    <span class="k">def</span> <span class="nf">setColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;Set RGB color.</span>
+
+<span class="sd">        :param color: RGB color</span>
+<span class="sd">        :type color: tuple</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Color the axon in color</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Color&quot;</span><span class="p">)</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">diffuse_color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">active_material</span> <span class="o">=</span> <span class="n">material</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start of the projection (soma).</span>
+
+<span class="sd">        :type start: Vector</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">location</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">location</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">destination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destination of the projection (receiving soma)</span>
+
+<span class="sd">        :type start: Vector</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">co</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">location</span>
+
+    <span class="nd">@destination</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">destination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">destination</span> <span class="o">=</span> <span class="n">destination</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">location</span>
+        <span class="c1"># TODO fix the handles</span>
+        <span class="n">point</span><span class="o">.</span><span class="n">co</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">handle_left</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">handle_right</span> <span class="o">=</span> <span class="n">destination</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">middle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Middle of the projection</span>
+
+<span class="sd">        :type start: Vector</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Projection.pullCenterTo"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.Projection.Projection.pullCenterTo">[docs]</a>    <span class="k">def</span> <span class="nf">pullCenterTo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Pull center of the projection to a specific position</span>
+
+<span class="sd">        :param destination: Where to pull project to</span>
+<span class="sd">        :type start: Vector|tuple</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: complex axons</span>
+        <span class="c1"># Control points for axon</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">destination</span> <span class="o">=</span> <span class="n">destination</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">location</span>
+        <span class="n">axon</span> <span class="o">=</span> <span class="p">[(</span><span class="n">start</span><span class="o">.</span><span class="n">co</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">destination</span><span class="o">-</span><span class="n">start</span><span class="o">.</span><span class="n">co</span><span class="p">),</span>
+                <span class="p">(</span><span class="n">end</span><span class="o">.</span><span class="n">co</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">destination</span><span class="o">-</span><span class="n">end</span><span class="o">.</span><span class="n">co</span><span class="p">)]</span>
+        <span class="n">start</span><span class="o">.</span><span class="n">handle_left_type</span> <span class="o">=</span> <span class="s1">&#39;VECTOR&#39;</span>
+        <span class="n">start</span><span class="o">.</span><span class="n">handle_right_type</span> <span class="o">=</span> <span class="s1">&#39;VECTOR&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateProjectionCurve</span><span class="p">(</span><span class="n">axon</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Neural Network Visualization with Blender</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html#view">View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html#controller">Controller</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, asakhnenko.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

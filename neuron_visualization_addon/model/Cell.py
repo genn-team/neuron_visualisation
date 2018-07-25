@@ -90,19 +90,25 @@ class Cell(object):
         self.blender_obj.active_material = material
 
     def setSpikes(self, spikes, colorMap='jet'):
-        # TODO: Clean up
+        """Set cell to spike at a time with a specific intensity
+
+        :param spikes: Array with times is ms and spike intensities
+        :type spikes: array
+        :param colorMap: Color map for intensities Visualization
+        :type colorMap: string
+
+        """
         material = bpy.data.materials.new("CellColor")
         self.blender_obj.active_material = material
         for [time,intensity] in spikes:
             multiplier = 0.0
-            time_step = 8
-            for _ in range(4):
-                print(intensity * multiplier)
+            time_step = 5
+            for _ in range(5):
                 material.diffuse_color = ColorMap.getColor(intensity * multiplier, colorMap)
                 material.keyframe_insert(data_path="diffuse_color", frame = time - time_step)
                 material.keyframe_insert(data_path="diffuse_color", frame = time + time_step)
-                self.blender_obj.scale = (1. + multiplier/4, 1. + multiplier/4, 1. + multiplier/4)
-                self.blender_obj.keyframe_insert(data_path="scale", frame = time - time_step)
-                self.blender_obj.keyframe_insert(data_path="scale", frame = time + time_step)
+                #self.blender_obj.scale = (1. + multiplier/4, 1. + multiplier/4, 1. + multiplier/4)
+                #self.blender_obj.keyframe_insert(data_path="scale", frame = time - time_step)
+                #self.blender_obj.keyframe_insert(data_path="scale", frame = time + time_step)
                 multiplier = multiplier + 0.25
-                time_step = time_step - 2
+                time_step = time_step - 1

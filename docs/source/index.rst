@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to neuron_visualization's documentation!
-================================================
+Welcome to Neural Network Visualization's documentation!
+========================================================
 
 .. toctree::
    :maxdepth: 2
