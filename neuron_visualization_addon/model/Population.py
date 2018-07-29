@@ -61,12 +61,3 @@ class Population(object):
         """Remove coloring from the population."""
         for cell in self.cells:
             cell.blender_obj.active_material = None
-
-    def cellSpike(self, id):
-        """Set a specific cell to spike.
-
-        :param id: Cell ID
-        :type id: string
-
-        """
-        self.cells[id].spike()

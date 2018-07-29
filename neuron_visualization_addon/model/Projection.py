@@ -165,7 +165,6 @@ class Projection(object):
         """Middle of the projection
 
         :type start: Vector
-
         """
         return 1/2 * (self.start + self.destination)
 

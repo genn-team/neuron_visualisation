@@ -42,20 +42,25 @@ class Network(object):
         for _,population in self.populations.items():
             population.removeColor()
 
-    def pullProjectionsAll(self):
-        """Pulls all projections to the center of their mass."""
+    def pullProjectionsAll(self, strength):
+        """Pulls all projections to the center of their mass.
+
+        :param strength: Pulling strength
+        :type strength: int
+        """
         for id1, id2 in self.projections:
             if id1 != id2:
-                self.pullProjections(id1, id2)
+                self.pullProjections(id1, id2, strength)
 
-    def pullProjections(self, populationID_1, populationID_2):
+    def pullProjections(self, populationID_1, populationID_2, strength):
         """Pull projections between two populations.
 
         :param populationID_1: First population ID
         :type populationID_1: string
         :param populationID_2: Second population ID
         :type populationID_2: string
-
+        :param strength: Pulling strength
+        :type strength: int
         """
         # TODO: Error handling
         projections = self.projections[(populationID_1,populationID_2)]
@@ -65,9 +70,9 @@ class Network(object):
             middle += p.middle
         # Set the center
         for p in projections:
-            p.pullCenterTo(middle / len(projections))
+            p.pullCenterTo(middle / (len(projections) * strength))
 
-    def animateSpikes(self, spikes):
+    def animateSpikes(self, spikes, colorMap):
         """ Animate network.
 
         :param spikes: Dictionary of cell IDs as keys and a tuple of time and intensity as values
@@ -77,5 +82,5 @@ class Network(object):
         for cell_id in spikes:
             for _, population in self.populations.items():
                 if cell_id in population.cells:
-                    population.cells[cell_id].setSpikes(spikes[cell_id])
+                    population.cells[cell_id].setSpikes(spikes[cell_id], colorMap)
                     continue

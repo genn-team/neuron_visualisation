@@ -1,0 +1,18 @@
+View
+==========
+
+Blender Add-on
+---------------------------------------
+
+
+Controller
+==========
+
+
+Parser
+---------------------------------------
+
+.. autoclass:: neuron_visualization_addon.controller.Parser.Parser
+    :members:
+    :undoc-members:
+    :show-inheritance:

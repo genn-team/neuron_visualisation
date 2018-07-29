@@ -1,6 +1,6 @@
 import bpy, bmesh, os, sys
 import numpy as np
-import neuroml
+import neuroml, math
 import neuroml.loaders as loaders
 
 from neuron_visualization_addon.model.CellNeuroML2 import CellNeuroML2
@@ -13,7 +13,7 @@ class Parser(object):
     This class represents a brain cell in the network
     """
 
-    def parse(self, filepath):
+    def parse(self, filepath, colorMap):
         """Parses nml files (TODO: extend)
 
         :param filepath: file to be parsed
@@ -38,7 +38,7 @@ class Parser(object):
                     spikes[line[1]] = np.array([[line[0],1.0]])
                 else:
                     spikes[line[1]] = np.append(spikes[line[1]],[[line[0],1.0]],axis=0)
-            self.network.animateSpikes(spikes)
+            self.network.animateSpikes(spikes, colorMap)
             return "activation"
         # Parsing of animation file .cmp
         elif filepath[-4:] == '.cmp':
@@ -93,7 +93,28 @@ class Parser(object):
         else:
             self.network.highlightPopulation(populationID)
 
-    def pullProjections(self):
-        """Pull projections
+    def pullProjections(self, strength):
+        """Pull projections between populations into a "sand-clock" form
+
+        :param strength: Pulling strength
+        :type strength: int
         """
-        self.network.pullProjectionsAll()
+        self.network.pullProjectionsAll(strength)
+
+    def rotateCamera(self, velocity=1):
+        # Create path curve
+        cam_location = bpy.data.objects['Camera'].location
+        radius = math.sqrt(cam_location.y**2 + cam_location.x**2)
+        bpy.ops.curve.primitive_bezier_circle_add(radius=radius, location=(0, 0, cam_location.z))
+        path = bpy.context.object
+        # Assign path to camera
+        bpy.data.objects['Camera'].parent = path
+        bpy.data.objects['Camera'].location -= cam_location
+        bpy.ops.object.parent_set(type='FOLLOW')
+        bpy.ops.object.empty_add(type='PLAIN_AXES')
+        empty = bpy.context.object
+        # Rotate camera to the correct position
+        bpy.data.objects['Camera'].constraints.new(type='TRACK_TO')
+        bpy.data.objects['Camera'].constraints['Track To'].target = empty
+        bpy.data.objects['Camera'].constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'
+        bpy.data.objects['Camera'].constraints['Track To'].up_axis = 'UP_Y'

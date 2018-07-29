@@ -22,7 +22,13 @@ def populationHighlight(self, context):
 def pullProjections(self, context):
     scene = context.scene
     inputs = scene.panelSettings
-    inputs.parser.pullProjections()
+    inputs.parser.pullProjections(inputs.pullProjections)
+    return None
+
+def rotateCamera(self, context):
+    scene = context.scene
+    inputs = scene.panelSettings
+    inputs.parser.rotateCamera()
     return None
 
 class MessageBox(bpy.types.Operator):
@@ -44,10 +50,11 @@ class PanelSettings(PropertyGroup):
         default="",
         subtype ='FILE_PATH'
         )
-    populationHighlight = bpy.props.BoolProperty(
-        name="Highlight populations",
-        description="A bool property",
-        default = False
+    cameraRotation = bpy.props.BoolProperty(
+        name="Rotate camera",
+        description="Rotate the camera around the objects",
+        default = False,
+        update = rotateCamera
         )
     populationsDropdown = bpy.props.EnumProperty(
         name="Highlight populations",
@@ -56,18 +63,21 @@ class PanelSettings(PropertyGroup):
                 ('All', "All", "")
                ]
         )
-    """colorMapDropdown = bpy.props.EnumProperty(
+    colorMapDropdown = bpy.props.EnumProperty(
         name="Color Map",
         description="Select color map for animation",
         items=[]
-        )"""
+        )
     parser = Parser()
-    pullProjections = bpy.props.BoolProperty(
+    pullProjections = bpy.props.IntProperty(
         name = "Pull projections",
         description = "Pull projections together between populations",
-        default = False,
+        default = 0,
+        min = 0,
+        max = 10,
         update = pullProjections
         )
+
 
 class ParseOperator(bpy.types.Operator):
     bl_idname = "wm.parser"
@@ -76,7 +86,7 @@ class ParseOperator(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         inputs = scene.panelSettings
-        file_type = inputs.parser.parse(inputs.networkFileUpload)
+        file_type = inputs.parser.parse(inputs.networkFileUpload, inputs.colorMapDropdown)
         if file_type == "network":
             self.updateDropdowns(inputs.parser)
             bpy.context.scene['fileParsed'] = True
@@ -143,6 +153,7 @@ class MainPanel(Panel):
             layout.prop(inputs, "networkFileUpload")
             layout.prop(inputs, "colorMapDropdown", text="")
             layout.operator("wm.parser")
+            layout.prop(inputs, "cameraRotation")
 
 @persistent
 def initSceneProperties(scene):

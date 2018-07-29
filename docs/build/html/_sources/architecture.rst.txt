@@ -1,7 +1,12 @@
+Architecture
+**************
+Architecture documentation. The Add-on follows classical model-view-controller pattern. 
+
+
 Model
 ==========
 
-Network structure documentation
+The model consists of the classes that represent an actual network: Cells, connections between them (Projections), Populations of cells and Networks
 
 High level model
 ---------------------------------------
@@ -58,7 +63,7 @@ Helper classes
 View
 ==========
 
-Blender Add-on
+Blender Panel
 ---------------------------------------
 
 

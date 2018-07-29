@@ -18,8 +18,8 @@ class ColorMap(object):
         :returns: tuple -- rgb color
         """
         #TODO: check input
-        if not colorMap in mapsList:
-            raise ValueError   
+        if not colorMap in ColorMap.mapsList:
+            raise ValueError
         if colorMap == 'jet':
             return ColorMap.jetColor(intensity)
 

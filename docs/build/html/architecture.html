@@ -6,8 +6,8 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Model &#8212; Neural Network Visualization with Blender  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <title>Architecture &#8212; Neural Network Visualization with Blender  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -16,28 +16,34 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to Neural Network Visualization’s documentation!" href="index.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="prev" title="&lt;no title&gt;" href="installation.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="&lt;no title&gt;"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Neural Network Visualization with Blender  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
-  <div class="section" id="model">
-<h1>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h1>
-<p>Network structure documentation</p>
+  <div class="section" id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<p>Architecture documentation. The Add-on follows classical model-view-controller pattern.</p>
+<div class="section" id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<p>The model consists of the classes that represent an actual network: Cells, connections between them (Projections), Populations of cells and Networks</p>
 <div class="section" id="high-level-model">
-<h2>High level model<a class="headerlink" href="#high-level-model" title="Permalink to this headline">¶</a></h2>
+<h3>High level model<a class="headerlink" href="#high-level-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="neuron_visualization_addon.model.Network.Network">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.Network.</code><code class="descname">Network</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Network.html#Network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Network.Network" title="Permalink to this definition">¶</a></dt>
@@ -391,7 +397,7 @@
 
 </div>
 <div class="section" id="neuroml2-model">
-<h2>NeuroML2 model<a class="headerlink" href="#neuroml2-model" title="Permalink to this headline">¶</a></h2>
+<h3>NeuroML2 model<a class="headerlink" href="#neuroml2-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.NetworkNeuroML2.</code><code class="descname">NetworkNeuroML2</code><span class="sig-paren">(</span><em>network</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/NetworkNeuroML2.html#NetworkNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2" title="Permalink to this definition">¶</a></dt>
@@ -431,7 +437,7 @@
 
 </div>
 <div class="section" id="helper-classes">
-<h2>Helper classes<a class="headerlink" href="#helper-classes" title="Permalink to this headline">¶</a></h2>
+<h3>Helper classes<a class="headerlink" href="#helper-classes" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="neuron_visualization_addon.model.ColorMap.ColorMap">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.ColorMap.</code><code class="descname">ColorMap</code><a class="reference internal" href="_modules/neuron_visualization_addon/model/ColorMap.html#ColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap" title="Permalink to this definition">¶</a></dt>
@@ -493,15 +499,15 @@ in a specified color map</p>
 </div>
 </div>
 <div class="section" id="view">
-<h1>View<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="blender-add-on">
-<h2>Blender Add-on<a class="headerlink" href="#blender-add-on" title="Permalink to this headline">¶</a></h2>
+<h2>View<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="blender-panel">
+<h3>Blender Panel<a class="headerlink" href="#blender-panel" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="controller">
-<h1>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h1>
+<h2>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="parser">
-<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+<h3>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="neuron_visualization_addon.controller.Parser.Parser">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.controller.Parser.</code><code class="descname">Parser</code><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser" title="Permalink to this definition">¶</a></dt>
@@ -575,50 +581,45 @@ in a specified color map</p>
 
 </div>
 </div>
+</div>
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Neural Network Visualization with Blender</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#high-level-model">High level model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#neuroml2-model">NeuroML2 model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#helper-classes">Helper classes</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Architecture</a><ul>
+<li><a class="reference internal" href="#model">Model</a><ul>
+<li><a class="reference internal" href="#high-level-model">High level model</a></li>
+<li><a class="reference internal" href="#neuroml2-model">NeuroML2 model</a></li>
+<li><a class="reference internal" href="#helper-classes">Helper classes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#view">View</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#blender-add-on">Blender Add-on</a></li>
+<li><a class="reference internal" href="#view">View</a><ul>
+<li><a class="reference internal" href="#blender-panel">Blender Panel</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#controller">Controller</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#parser">Parser</a></li>
+<li><a class="reference internal" href="#controller">Controller</a><ul>
+<li><a class="reference internal" href="#parser">Parser</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Neural Network Visualization’s documentation!</a></li>
-  </ul></li>
-</ul>
-</div>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">&lt;no title&gt;</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/architecture.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -635,20 +636,21 @@ in a specified color map</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2018, asakhnenko.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="_sources/model.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="&lt;no title&gt;"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Neural Network Visualization with Blender  documentation</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, asakhnenko.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
   </body>
 </html>

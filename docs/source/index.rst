@@ -6,11 +6,15 @@
 Welcome to Neural Network Visualization's documentation!
 ========================================================
 
+This is an implementation of a Blender Add-On that converts neural networks description files into 3D Blender models. 
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   model
+   installation
+   start
+   architecture
 
 Indices and tables
 ==================
