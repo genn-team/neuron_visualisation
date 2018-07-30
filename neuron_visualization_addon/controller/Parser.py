@@ -105,7 +105,8 @@ class Parser(object):
         # Create path curve
         cam_location = bpy.data.objects['Camera'].location
         radius = math.sqrt(cam_location.y**2 + cam_location.x**2)
-        bpy.ops.curve.primitive_bezier_circle_add(radius=radius, location=(0, 0, cam_location.z))
+        centerOfMass = self.network.location
+        bpy.ops.curve.primitive_bezier_circle_add(radius=radius, location=(centerOfMass.x, centerOfMass.y, cam_location.z))
         path = bpy.context.object
         # Assign path to camera
         bpy.data.objects['Camera'].parent = path

@@ -28,11 +28,10 @@ class Population(object):
         """Location of the center of mass.
 
         :type location: Vector
-
         """
         location_sum = mathutils.Vector((0,0,0))
-        for cell in self.cells:
-            location_sum += cell.getLocation()
+        for _, cell in self.cells.items():
+            location_sum += cell.location
         return location_sum / len(self.cells)
 
     @location.setter

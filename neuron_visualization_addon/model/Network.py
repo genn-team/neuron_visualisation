@@ -1,5 +1,4 @@
-import bpy, random
-import mathutils
+import bpy, random, mathutils
 from neuron_visualization_addon.model.Population import Population
 
 class Network(object):
@@ -17,6 +16,17 @@ class Network(object):
         self.id = id
         self.populations = {}
         self.projections = {}
+
+    @property
+    def location(self):
+        """Location of the center of mass.
+
+        :type location: Vector
+        """
+        location_sum = mathutils.Vector((0,0,0))
+        for _, population in self.populations.items():
+            location_sum += population.location
+        return location_sum / len(self.populations)
 
     def highlightPopulationsAll(self):
         """Highlights all populations with random colors.
@@ -77,7 +87,6 @@ class Network(object):
 
         :param spikes: Dictionary of cell IDs as keys and a tuple of time and intensity as values
         :type spikes: dict
-
         """
         for cell_id in spikes:
             for _, population in self.populations.items():
