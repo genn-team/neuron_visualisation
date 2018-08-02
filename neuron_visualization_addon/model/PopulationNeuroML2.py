@@ -20,8 +20,8 @@ class PopulationNeuroML2(Population):
         # Create all cells
         for instance in population.instances:
             # Switch coordinates systems
-            x = instance.location.x / 10
-            z = instance.location.y / 10
-            y = instance.location.z / 10
+            x = instance.location.x / 100
+            z = instance.location.y / 100
+            y = instance.location.z / 100
             # Save in a dictionary
             self.cells[instance.id] = Cell(str(instance.id), (x,y,z))

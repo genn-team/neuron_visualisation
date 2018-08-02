@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>neuron_visualization_addon.model.JetColorMap &#8212; Neural Network Visualization with Blender  documentation</title>
+    <title>neuron_visualization_addon.model.ColorMap &#8212; Neural Network Visualization with Blender  documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -33,19 +33,39 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for neuron_visualization_addon.model.JetColorMap</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">neuron_visualization_addon.model.ColorMap</span> <span class="k">import</span> <span class="n">ColorMap</span>
+  <h1>Source code for neuron_visualization_addon.model.ColorMap</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="ColorMap"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap">[docs]</a><span></span><span class="k">class</span> <span class="nc">ColorMap</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Color map for the animation</span>
 
-<div class="viewcode-block" id="JetColorMap"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.JetColorMap.JetColorMap">[docs]</a><span class="k">class</span> <span class="nc">JetColorMap</span><span class="p">(</span><span class="n">ColorMap</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Jet color map class.</span>
+<span class="sd">    :param mapsList: list of available maps</span>
+<span class="sd">    :type mapsList: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mapsList</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jet&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="JetColorMap.getColor"><a class="viewcode-back" href="../../../model.html#neuron_visualization_addon.model.JetColorMap.JetColorMap.getColor">[docs]</a>    <span class="k">def</span> <span class="nf">getColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorMap.getColor"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap.getColor">[docs]</a>    <span class="k">def</span> <span class="nf">getColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span><span class="n">colorMap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the color that corresponds to the intensity</span>
+<span class="sd">        in a specified color map</span>
+
+<span class="sd">        :param intensity: Firing intensity between 0 and 1</span>
+<span class="sd">        :type intensity: float</span>
+<span class="sd">        :param colorMap: color map</span>
+<span class="sd">        :type colorMap: string</span>
+
+<span class="sd">        :returns: tuple -- rgb color</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#TODO: check input</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colorMap</span> <span class="ow">in</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">mapsList</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">if</span> <span class="n">colorMap</span> <span class="o">==</span> <span class="s1">&#39;jet&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">jetColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorMap.jetColor"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap.jetColor">[docs]</a>    <span class="k">def</span> <span class="nf">jetColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">):</span>
+        <span class="c1">#TODO: check input</span>
         <span class="sd">&quot;&quot;&quot;Calculates jet color based on firing intensity</span>
 
 <span class="sd">        :param intensity: Firing intensity between 0 and 1</span>
 <span class="sd">        :type intensity: float</span>
-<span class="sd">        </span>
+
 <span class="sd">        :returns: tuple -- rgb color</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">red</span> <span class="o">=</span> <span class="n">green</span> <span class="o">=</span> <span class="n">blue</span> <span class="o">=</span> <span class="mf">1.0</span>

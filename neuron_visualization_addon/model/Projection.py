@@ -185,3 +185,41 @@ class Projection(object):
         start.handle_left_type = 'VECTOR'
         start.handle_right_type = 'VECTOR'
         self.updateProjectionCurve(axon)
+
+    def spike(self, time, minColor, maxColor):
+        """Propagate potential from parent cell to receiving cells
+
+        :param time: Where to spike
+        :type time: float
+        :param minColor: Color for resting state
+        :type minColor: tuple
+        :param maxColor: Color for a spike
+        :type maxColor: tuple
+
+        """
+        bpy.data.scenes['Scene'].render.engine = 'CYCLES'
+        material = bpy.data.materials.new('Material')
+        material.use_nodes = True
+        self.object.active_material = material
+        # Texture coordinate node
+        tex_node = material.node_tree.nodes.new(type='ShaderNodeTexCoord')
+        # Mapping node
+        map_node = material.node_tree.nodes.new(type='ShaderNodeMapping')
+        # Color ramp node
+        color_ramp_node = material.node_tree.nodes.new(type='ShaderNodeValToRGB')
+        # Rotate texture
+        map_node.rotation = (-3.1415,1.5707,3.1415)
+        map_node.scale = (0.5,0.5,0.5)
+        map_node.translation = (0., 0., 0.)
+        map_node.keyframe_insert(data_path="translation", frame = time)
+        map_node.translation = (4., 0., 0.)
+        map_node.keyframe_insert(data_path="translation", frame = time + 4)
+        # Set colors
+        color_ramp_node.color_ramp.elements.new(position=0.5)
+        color_ramp_node.color_ramp.elements[0].color = color_ramp_node.color_ramp.elements[2].color = minColor
+        color_ramp_node.color_ramp.elements[1].color = maxColor
+        # Connect
+        diffuse_node = material.node_tree.nodes['Diffuse BSDF']
+        material.node_tree.links.new(diffuse_node.inputs['Color'], color_ramp_node.outputs['Color'])
+        material.node_tree.links.new(color_ramp_node.inputs['Fac'], map_node.outputs['Vector'])
+        material.node_tree.links.new(map_node.inputs['Vector'], tex_node.outputs['Object'])

@@ -54,8 +54,8 @@
 <span class="sd">        :returns: tuple -- rgb color</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#TODO: check input</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">colorMap</span> <span class="ow">in</span> <span class="n">mapsList</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span>   
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colorMap</span> <span class="ow">in</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">mapsList</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
         <span class="k">if</span> <span class="n">colorMap</span> <span class="o">==</span> <span class="s1">&#39;jet&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">jetColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span></div>
 

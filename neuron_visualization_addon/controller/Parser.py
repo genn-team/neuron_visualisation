@@ -102,8 +102,11 @@ class Parser(object):
         self.network.pullProjectionsAll(strength)
 
     def rotateCamera(self, velocity=1):
+        """Rotate camera around the network
+        """
         # Create path curve
         cam_location = bpy.data.objects['Camera'].location
+        #TODO fix the radius
         radius = math.sqrt(cam_location.y**2 + cam_location.x**2)
         centerOfMass = self.network.location
         bpy.ops.curve.primitive_bezier_circle_add(radius=radius, location=(centerOfMass.x, centerOfMass.y, cam_location.z))

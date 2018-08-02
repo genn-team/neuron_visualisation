@@ -103,6 +103,8 @@ class Cell(object):
         for [time,intensity] in spikes:
             multiplier = 0.0
             time_step = 5
+            if len(self.projectsTo) > 0:
+                self.projectsTo[0].spike(time,ColorMap.getColor(0, colorMap), ColorMap.getColor(intensity, colorMap))
             for _ in range(5):
                 material.diffuse_color = ColorMap.getColor(intensity * multiplier, colorMap)
                 material.keyframe_insert(data_path="diffuse_color", frame = time - time_step)
