@@ -31,18 +31,6 @@ def rotateCamera(self, context):
     inputs.parser.rotateCamera()
     return None
 
-class MessageBox(bpy.types.Operator):
-    bl_idname = "message.messagebox"
-    bl_label = ""
-
-    def execute(self, context):
-        self.report({'INFO'}, self.message)
-        print(self.message)
-        return {'FINISHED'}
-
-    def invoke(self, context, event):
-        return context.window_manager.invoke_props_dialog(self, width = 400)
-
 class PanelSettings(PropertyGroup):
     networkFileUpload = bpy.props.StringProperty(
         name="File Path",
@@ -163,17 +151,14 @@ def initSceneProperties(scene):
     return
 
 def register():
-    print("REGISTER")
     bpy.app.handlers.scene_update_pre.append(initSceneProperties)
     bpy.utils.register_module(__name__)
     bpy.types.Scene.panelSettings = bpy.props.PointerProperty(type=PanelSettings)
-    bpy.utils.register_class(MessageBox)
 
 def unregister():
     bpy.utils.unregister_module(__name__)
     del bpy.types.Scene.panelSettings
 
 if __name__ == "__main__":
-    print("MAIN")
     initSceneProperties(bpy.context.scene)
     register()

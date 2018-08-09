@@ -23,12 +23,20 @@ class Parser(object):
         """
         # Parsing network neuroml2 file
         if filepath[-8:] == '.net.nml' or filepath[-4:] == '.xml':
-            # TODO
             network_file = loaders.NeuroMLLoader.load(filepath)
+            loaded_cells = {}
             if len(network_file.includes) != 0:
-                self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes)
-            self.network = NetworkNeuroML2(network_file.networks[0])
+                loaded_cells = self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes)
+            print("Loaded Cells:")
+            print(loaded_cells)
+            self.network = NetworkNeuroML2(network_file.networks[0], loaded_cells)
             return "network"
+        elif filepath[-9:] == '.cell.nml':
+            cell = loaders.NeuroMLLoader.load(filepath)
+            self.cell_dict = {}
+            for c in cell.cells:
+                tmp = CellNeuroML2(c)
+                self.cell_dict[tmp.id] = tmp
         # Parsing of animation file .st
         elif filepath[-3:] == '.st':
             activation_file = np.loadtxt(filepath)
