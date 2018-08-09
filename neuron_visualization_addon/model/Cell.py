@@ -45,7 +45,11 @@ class Cell(object):
 
     @location.setter
     def location(self, location):
-        """Location setter"""
+        """Location setter
+
+        :param location: New location
+        :type location: Vector | tuple
+        """
         self.blender_obj.location = location
         for axon in self.receivesFrom:
             axon.updateDestination(location)
