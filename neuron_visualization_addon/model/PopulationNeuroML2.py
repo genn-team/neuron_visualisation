@@ -5,7 +5,7 @@ from neuron_visualization_addon.model.Population import Population
 class PopulationNeuroML2(Population):
     """This class represents a population of brain cells in the network based on NeuroML2"""
 
-    def __init__(self, population):
+    def __init__(self, population, loaded_cells={}):
         """The constructor.
 
         :param population: Population from the parser
@@ -20,8 +20,11 @@ class PopulationNeuroML2(Population):
         # Create all cells
         for instance in population.instances:
             # Switch coordinates systems
-            x = instance.location.x / 100
-            z = instance.location.y / 100
-            y = instance.location.z / 100
+            x = instance.location.x / 10
+            z = instance.location.y / 10
+            y = instance.location.z / 10
             # Save in a dictionary
-            self.cells[instance.id] = Cell(str(instance.id), (x,y,z))
+            if population.component in loaded_cells:
+                loaded_cells[population.component].location = (x,y,z)
+            else:
+                self.cells[instance.id] = Cell(str(instance.id), (x,y,z))
