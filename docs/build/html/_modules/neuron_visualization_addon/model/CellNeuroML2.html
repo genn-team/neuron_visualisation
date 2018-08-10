@@ -41,19 +41,48 @@
 <span class="kn">from</span> <span class="nn">neuron_visualization_addon.model.Cell</span> <span class="k">import</span> <span class="n">Cell</span>
 
 <div class="viewcode-block" id="CellNeuroML2"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2">[docs]</a><span class="k">class</span> <span class="nc">CellNeuroML2</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    This class represents brain cells in the network</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class represents brain cells in the network parsed from NeuroML2 files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
+        <span class="c1"># Call super constructor</span>
         <span class="n">Cell</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="c1">#if id not in Cell.generated_models:</span>
         <span class="c1"># Remove the dummy soma</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
         <span class="c1"># Parse new model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parse_model</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Location</span>
+
+<span class="sd">        :param location: Cell location</span>
+<span class="sd">        :type location: Vector | tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">location</span>
+
+    <span class="nd">@location</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Location setter</span>
+
+<span class="sd">        :param location: New location</span>
+<span class="sd">        :type location: Vector | tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
+
+<div class="viewcode-block" id="CellNeuroML2.setSpikes"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.setSpikes">[docs]</a>    <span class="k">def</span> <span class="nf">setSpikes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">colorMap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: Implement&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="CellNeuroML2.make_soma"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.make_soma">[docs]</a>    <span class="k">def</span> <span class="nf">make_soma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make soma of the cell</span>
+
+<span class="sd">        :param size: Soma size / radius</span>
+<span class="sd">        :type size: float</span>
+<span class="sd">        :param location: New location</span>
+<span class="sd">        :type location: Vector | tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">primitive_uv_sphere_add</span><span class="p">(</span><span class="n">segments</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ring_count</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">)</span>
         <span class="c1"># Name object as cell</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
@@ -61,6 +90,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span></div>
 
 <div class="viewcode-block" id="CellNeuroML2.draw_segment"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment">[docs]</a>    <span class="k">def</span> <span class="nf">draw_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bezier</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Draw segment of the cell of given size and bezier points</span>
+
+<span class="sd">        :param size: Segment size or connection radius</span>
+<span class="sd">        :type size: float</span>
+<span class="sd">        :param bezier: List of bezier points [(control, handle_left, handle_right)]</span>
+<span class="sd">        :type bezier: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create curve, curve object and set Cell as a parent</span>
         <span class="n">cu</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;AxonCurve&#39;</span><span class="p">,</span> <span class="s1">&#39;CURVE&#39;</span><span class="p">)</span>
         <span class="n">ob</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;AxonObject&#39;</span><span class="p">,</span> <span class="n">cu</span><span class="p">)</span>
@@ -79,33 +115,19 @@
         <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bezier</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bezier</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="n">bpt</span> <span class="o">=</span> <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">bpt</span><span class="o">.</span><span class="n">co</span> <span class="o">=</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_left</span> <span class="o">=</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_right</span> <span class="o">=</span> <span class="n">bezier</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-
-        <span class="c1"># Change context to console</span>
-        <span class="n">old_context</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">type</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s1">&#39;CONSOLE&#39;</span>
-        <span class="c1"># Convert curve to mesh</span>
-        <span class="n">ob</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;MESH&#39;</span><span class="p">)</span>
-        <span class="c1"># Apply decimate modifier</span>
-        <span class="n">ob</span><span class="o">.</span><span class="n">modifiers</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;MyDecimate&#39;</span><span class="p">,</span><span class="s1">&#39;DECIMATE&#39;</span><span class="p">)</span>
-        <span class="n">ob</span><span class="o">.</span><span class="n">modifiers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="mf">0.01</span>
-        <span class="c1"># Change context back</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">old_context</span></div>
+            <span class="n">bpt</span><span class="o">.</span><span class="n">co</span> <span class="o">=</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_left</span> <span class="o">=</span> <span class="n">bpt</span><span class="o">.</span><span class="n">handle_right</span> <span class="o">=</span> <span class="n">bezier</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="CellNeuroML2.parse_model"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.parse_model">[docs]</a>    <span class="k">def</span> <span class="nf">parse_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Parse cell into a blender object</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c1"># TODO fix measuremt units</span>
+        <span class="sd">&quot;&quot;&quot;Parse cell model</span>
 
+<span class="sd">        :param cell: Cell description object</span>
+<span class="sd">        :type cell: NeuroML2 Cell</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO fix measuremt units</span>
         <span class="c1"># Dictionary of segment ids and locations</span>
         <span class="n">cell_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">axon</span> <span class="o">=</span> <span class="p">[]</span>
-
         <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">segments</span><span class="p">:</span>
-            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cell_dict</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span><span class="p">):</span>
-                <span class="k">break</span>
 
             <span class="c1"># Cell dictionary</span>
             <span class="n">cell_dict</span><span class="p">[</span><span class="n">segment</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">segment</span>
@@ -113,7 +135,6 @@
             <span class="n">distal_vector</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">distal</span>
             <span class="n">size</span> <span class="o">=</span> <span class="n">distal_vector</span><span class="o">.</span><span class="n">diameter</span> <span class="o">/</span> <span class="mf">10.0</span>
             <span class="n">distal_location</span> <span class="o">=</span> <span class="n">mathutils</span><span class="o">.</span><span class="n">Vector</span><span class="p">((</span><span class="n">distal_vector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">distal_vector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">distal_vector</span><span class="o">.</span><span class="n">z</span><span class="p">))</span> <span class="o">/</span> <span class="mf">10.0</span>
-
             <span class="k">if</span> <span class="n">segment</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># Soma</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">make_soma</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">distal_location</span><span class="p">)</span>
@@ -128,24 +149,13 @@
                     <span class="n">vector</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">proximal</span>
                 <span class="c1"># Extract location</span>
                 <span class="n">location</span> <span class="o">=</span> <span class="n">mathutils</span><span class="o">.</span><span class="n">Vector</span><span class="p">((</span><span class="n">vector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">vector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">vector</span><span class="o">.</span><span class="n">z</span><span class="p">))</span> <span class="o">/</span> <span class="mf">10.0</span>
-
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axon</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">axon</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">location</span><span class="p">:</span>
                     <span class="n">axon</span> <span class="o">=</span> <span class="p">[</span><span class="n">location</span><span class="p">,</span> <span class="n">distal_location</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">axon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distal_location</span><span class="p">)</span>
 
                 <span class="c1"># Draw the segment</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">draw_segment</span><span class="p">(</span><span class="n">size</span><span class="p">,</span><span class="n">axon</span><span class="p">)</span>
-
-        <span class="c1"># Change context to console</span>
-        <span class="n">old_context</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">type</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s1">&#39;CONSOLE&#39;</span>
-        <span class="c1"># Join everything together</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">select_hierarchy</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;CHILD&#39;</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-        <span class="c1"># Change back</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">old_context</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_segment</span><span class="p">(</span><span class="n">size</span><span class="p">,</span><span class="n">axon</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

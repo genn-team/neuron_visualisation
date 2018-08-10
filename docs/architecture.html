@@ -426,14 +426,14 @@
 <h3>NeuroML2 model<a class="headerlink" href="#neuroml2-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2">
-<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.NetworkNeuroML2.</code><code class="descname">NetworkNeuroML2</code><span class="sig-paren">(</span><em>network</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/NetworkNeuroML2.html#NetworkNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.NetworkNeuroML2.</code><code class="descname">NetworkNeuroML2</code><span class="sig-paren">(</span><em>network</em>, <em>loaded_cells={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/NetworkNeuroML2.html#NetworkNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.NetworkNeuroML2.NetworkNeuroML2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Network.Network" title="neuron_visualization_addon.model.Network.Network"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Network.Network</span></code></a></p>
 <p>This class represents a network read from NeuroML file.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="neuron_visualization_addon.model.PopulationNeuroML2.PopulationNeuroML2">
-<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.PopulationNeuroML2.</code><code class="descname">PopulationNeuroML2</code><span class="sig-paren">(</span><em>population</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/PopulationNeuroML2.html#PopulationNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.PopulationNeuroML2.PopulationNeuroML2" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.PopulationNeuroML2.</code><code class="descname">PopulationNeuroML2</code><span class="sig-paren">(</span><em>population</em>, <em>loaded_cells={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/PopulationNeuroML2.html#PopulationNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.PopulationNeuroML2.PopulationNeuroML2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Population.Population" title="neuron_visualization_addon.model.Population.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Population.Population</span></code></a></p>
 <p>This class represents a population of brain cells in the network based on NeuroML2</p>
 </dd></dl>
@@ -442,21 +442,75 @@
 <dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.CellNeuroML2.</code><code class="descname">CellNeuroML2</code><span class="sig-paren">(</span><em>cell</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Cell.Cell" title="neuron_visualization_addon.model.Cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Cell.Cell</span></code></a></p>
-<p>This class represents brain cells in the network</p>
+<p>This class represents brain cells in the network parsed from NeuroML2 files</p>
 <dl class="method">
 <dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment">
 <code class="descname">draw_segment</code><span class="sig-paren">(</span><em>size</em>, <em>bezier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.draw_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Draw segment of the cell of given size and bezier points</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>size</strong> (<em>float</em>) – Segment size or connection radius</li>
+<li><strong>bezier</strong> (<em>list</em>) – List of bezier points [(control, handle_left, handle_right)]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.location">
+<code class="descname">location</code><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>location</strong> (<em>Vector | tuple</em>) – Cell location</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.make_soma">
 <code class="descname">make_soma</code><span class="sig-paren">(</span><em>size</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.make_soma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.make_soma" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Make soma of the cell</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>size</strong> (<em>float</em>) – Soma size / radius</li>
+<li><strong>location</strong> (<em>Vector | tuple</em>) – New location</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.parse_model">
 <code class="descname">parse_model</code><span class="sig-paren">(</span><em>cell</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.parse_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.parse_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse cell into a blender object</p>
+<dd><p>Parse cell model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cell</strong> (<em>NeuroML2 Cell</em>) – Cell description object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.setSpikes">
+<code class="descname">setSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap='jet'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.setSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.setSpikes" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Implement</p>
 </dd></dl>
 
 </dd></dl>

@@ -81,7 +81,11 @@
 
     <span class="nd">@location</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Location setter&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Location setter</span>
+
+<span class="sd">        :param location: New location</span>
+<span class="sd">        :type location: Vector | tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
         <span class="k">for</span> <span class="n">axon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">receivesFrom</span><span class="p">:</span>
             <span class="n">axon</span><span class="o">.</span><span class="n">updateDestination</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>

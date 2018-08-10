@@ -43,14 +43,14 @@
     <span class="sd">&quot;&quot;&quot; This class represents a network read from NeuroML file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">loaded_cells</span><span class="o">=</span><span class="p">{}):</span>
         <span class="sd">&quot;&quot;&quot;The constructor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Call parent class constructor</span>
         <span class="n">Network</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="c1"># Create populations</span>
         <span class="k">for</span> <span class="n">population</span> <span class="ow">in</span> <span class="n">network</span><span class="o">.</span><span class="n">populations</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">population</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">PopulationNeuroML2</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">population</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">PopulationNeuroML2</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">loaded_cells</span><span class="p">)</span>
         <span class="c1"># Create projections between populations</span>
         <span class="k">for</span> <span class="n">projection</span> <span class="ow">in</span> <span class="n">network</span><span class="o">.</span><span class="n">projections</span><span class="p">:</span>
             <span class="n">firstPopulationID</span> <span class="o">=</span> <span class="n">projection</span><span class="o">.</span><span class="n">presynaptic_population</span>
