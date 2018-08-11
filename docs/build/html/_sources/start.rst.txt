@@ -24,7 +24,9 @@ Generating 3D network models from NeuroML2
 The NeuroML2 files of extension .net.nml or .xml can be parsed with the AddOn.
 
 .. todo::
-    Different measurement units
+	* Different measurement units.
+	* Taper curve for all.
+	* List of bevel objects.
 
 .. image:: img\\3.png
    :width: 250px
@@ -54,7 +56,13 @@ Animation
 ---------------------------------------
 
 .. todo::
-    Fix position of the empty
-
+	* Fix position of the empty.
+	* List of materials.
 
 Animation can be added only after the network model was already parsed. The extentions .st and .cmp are supported. These file consists of a description of which neuron fires at which time point. You can also choose the color map as well as set the camera to rotate around the model.
+
+.. raw:: html
+
+	<div style="margin: auto;width: 60%;">
+   		<iframe width="560" height="315" src="https://www.youtube.com/embed/E6RyfPGAklY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	</div>

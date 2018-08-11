@@ -24,6 +24,8 @@ class NetworkNeuroML2(Network):
                 for connection in projection.connection_wds:
                     # Precell
                     pre_cell_adress = connection.pre_cell_id.split('/')
+                    print(self.populations[firstPopulationID].cells)
+                    print(int(pre_cell_adress[-2]))
                     pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
                     # Postcell
                     post_cell_adress = connection.post_cell_id.split('/')

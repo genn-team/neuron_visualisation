@@ -4,13 +4,17 @@ class Projection(object):
     """
     This class represents a projection between neurons in the network
     """
+    # Global variables for the taper curve
+    curve_taper = None
+    taper = None
+    # Global dictionary for the bevel objects
+    bevel_objects = {}
 
     def __init__(self, parent_object):
         """The constructor.
 
         :param parent_object: Parent object - soma
         :type parent_object: Cell
-
         """
         # --- Axon ---
         # Create curve, curve object and set Cell as a parent
@@ -21,32 +25,38 @@ class Projection(object):
         self.object.parent = parent_object
         self.object.hide = True
 
-        # --- Taper curve ---
-        self.curve_taper = bpy.data.curves.new('TaperCurve', 'CURVE')
-        self.taper = bpy.data.objects.new('TaperObject', self.curve_taper)
-        bpy.context.scene.objects.link(self.taper)
-        self.taper.hide = True
+        # Initialize a global taper curve if it doesn't exist yet
+        if Projection.taper == None:
+            Projection.initTaper()
 
-        # TODO
+        # Set the taper_curve
+        self.curve.taper_object = Projection.taper
+
+    def initTaper():
+        """Initialize global taper curve
+        """
+        # --- Taper curve ---
+        Projection.curve_taper = bpy.data.curves.new('TaperCurve', 'CURVE')
+        Projection.taper = bpy.data.objects.new('TaperObject', Projection.curve_taper)
+        bpy.context.scene.objects.link(Projection.taper)
+        Projection.taper.hide = True
+
         taper_points = [
             ((-1.0,0.1,0.0), (-2.0,0.1,0.0), (-0.5,0.1,-0.0)),
             ((1.0,0.01,0.0), (0.0,0.01,0.0), (2.0, 0.01, 0.0))
         ]
-
         # Create spline
-        self.curve_taper.splines.new('BEZIER')
-        self.updateTaperCurve(taper_points)
-        self.curve.taper_object = self.taper
+        Projection.curve_taper.splines.new('BEZIER')
+        Projection.updateTaperCurve(taper_points)
 
-
-    def updateTaperCurve(self, taper_points):
+    def updateTaperCurve(taper_points):
         """Updates taper curve (shape curve).
 
         :param taper_points: Array of points that define a bezier curve
         :type taper_points: array
 
         """
-        spline_taper = self.curve_taper.splines[0]
+        spline_taper = Projection.curve_taper.splines[0]
         # Add more points to the curve
         diff = len(taper_points) - len(spline_taper.bezier_points)
         spline_taper.bezier_points.add(diff)
@@ -82,11 +92,14 @@ class Projection(object):
         :type weight: float
 
         """
-        # Create bevel object
-        bpy.ops.curve.primitive_bezier_circle_add(radius=weight,rotation=(0,90,0))
-        self.bevel_object = bpy.context.object
-        self.curve.bevel_object = self.bevel_object
-        self.bevel_object.hide = True
+        # Get bevel object
+        if not weight in Projection.bevel_objects:
+            bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
+            Projection.bevel_objects[weight] = bpy.context.object
+            Projection.bevel_objects[weight].hide = True
+
+        self.curve.bevel_object = Projection.bevel_objects[weight]
+
         # Unhide the curve object
         self.object.hide = False
         # Control points for axon
@@ -111,11 +124,13 @@ class Projection(object):
         :type weight: array
 
         """
-        # Create bevel object
-        bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
-        self.bevel_object = bpy.context.object
-        self.curve.bevel_object = self.bevel_object
-        self.bevel_object.hide = True
+        # Get bevel object
+        if not weight in Projection.bevel_objects:
+            bpy.ops.curve.primitive_bezier_circle_add(radius=weight)
+            Projection.bevel_objects[weight] = bpy.context.object
+            Projection.bevel_objects[weight].hide = True
+
+        self.curve.bevel_object = Projection.bevel_objects[weight]
         # Unhide the curve object
         self.object.hide = False
         # Create spline and set Bezier control points
@@ -197,6 +212,10 @@ class Projection(object):
         :type maxColor: tuple
 
         """
+        if len(minColor) == 3:
+            minColor += (1,)
+        if len(maxColor) == 3:
+            maxColor += (1,)
         bpy.data.scenes['Scene'].render.engine = 'CYCLES'
         material = bpy.data.materials.new('Material')
         material.use_nodes = True

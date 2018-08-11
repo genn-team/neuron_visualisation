@@ -7,9 +7,6 @@ class Cell(object):
     This class represents a brain cell in the network
     """
 
-    # --- Dictionary of generated models ---
-    # generated_models = {}
-
     def __init__(self, id, location=(0,0,0)):
         """The constructor.
 
@@ -19,7 +16,6 @@ class Cell(object):
         :type location: Vector|tuple
         """
         self.id = id
-    #    if id not in Cell.generated_models:
         # Create some placeholder
         bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, size=0.05, location=location)
         # Name the object as the cell
@@ -30,16 +26,12 @@ class Cell(object):
         # Initialization
         self.projectsTo = []
         self.receivesFrom = []
-    #    else:
-    #        Cell.generated_models[id].duplicate()
-    #        self.blender_obj = bpy.context.object
 
     @property
     def location(self):
         """Location of the cell.
 
         :type location: Vector
-
         """
         return self.blender_obj.location
 
@@ -78,7 +70,6 @@ class Cell(object):
 
         :param projection: Projection to be added
         :type projection: Projection
-
         """
         self.receivesFrom.append(projection)
 
@@ -87,7 +78,6 @@ class Cell(object):
 
         :param color: RGB color
         :type color: tuple
-
         """
         material = bpy.data.materials.new("CellColor")
         material.diffuse_color = color
@@ -100,7 +90,6 @@ class Cell(object):
         :type spikes: array
         :param colorMap: Color map for intensities Visualization
         :type colorMap: string
-
         """
         material = bpy.data.materials.new("CellColor")
         self.blender_obj.active_material = material

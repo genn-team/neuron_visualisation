@@ -32,6 +32,10 @@ def rotateCamera(self, context):
     return None
 
 class PanelSettings(PropertyGroup):
+    """
+    Class of panel elements
+    """
+
     networkFileUpload = bpy.props.StringProperty(
         name="File Path",
         description="Provide description file",
@@ -130,13 +134,17 @@ class MainPanel(Panel):
         scene = context.scene
         inputs = scene.panelSettings
 
+        # Initial layout with a filepath, parse and clear buttons
         layout.prop(inputs, "networkFileUpload")
         layout.operator("wm.parser")
         layout.operator("wm.clear")
+        # Unfold the rest, once the network was parsed
         if bpy.context.scene['fileParsed']:
+            # --- Model manipulation ---
             layout.label(text="Model manipulation")
             layout.prop(inputs, "populationsDropdown", text="")
             layout.prop(inputs, "pullProjections")
+            # --- Animation ---
             layout.label(text="Animation")
             layout.prop(inputs, "networkFileUpload")
             layout.prop(inputs, "colorMapDropdown", text="")

@@ -24,7 +24,7 @@ class PopulationNeuroML2(Population):
             z = instance.location.y / 10
             y = instance.location.z / 10
             # Save in a dictionary
-            if population.component in loaded_cells:
-                loaded_cells[population.component].location = (x,y,z)
-            else:
-                self.cells[instance.id] = Cell(str(instance.id), (x,y,z))
+            #if population.component in loaded_cells:
+            #    loaded_cells[population.component].location = (x,y,z)
+            #else:
+            self.cells[instance.id] = Cell(str(instance.id), (x,y,z))
