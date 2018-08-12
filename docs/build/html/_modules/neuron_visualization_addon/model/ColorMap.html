@@ -37,30 +37,13 @@
 <div class="viewcode-block" id="ColorMap"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap">[docs]</a><span></span><span class="k">class</span> <span class="nc">ColorMap</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Color map for the animation</span>
 
+<span class="sd">    In order to augment the list of color maps, define your own function within</span>
+<span class="sd">    this class and add it to the mapsList dictionary</span>
+
 <span class="sd">    :param mapsList: list of available maps</span>
 <span class="sd">    :type mapsList: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">mapsList</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jet&#39;</span><span class="p">]</span>
-
-<div class="viewcode-block" id="ColorMap.getColor"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap.getColor">[docs]</a>    <span class="k">def</span> <span class="nf">getColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span><span class="n">colorMap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the color that corresponds to the intensity</span>
-<span class="sd">        in a specified color map</span>
-
-<span class="sd">        :param intensity: Firing intensity between 0 and 1</span>
-<span class="sd">        :type intensity: float</span>
-<span class="sd">        :param colorMap: color map</span>
-<span class="sd">        :type colorMap: string</span>
-
-<span class="sd">        :returns: tuple -- rgb color</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#TODO: check input</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">colorMap</span> <span class="ow">in</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">mapsList</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span>
-        <span class="k">if</span> <span class="n">colorMap</span> <span class="o">==</span> <span class="s1">&#39;jet&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">jetColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="ColorMap.jetColor"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap.jetColor">[docs]</a>    <span class="k">def</span> <span class="nf">jetColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">):</span>
-        <span class="c1">#TODO: check input</span>
         <span class="sd">&quot;&quot;&quot;Calculates jet color based on firing intensity</span>
 
 <span class="sd">        :param intensity: Firing intensity between 0 and 1</span>
@@ -68,6 +51,10 @@
 
 <span class="sd">        :returns: tuple -- rgb color</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">intensity</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Intensity is not betwen 0 and 1&#39;</span><span class="p">)</span>
+
         <span class="n">red</span> <span class="o">=</span> <span class="n">green</span> <span class="o">=</span> <span class="n">blue</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="k">if</span> <span class="n">intensity</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
             <span class="n">red</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -81,7 +68,28 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">blue</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="n">green</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">intensity</span> <span class="o">+</span> <span class="mi">4</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">)</span></div>
+
+    <span class="n">mapsList</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;jet&quot;</span><span class="p">:</span> <span class="n">jetColor</span><span class="p">}</span>
+
+<div class="viewcode-block" id="ColorMap.getColor"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.ColorMap.ColorMap.getColor">[docs]</a>    <span class="k">def</span> <span class="nf">getColor</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span><span class="n">colorMap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the color that corresponds to the intensity</span>
+<span class="sd">        in a specified color map</span>
+
+<span class="sd">        :param intensity: Firing intensity between 0 and 1</span>
+<span class="sd">        :type intensity: float</span>
+<span class="sd">        :param colorMap: color map</span>
+<span class="sd">        :type colorMap: string</span>
+
+<span class="sd">        :returns: tuple -- rgb color</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">intensity</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Intensity is not betwen 0 and 1&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colorMap</span> <span class="ow">in</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">mapsList</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid color map&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">mapsList</span><span class="p">[</span><span class="n">colorMap</span><span class="p">](</span><span class="n">intensity</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

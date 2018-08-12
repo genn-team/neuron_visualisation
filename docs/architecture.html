@@ -273,6 +273,16 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class represents a projection between neurons in the network</p>
 <dl class="attribute">
+<dt id="neuron_visualization_addon.model.Projection.Projection.bevel_objects">
+<code class="descname">bevel_objects</code><em class="property"> = {}</em><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.bevel_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.Projection.Projection.curve_taper">
+<code class="descname">curve_taper</code><em class="property"> = None</em><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.curve_taper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="neuron_visualization_addon.model.Projection.Projection.destination">
 <code class="descname">destination</code><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.destination" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destination of the projection (receiving soma)</p>
@@ -282,6 +292,12 @@
 <tbody valign="top">
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Projection.Projection.initTaper">
+<code class="descname">initTaper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.initTaper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.initTaper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize global taper curve</p>
 </dd></dl>
 
 <dl class="method">
@@ -391,6 +407,11 @@
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.Projection.Projection.taper">
+<code class="descname">taper</code><em class="property"> = None</em><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.taper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Projection.Projection.updateProjectionCurve">
 <code class="descname">updateProjectionCurve</code><span class="sig-paren">(</span><em>projection_points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.updateProjectionCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.updateProjectionCurve" title="Permalink to this definition">¶</a></dt>
@@ -407,7 +428,7 @@
 
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Projection.Projection.updateTaperCurve">
-<code class="descname">updateTaperCurve</code><span class="sig-paren">(</span><em>taper_points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.updateTaperCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.updateTaperCurve" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updateTaperCurve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Projection.html#Projection.updateTaperCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Projection.Projection.updateTaperCurve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates taper curve (shape curve).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -523,6 +544,8 @@
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.ColorMap.</code><code class="descname">ColorMap</code><a class="reference internal" href="_modules/neuron_visualization_addon/model/ColorMap.html#ColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Color map for the animation</p>
+<p>In order to augment the list of color maps, define your own function within
+this class and add it to the mapsList dictionary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -571,7 +594,7 @@ in a specified color map</p>
 
 <dl class="attribute">
 <dt id="neuron_visualization_addon.model.ColorMap.ColorMap.mapsList">
-<code class="descname">mapsList</code><em class="property"> = ['jet']</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x0000015F48EC4510&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -582,6 +605,63 @@ in a specified color map</p>
 <h2>View<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="blender-panel">
 <h3>Blender Panel<a class="headerlink" href="#blender-panel" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="neuron_visualization_addon.__init__.PanelSettings">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.__init__.</code><code class="descname">PanelSettings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#PanelSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class of panel elements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>networkFileUpload</strong> – string filepath to model or animation file</li>
+<li><strong>cameraRotation</strong> – boolean that indicates whether camera should be rotated</li>
+<li><strong>populationsDropdown</strong> – dropdown of population IDs</li>
+<li><strong>colorMapDropdown</strong> – dropdown of available color maps</li>
+<li><strong>parser</strong> – pointer to the parser instance</li>
+<li><strong>pullProjections</strong> – boolean that indicates whether the projections between populations should be pulled</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.cameraRotation">
+<code class="descname">cameraRotation</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.cameraRotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.colorMapDropdown">
+<code class="descname">colorMapDropdown</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.colorMapDropdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.networkFileUpload">
+<code class="descname">networkFileUpload</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.networkFileUpload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.parser">
+<code class="descname">parser</code><em class="property"> = &lt;neuron_visualization_addon.controller.Parser.Parser object&gt;</em><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.populationsDropdown">
+<code class="descname">populationsDropdown</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.populationsDropdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.pullProjections">
+<code class="descname">pullProjections</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.pullProjections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="controller">

@@ -65,7 +65,9 @@ View
 
 Blender Panel
 ---------------------------------------
-
+.. autoclass:: neuron_visualization_addon.__init__.PanelSettings
+    :members:
+    :undoc-members:
 
 Controller
 ==========

@@ -25,8 +25,6 @@ The NeuroML2 files of extension .net.nml or .xml can be parsed with the AddOn.
 
 .. todo::
 	* Different measurement units.
-	* Taper curve for all.
-	* List of bevel objects.
 
 .. image:: img\\3.png
    :width: 250px

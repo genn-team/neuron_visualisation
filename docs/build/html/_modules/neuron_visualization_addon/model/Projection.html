@@ -40,13 +40,17 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class represents a projection between neurons in the network</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Global variables for the taper curve</span>
+    <span class="n">curve_taper</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">taper</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Global dictionary for the bevel objects</span>
+    <span class="n">bevel_objects</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The constructor.</span>
 
 <span class="sd">        :param parent_object: Parent object - soma</span>
 <span class="sd">        :type parent_object: Cell</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># --- Axon ---</span>
         <span class="c1"># Create curve, curve object and set Cell as a parent</span>
@@ -57,32 +61,38 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent_object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="c1"># --- Taper curve ---</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;TaperCurve&#39;</span><span class="p">,</span> <span class="s1">&#39;CURVE&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">taper</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;TaperObject&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">taper</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">taper</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Initialize a global taper curve if it doesn&#39;t exist yet</span>
+        <span class="k">if</span> <span class="n">Projection</span><span class="o">.</span><span class="n">taper</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Projection</span><span class="o">.</span><span class="n">initTaper</span><span class="p">()</span>
 
-        <span class="c1"># TODO</span>
+        <span class="c1"># Set the taper_curve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">taper_object</span> <span class="o">=</span> <span class="n">Projection</span><span class="o">.</span><span class="n">taper</span>
+
+<div class="viewcode-block" id="Projection.initTaper"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.Projection.Projection.initTaper">[docs]</a>    <span class="k">def</span> <span class="nf">initTaper</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Initialize global taper curve</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Taper curve ---</span>
+        <span class="n">Projection</span><span class="o">.</span><span class="n">curve_taper</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;TaperCurve&#39;</span><span class="p">,</span> <span class="s1">&#39;CURVE&#39;</span><span class="p">)</span>
+        <span class="n">Projection</span><span class="o">.</span><span class="n">taper</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;TaperObject&#39;</span><span class="p">,</span> <span class="n">Projection</span><span class="o">.</span><span class="n">curve_taper</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">Projection</span><span class="o">.</span><span class="n">taper</span><span class="p">)</span>
+        <span class="n">Projection</span><span class="o">.</span><span class="n">taper</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+
         <span class="n">taper_points</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">((</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.0</span><span class="p">)),</span>
             <span class="p">((</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
         <span class="p">]</span>
-
         <span class="c1"># Create spline</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span><span class="o">.</span><span class="n">splines</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;BEZIER&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">updateTaperCurve</span><span class="p">(</span><span class="n">taper_points</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">taper_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper</span>
+        <span class="n">Projection</span><span class="o">.</span><span class="n">curve_taper</span><span class="o">.</span><span class="n">splines</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;BEZIER&#39;</span><span class="p">)</span>
+        <span class="n">Projection</span><span class="o">.</span><span class="n">updateTaperCurve</span><span class="p">(</span><span class="n">taper_points</span><span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="Projection.updateTaperCurve"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.Projection.Projection.updateTaperCurve">[docs]</a>    <span class="k">def</span> <span class="nf">updateTaperCurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taper_points</span><span class="p">):</span>
+<div class="viewcode-block" id="Projection.updateTaperCurve"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.Projection.Projection.updateTaperCurve">[docs]</a>    <span class="k">def</span> <span class="nf">updateTaperCurve</span><span class="p">(</span><span class="n">taper_points</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates taper curve (shape curve).</span>
 
 <span class="sd">        :param taper_points: Array of points that define a bezier curve</span>
 <span class="sd">        :type taper_points: array</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">spline_taper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_taper</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">spline_taper</span> <span class="o">=</span> <span class="n">Projection</span><span class="o">.</span><span class="n">curve_taper</span><span class="o">.</span><span class="n">splines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># Add more points to the curve</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">taper_points</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">spline_taper</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">)</span>
         <span class="n">spline_taper</span><span class="o">.</span><span class="n">bezier_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
@@ -118,11 +128,14 @@
 <span class="sd">        :type weight: float</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Create bevel object</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span><span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Get bevel object</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">:</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">weight</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+            <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">weight</span><span class="p">]</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">weight</span><span class="p">]</span>
+
         <span class="c1"># Unhide the curve object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="c1"># Control points for axon</span>
@@ -147,11 +160,13 @@
 <span class="sd">        :type weight: array</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Create bevel object</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bevel_object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Get bevel object</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">:</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">weight</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+            <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">weight</span><span class="p">]</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">Projection</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">weight</span><span class="p">]</span>
         <span class="c1"># Unhide the curve object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="c1"># Create spline and set Bezier control points</span>
@@ -233,6 +248,10 @@
 <span class="sd">        :type maxColor: tuple</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">minColor</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">minColor</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">maxColor</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">maxColor</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">scenes</span><span class="p">[</span><span class="s1">&#39;Scene&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s1">&#39;CYCLES&#39;</span>
         <span class="n">material</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;Material&#39;</span><span class="p">)</span>
         <span class="n">material</span><span class="o">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="kc">True</span>

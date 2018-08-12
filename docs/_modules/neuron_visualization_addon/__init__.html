@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>neuron_visualization_addon.__init__ &#8212; Neural Network Visualization with Blender  documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Neural Network Visualization with Blender  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for neuron_visualization_addon.__init__</h1><div class="highlight"><pre>
+<span></span><span class="n">bl_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Network Visualization&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Converts neural network description files into 3D models&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blender&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;3D View &gt; Tools Props&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;3D View&quot;</span>
+<span class="p">}</span>
+
+<span class="kn">import</span> <span class="nn">bpy</span>
+<span class="kn">from</span> <span class="nn">bpy.types</span> <span class="k">import</span> <span class="n">Panel</span><span class="p">,</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">PropertyGroup</span>
+<span class="kn">from</span> <span class="nn">bpy.app.handlers</span> <span class="k">import</span> <span class="n">persistent</span>
+
+<span class="kn">from</span> <span class="nn">neuron_visualization_addon.controller.Parser</span> <span class="k">import</span> <span class="n">Parser</span>
+
+<span class="k">def</span> <span class="nf">populationHighlight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
+    <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">highlightPopulation</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">populationsDropdown</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">pullProjections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
+    <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">pullProjections</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">pullProjections</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">rotateCamera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
+    <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">rotateCamera</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="PanelSettings"><a class="viewcode-back" href="../../architecture.html#neuron_visualization_addon.__init__.PanelSettings">[docs]</a><span class="k">class</span> <span class="nc">PanelSettings</span><span class="p">(</span><span class="n">PropertyGroup</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class of panel elements</span>
+
+<span class="sd">    :param networkFileUpload: string filepath to model or animation file</span>
+<span class="sd">    :param cameraRotation: boolean that indicates whether camera should be rotated</span>
+<span class="sd">    :param populationsDropdown: dropdown of population IDs</span>
+<span class="sd">    :param colorMapDropdown: dropdown of available color maps</span>
+<span class="sd">    :param parser: pointer to the parser instance</span>
+<span class="sd">    :param pullProjections: boolean that indicates whether the projections between populations should be pulled</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">networkFileUpload</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">StringProperty</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;File Path&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Provide description file&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">subtype</span> <span class="o">=</span><span class="s1">&#39;FILE_PATH&#39;</span>
+        <span class="p">)</span>
+    <span class="n">cameraRotation</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">BoolProperty</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Rotate camera&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Rotate the camera around the objects&quot;</span><span class="p">,</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="n">rotateCamera</span>
+        <span class="p">)</span>
+    <span class="n">populationsDropdown</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">EnumProperty</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Highlight populations&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Select populations to highlight&quot;</span><span class="p">,</span>
+        <span class="n">items</span><span class="o">=</span><span class="p">[</span> <span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;All&#39;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+               <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="n">colorMapDropdown</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">EnumProperty</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Color Map&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Select color map for animation&quot;</span><span class="p">,</span>
+        <span class="n">items</span><span class="o">=</span><span class="p">[]</span>
+        <span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
+    <span class="n">pullProjections</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">IntProperty</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Pull projections&quot;</span><span class="p">,</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Pull projections together between populations&quot;</span><span class="p">,</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nb">min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nb">max</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="n">pullProjections</span>
+        <span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">ParseOperator</span><span class="p">(</span><span class="n">bpy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Operator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Operator that parses the file into a model or animation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bl_idname</span> <span class="o">=</span> <span class="s2">&quot;wm.parser&quot;</span>
+    <span class="n">bl_label</span> <span class="o">=</span> <span class="s2">&quot;Parse&quot;</span>
+
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
+        <span class="n">file_type</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">networkFileUpload</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">colorMapDropdown</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_type</span> <span class="o">==</span> <span class="s2">&quot;network&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateDropdowns</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="p">)</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;FINISHED&#39;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">updateDropdowns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="c1"># Population dropdown</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">panelSettings</span> <span class="o">=</span> <span class="n">PanelSettings</span><span class="o">.</span><span class="n">populationsDropdown</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">populations</span><span class="p">:</span>
+            <span class="n">panelSettings</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="n">PanelSettings</span><span class="o">.</span><span class="n">populationsDropdown</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">EnumProperty</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Highlight populations&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Select populations to highlight&quot;</span><span class="p">,</span>
+            <span class="n">items</span><span class="o">=</span><span class="n">panelSettings</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">],</span>
+            <span class="n">update</span><span class="o">=</span><span class="n">populationHighlight</span>
+            <span class="p">)</span>
+        <span class="c1"># Color map dropdown</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">colorMaps</span><span class="p">]</span>
+        <span class="n">PanelSettings</span><span class="o">.</span><span class="n">colorMapDropdown</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">EnumProperty</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Color map&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Select color map for animation&quot;</span><span class="p">,</span>
+            <span class="n">items</span><span class="o">=</span><span class="n">items</span>
+            <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ClearOperator</span><span class="p">(</span><span class="n">bpy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Operator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Operator that clears the objects from the scene</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">bl_idname</span> <span class="o">=</span> <span class="s2">&quot;wm.clear&quot;</span>
+    <span class="n">bl_label</span> <span class="o">=</span> <span class="s2">&quot;Clear All&quot;</span>
+
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">select_by_type</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;MESH&#39;</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">select_by_type</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;CURVE&#39;</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="n">PanelSettings</span><span class="o">.</span><span class="n">populationsDropdown</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">EnumProperty</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Highlight populations&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Select populations to highlight&quot;</span><span class="p">,</span>
+            <span class="n">items</span><span class="o">=</span><span class="p">[</span> <span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;All&#39;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                   <span class="p">],</span>
+            <span class="n">update</span><span class="o">=</span><span class="n">populationHighlight</span>
+            <span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;FINISHED&#39;</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">MainPanel</span><span class="p">(</span><span class="n">Panel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main panel that the user sees</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bl_idname</span> <span class="o">=</span> <span class="s2">&quot;MainPanel&quot;</span>
+    <span class="n">bl_label</span> <span class="o">=</span> <span class="s2">&quot;Network Visualization&quot;</span>
+    <span class="n">bl_space_type</span> <span class="o">=</span> <span class="s2">&quot;VIEW_3D&quot;</span>
+    <span class="n">bl_region_type</span> <span class="o">=</span> <span class="s2">&quot;TOOL_PROPS&quot;</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
+
+        <span class="c1"># Initial layout with a filepath, parse and clear buttons</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;networkFileUpload&quot;</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.clear&quot;</span><span class="p">)</span>
+        <span class="c1"># Unfold the rest, once the network was parsed</span>
+        <span class="k">if</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]:</span>
+            <span class="c1"># --- Model manipulation ---</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Model manipulation&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;populationsDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;pullProjections&quot;</span><span class="p">)</span>
+            <span class="c1"># --- Animation ---</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Animation&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;networkFileUpload&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;colorMapDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;cameraRotation&quot;</span><span class="p">)</span>
+
+<span class="nd">@persistent</span>
+<span class="k">def</span> <span class="nf">initSceneProperties</span><span class="p">(</span><span class="n">scene</span><span class="p">):</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">scene_update_pre</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">initSceneProperties</span><span class="p">)</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Scene</span><span class="o">.</span><span class="n">fileParsed</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">BoolProperty</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">scene_update_pre</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initSceneProperties</span><span class="p">)</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Scene</span><span class="o">.</span><span class="n">panelSettings</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">PointerProperty</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">PanelSettings</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">unregister</span><span class="p">():</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">unregister_module</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">bpy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Scene</span><span class="o">.</span><span class="n">panelSettings</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">initSceneProperties</span><span class="p">(</span><span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">)</span>
+    <span class="n">register</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Neural Network Visualization with Blender  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, asakhnenko.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

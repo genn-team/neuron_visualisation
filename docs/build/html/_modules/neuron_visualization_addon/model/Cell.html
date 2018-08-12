@@ -43,9 +43,6 @@
 <span class="sd">    This class represents a brain cell in the network</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># --- Dictionary of generated models ---</span>
-    <span class="c1"># generated_models = {}</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
         <span class="sd">&quot;&quot;&quot;The constructor.</span>
 
@@ -55,7 +52,6 @@
 <span class="sd">        :type location: Vector|tuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-    <span class="c1">#    if id not in Cell.generated_models:</span>
         <span class="c1"># Create some placeholder</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">primitive_uv_sphere_add</span><span class="p">(</span><span class="n">segments</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">ring_count</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">)</span>
         <span class="c1"># Name the object as the cell</span>
@@ -66,16 +62,12 @@
         <span class="c1"># Initialization</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">projectsTo</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">receivesFrom</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c1">#    else:</span>
-    <span class="c1">#        Cell.generated_models[id].duplicate()</span>
-    <span class="c1">#        self.blender_obj = bpy.context.object</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Location of the cell.</span>
 
 <span class="sd">        :type location: Vector</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">location</span>
 
@@ -114,7 +106,6 @@
 
 <span class="sd">        :param projection: Projection to be added</span>
 <span class="sd">        :type projection: Projection</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">receivesFrom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">projection</span><span class="p">)</span></div>
 
@@ -123,7 +114,6 @@
 
 <span class="sd">        :param color: RGB color</span>
 <span class="sd">        :type color: tuple</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">material</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CellColor&quot;</span><span class="p">)</span>
         <span class="n">material</span><span class="o">.</span><span class="n">diffuse_color</span> <span class="o">=</span> <span class="n">color</span>
@@ -136,7 +126,6 @@
 <span class="sd">        :type spikes: array</span>
 <span class="sd">        :param colorMap: Color map for intensities Visualization</span>
 <span class="sd">        :type colorMap: string</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">material</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CellColor&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span><span class="o">.</span><span class="n">active_material</span> <span class="o">=</span> <span class="n">material</span>
