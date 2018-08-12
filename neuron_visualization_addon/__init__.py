@@ -34,6 +34,13 @@ def rotateCamera(self, context):
 class PanelSettings(PropertyGroup):
     """
     Class of panel elements
+
+    :param networkFileUpload: string filepath to model or animation file
+    :param cameraRotation: boolean that indicates whether camera should be rotated
+    :param populationsDropdown: dropdown of population IDs
+    :param colorMapDropdown: dropdown of available color maps
+    :param parser: pointer to the parser instance
+    :param pullProjections: int that indicates whether the projections between populations should be pulled
     """
 
     networkFileUpload = bpy.props.StringProperty(
@@ -72,6 +79,9 @@ class PanelSettings(PropertyGroup):
 
 
 class ParseOperator(bpy.types.Operator):
+    """
+    Operator that parses the file into a model or animation
+    """
     bl_idname = "wm.parser"
     bl_label = "Parse"
 
@@ -104,6 +114,10 @@ class ParseOperator(bpy.types.Operator):
             )
 
 class ClearOperator(bpy.types.Operator):
+    """
+    Operator that clears the objects from the scene
+    """
+
     bl_idname = "wm.clear"
     bl_label = "Clear All"
 
@@ -124,6 +138,9 @@ class ClearOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class MainPanel(Panel):
+    """
+    Main panel that the user sees
+    """
     bl_idname = "MainPanel"
     bl_label = "Network Visualization"
     bl_space_type = "VIEW_3D"

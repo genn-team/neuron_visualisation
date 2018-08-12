@@ -8,6 +8,8 @@ class CellNeuroML2(Cell):
     """
     This class represents brain cells in the network parsed from NeuroML2 files
     """
+    bevel_objects = {}
+
     def __init__(self, cell):
         # Call super constructor
         Cell.__init__(self, cell.id)
@@ -68,11 +70,13 @@ class CellNeuroML2(Cell):
         ob.parent = self.blender_obj
 
         # Create bevel object
-        bpy.ops.curve.primitive_bezier_circle_add(radius=size)
-        cu.bevel_object = bpy.context.object
-        cu.bevel_object.hide = True
-        cu.bevel_resolution = 1
+        if not size in CellNeuroML2.bevel_objects:
+            bpy.ops.curve.primitive_bezier_circle_add(radius=size)
+            CellNeuroML2.bevel_objects[size] = bpy.context.object
+            CellNeuroML2.bevel_objects[size].hide = True
 
+        cu.bevel_object = CellNeuroML2.bevel_objects[size]
+        cu.bevel_resolution = 1
         # Create spline and set Bezier control points
         spline_axon = cu.splines.new('BEZIER')
         spline_axon.bezier_points[0].co = spline_axon.bezier_points[0].handle_left = spline_axon.bezier_points[0].handle_right = bezier[0]
