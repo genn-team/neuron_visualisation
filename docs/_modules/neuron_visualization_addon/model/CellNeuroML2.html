@@ -44,6 +44,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class represents brain cells in the network parsed from NeuroML2 files</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bevel_objects</span> <span class="o">=</span> <span class="p">{}</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
         <span class="c1"># Call super constructor</span>
         <span class="n">Cell</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -104,11 +106,13 @@
         <span class="n">ob</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blender_obj</span>
 
         <span class="c1"># Create bevel object</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
-        <span class="n">cu</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
-        <span class="n">cu</span><span class="o">.</span><span class="n">bevel_object</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">cu</span><span class="o">.</span><span class="n">bevel_resolution</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">CellNeuroML2</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">:</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">CellNeuroML2</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+            <span class="n">CellNeuroML2</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">size</span><span class="p">]</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span>
 
+        <span class="n">cu</span><span class="o">.</span><span class="n">bevel_object</span> <span class="o">=</span> <span class="n">CellNeuroML2</span><span class="o">.</span><span class="n">bevel_objects</span><span class="p">[</span><span class="n">size</span><span class="p">]</span>
+        <span class="n">cu</span><span class="o">.</span><span class="n">bevel_resolution</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="c1"># Create spline and set Bezier control points</span>
         <span class="n">spline_axon</span> <span class="o">=</span> <span class="n">cu</span><span class="o">.</span><span class="n">splines</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;BEZIER&#39;</span><span class="p">)</span>
         <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">co</span> <span class="o">=</span> <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">handle_left</span> <span class="o">=</span> <span class="n">spline_axon</span><span class="o">.</span><span class="n">bezier_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">handle_right</span> <span class="o">=</span> <span class="n">bezier</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>

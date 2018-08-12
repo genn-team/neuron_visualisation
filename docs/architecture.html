@@ -464,6 +464,11 @@
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.model.CellNeuroML2.</code><code class="descname">CellNeuroML2</code><span class="sig-paren">(</span><em>cell</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#neuron_visualization_addon.model.Cell.Cell" title="neuron_visualization_addon.model.Cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">neuron_visualization_addon.model.Cell.Cell</span></code></a></p>
 <p>This class represents brain cells in the network parsed from NeuroML2 files</p>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.bevel_objects">
+<code class="descname">bevel_objects</code><em class="property"> = {}</em><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.bevel_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment">
 <code class="descname">draw_segment</code><span class="sig-paren">(</span><em>size</em>, <em>bezier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.draw_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.draw_segment" title="Permalink to this definition">¶</a></dt>
@@ -594,7 +599,7 @@ in a specified color map</p>
 
 <dl class="attribute">
 <dt id="neuron_visualization_addon.model.ColorMap.ColorMap.mapsList">
-<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x0000015F48EC4510&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000001DC7EE10510&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -619,7 +624,7 @@ in a specified color map</p>
 <li><strong>populationsDropdown</strong> – dropdown of population IDs</li>
 <li><strong>colorMapDropdown</strong> – dropdown of available color maps</li>
 <li><strong>parser</strong> – pointer to the parser instance</li>
-<li><strong>pullProjections</strong> – boolean that indicates whether the projections between populations should be pulled</li>
+<li><strong>pullProjections</strong> – int that indicates whether the projections between populations should be pulled</li>
 </ul>
 </td>
 </tr>

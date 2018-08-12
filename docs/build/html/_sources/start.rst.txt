@@ -54,7 +54,6 @@ Animation
 ---------------------------------------
 
 .. todo::
-	* Fix position of the empty.
 	* List of materials.
 
 Animation can be added only after the network model was already parsed. The extentions .st and .cmp are supported. These file consists of a description of which neuron fires at which time point. You can also choose the color map as well as set the camera to rotate around the model.
