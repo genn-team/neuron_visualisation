@@ -1,15 +1,34 @@
 Getting started
 =================
-Once the AddOn is installed and activated, you should see the AddOn's panel. After your model has been parsed, additional options unfold, such as model manipulation or adding animation.
+Once the AddOn is installed, you can locate the panel on the bottom left side of Blender window. Your next step is to upload the relevant network description file and press "Parse". Parsing can take up to several minutes, depending on your file's size. After parsing is complete, additional options for manipulating the model will appear below.
 
 .. image:: img\\screen1.png
    :scale: 25 %
    :alt: alternate text
    :align: center
 
-Generating 3D cell models from NeuroML2
----------------------------------------
-The Add-On allows generating 3D models of cells from .cell.nml files. These files can be parsed directly or as includes in .net.nml files.
+Generating your 3D models
+---------------------------------
+To generate a **network model**, the following NeuroML2 extensions are supported:
+ 
+* .net.nml
+* .xml
+
+These files can be parsed with this AddOn and then rendered using Blender tools. The image below illustrates a possible outcome. 
+
+*Note: the camera and light sources have to be positioned manually.*
+
+.. image:: img\\3.png
+   :width: 250px
+   :height: 250px
+   :alt: alternate text
+   :align: center
+
+To generate a **cell model**, the following NeuroML2 extension is supported:
+
+* .cell.nml
+
+These files can be parsed directly or as includes in .net.nml files.
 
 .. image:: img\\1.png
    :width: 250px
@@ -19,30 +38,15 @@ The Add-On allows generating 3D models of cells from .cell.nml files. These file
 
 *Source file for the model: http://www.opensourcebrain.org/projects/blue-brain-project-showcase/models*
 
-Generating 3D network models from NeuroML2
-------------------------------------------
-The NeuroML2 files of extension .net.nml or .xml can be parsed with the AddOn.
-
-.. todo::
-	* Different measurement units.
-
-.. image:: img\\3.png
-   :width: 250px
-   :height: 250px
-   :alt: alternate text
-   :align: center
-
-
 Model manipulation
 ---------------------------------------
 
 Once the model has been created, there are multiple posibilities to draw attention to a specific population of interest:
 
-.. todo::
-    Allow different pulling
-
 * pull projections between all populations into a "sand-clock" form.
 * assign random colors to specific populations.
+
+These options are available under "Model manipulation" tag in the panel.
 
 .. image:: img\\2.png
    :width: 250px
@@ -50,13 +54,23 @@ Once the model has been created, there are multiple posibilities to draw attenti
    :alt: alternate text
    :align: center
 
+
+.. todo::
+    Allow different pulling
+
+
 Animation
 ---------------------------------------
 
 .. todo::
 	* List of materials.
 
-Animation can be added only after the network model was already parsed. The extentions .st and .cmp are supported. These file consists of a description of which neuron fires at which time point. You can also choose the color map as well as set the camera to rotate around the model.
+For model **animation**, the following file extensions are supported:
+
+* .st
+* .cmp
+
+These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model.
 
 .. raw:: html
 

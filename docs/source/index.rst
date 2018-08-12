@@ -6,7 +6,17 @@
 Welcome to Neural Network Visualization's documentation!
 ========================================================
 
-This is an implementation of a Blender Add-On that converts neural networks description files into 3D Blender models. Currently only NeuroML2 format can be parsed.
+This is a documentation of Blender Add-On that converts neural networks description files into 3D Blender models, which was created as a part of Google Summer of Code program over the summer of 2018.
+
+
+.. image:: img\\3.png
+   :width: 250px
+   :height: 250px
+   :alt: alternate text
+   :align: center
+
+
+At the current point in time, the only supported format for network description is NeuroML2. Given that additional information is provided - time-series of firing patterns, the model can be animated. 
 
 .. toctree::
    :maxdepth: 2
