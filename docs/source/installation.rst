@@ -19,3 +19,5 @@ Make sure that you enabled that AddOn by checking the checkbox next it.
 Additionally, you need to install the dependencies:
 https://libneuroml.readthedocs.io/en/latest/install.html
 
+The requirements will be installed in your system's python folder, so you will need to export it into Blender's python since this folder is not shared.
+
