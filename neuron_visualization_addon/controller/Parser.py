@@ -13,7 +13,7 @@ class Parser(object):
     This class represents a brain cell in the network
     """
 
-    def parse(self, filepath, colorMap):
+    def parse(self, filepath, scale, colorMap):
         """Parses nml files (TODO: extend)
 
         :param filepath: file to be parsed
@@ -26,16 +26,16 @@ class Parser(object):
             network_file = loaders.NeuroMLLoader.load(filepath)
             loaded_cells = {}
             if len(network_file.includes) != 0:
-                loaded_cells = self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes)
+                loaded_cells = self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes, scale)
             print("Loaded Cells:")
             print(loaded_cells)
-            self.network = NetworkNeuroML2(network_file.networks[0], loaded_cells)
+            self.network = NetworkNeuroML2(network_file.networks[0], scale, loaded_cells)
             return "network"
         elif filepath[-9:] == '.cell.nml':
             cell = loaders.NeuroMLLoader.load(filepath)
             self.cell_dict = {}
             for c in cell.cells:
-                tmp = CellNeuroML2(c)
+                tmp = CellNeuroML2(c, scale)
                 self.cell_dict[tmp.id] = tmp
         # Parsing of animation file .st
         elif filepath[-3:] == '.st':
@@ -57,7 +57,7 @@ class Parser(object):
             self.network.animateSpikes(spikes)
             return "activation"
 
-    def loadCellsNeuroML2(self, dirpath, includes):
+    def loadCellsNeuroML2(self, dirpath, includes, scale):
         """Load cells from neuroml2
 
         :param dirpath: path to include directory
@@ -71,7 +71,7 @@ class Parser(object):
                 continue
             cell = loaders.NeuroMLLoader.load(os.path.join(dirpath,include.href))
             for c in cell.cells:
-                tmp = CellNeuroML2(c)
+                tmp = CellNeuroML2(c, scale)
                 cell_dict[tmp.id] = tmp
         return cell_dict
 
@@ -114,7 +114,6 @@ class Parser(object):
         """
         # Create path curve
         cam_location = bpy.data.objects['Camera'].location
-        #TODO fix the radius
         radius = math.sqrt(cam_location.y**2 + cam_location.x**2)
         centerOfMass = self.network.location
         bpy.ops.curve.primitive_bezier_circle_add(radius=radius, location=(centerOfMass.x, centerOfMass.y, cam_location.z))
@@ -123,7 +122,7 @@ class Parser(object):
         bpy.data.objects['Camera'].parent = path
         bpy.data.objects['Camera'].location -= cam_location
         bpy.ops.object.parent_set(type='FOLLOW')
-        bpy.ops.object.empty_add(type='PLAIN_AXES')
+        bpy.ops.object.empty_add(type='PLAIN_AXES', location=(centerOfMass.x, centerOfMass.y, cam_location.z))
         empty = bpy.context.object
         # Rotate camera to the correct position
         bpy.data.objects['Camera'].constraints.new(type='TRACK_TO')

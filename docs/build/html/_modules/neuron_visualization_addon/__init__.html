@@ -38,7 +38,7 @@
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Network Visualization&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Converts neural network description files into 3D models&quot;</span><span class="p">,</span>
     <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;blender&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s2">&quot;blender&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
     <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;3D View &gt; Tools Props&quot;</span><span class="p">,</span>
     <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;3D View&quot;</span>
 <span class="p">}</span>
@@ -106,11 +106,21 @@
     <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
     <span class="n">pullProjections</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">IntProperty</span><span class="p">(</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Pull projections&quot;</span><span class="p">,</span>
-        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Pull projections together between populations&quot;</span><span class="p">,</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Pull projections together in a &#39;sand-clock&#39; form between populations&quot;</span><span class="p">,</span>
         <span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nb">min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nb">max</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">soft_min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">soft_max</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">subtype</span> <span class="o">=</span> <span class="s1">&#39;FACTOR&#39;</span><span class="p">,</span>
         <span class="n">update</span> <span class="o">=</span> <span class="n">pullProjections</span>
+        <span class="p">)</span>
+    <span class="n">modelScale</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">IntProperty</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Model scale:  1 &quot;</span><span class="p">,</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;How many Blender units correspond to a unit defined in your file&quot;</span><span class="p">,</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">subtype</span> <span class="o">=</span> <span class="s1">&#39;FACTOR&#39;</span><span class="p">,</span>
+        <span class="n">soft_min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">soft_max</span> <span class="o">=</span> <span class="mi">100</span>
         <span class="p">)</span></div>
 
 
@@ -124,7 +134,7 @@
     <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
-        <span class="n">file_type</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">networkFileUpload</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">colorMapDropdown</span><span class="p">)</span>
+        <span class="n">file_type</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">networkFileUpload</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">modelScale</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">colorMapDropdown</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">file_type</span> <span class="o">==</span> <span class="s2">&quot;network&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateDropdowns</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="p">)</span>
             <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -189,8 +199,10 @@
 
         <span class="c1"># Initial layout with a filepath, parse and clear buttons</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;networkFileUpload&quot;</span><span class="p">)</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.clear&quot;</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;modelScale&quot;</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.clear&quot;</span><span class="p">)</span>
         <span class="c1"># Unfold the rest, once the network was parsed</span>
         <span class="k">if</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]:</span>
             <span class="c1"># --- Model manipulation ---</span>

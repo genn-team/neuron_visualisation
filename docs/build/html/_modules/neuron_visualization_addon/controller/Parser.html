@@ -44,12 +44,12 @@
 <span class="kn">from</span> <span class="nn">neuron_visualization_addon.model.Cell</span> <span class="k">import</span> <span class="n">Cell</span>
 <span class="kn">from</span> <span class="nn">neuron_visualization_addon.model.ColorMap</span> <span class="k">import</span> <span class="n">ColorMap</span>
 
-<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.controller.Parser.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class represents a brain cell in the network</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Parser.parse"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.controller.Parser.Parser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">colorMap</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.parse"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">colorMap</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Parses nml files (TODO: extend)</span>
 
 <span class="sd">        :param filepath: file to be parsed</span>
@@ -62,16 +62,16 @@
             <span class="n">network_file</span> <span class="o">=</span> <span class="n">loaders</span><span class="o">.</span><span class="n">NeuroMLLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
             <span class="n">loaded_cells</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">network_file</span><span class="o">.</span><span class="n">includes</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">loaded_cells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadCellsNeuroML2</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">network_file</span><span class="o">.</span><span class="n">includes</span><span class="p">)</span>
+                <span class="n">loaded_cells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadCellsNeuroML2</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">network_file</span><span class="o">.</span><span class="n">includes</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded Cells:&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">loaded_cells</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">NetworkNeuroML2</span><span class="p">(</span><span class="n">network_file</span><span class="o">.</span><span class="n">networks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">loaded_cells</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">NetworkNeuroML2</span><span class="p">(</span><span class="n">network_file</span><span class="o">.</span><span class="n">networks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="p">,</span> <span class="n">loaded_cells</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;network&quot;</span>
         <span class="k">elif</span> <span class="n">filepath</span><span class="p">[</span><span class="o">-</span><span class="mi">9</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;.cell.nml&#39;</span><span class="p">:</span>
             <span class="n">cell</span> <span class="o">=</span> <span class="n">loaders</span><span class="o">.</span><span class="n">NeuroMLLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cell_dict</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">cells</span><span class="p">:</span>
-                <span class="n">tmp</span> <span class="o">=</span> <span class="n">CellNeuroML2</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">CellNeuroML2</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cell_dict</span><span class="p">[</span><span class="n">tmp</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
         <span class="c1"># Parsing of animation file .st</span>
         <span class="k">elif</span> <span class="n">filepath</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;.st&#39;</span><span class="p">:</span>
@@ -93,7 +93,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">animateSpikes</span><span class="p">(</span><span class="n">spikes</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;activation&quot;</span></div>
 
-<div class="viewcode-block" id="Parser.loadCellsNeuroML2"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.controller.Parser.Parser.loadCellsNeuroML2">[docs]</a>    <span class="k">def</span> <span class="nf">loadCellsNeuroML2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">includes</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.loadCellsNeuroML2"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.loadCellsNeuroML2">[docs]</a>    <span class="k">def</span> <span class="nf">loadCellsNeuroML2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load cells from neuroml2</span>
 
 <span class="sd">        :param dirpath: path to include directory</span>
@@ -107,7 +107,7 @@
                 <span class="k">continue</span>
             <span class="n">cell</span> <span class="o">=</span> <span class="n">loaders</span><span class="o">.</span><span class="n">NeuroMLLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span><span class="n">include</span><span class="o">.</span><span class="n">href</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">cells</span><span class="p">:</span>
-                <span class="n">tmp</span> <span class="o">=</span> <span class="n">CellNeuroML2</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">CellNeuroML2</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
                 <span class="n">cell_dict</span><span class="p">[</span><span class="n">tmp</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
         <span class="k">return</span> <span class="n">cell_dict</span></div>
 
@@ -123,7 +123,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">ColorMap</span><span class="o">.</span><span class="n">mapsList</span>
 
-<div class="viewcode-block" id="Parser.highlightPopulation"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.controller.Parser.Parser.highlightPopulation">[docs]</a>    <span class="k">def</span> <span class="nf">highlightPopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">populationID</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.highlightPopulation"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.highlightPopulation">[docs]</a>    <span class="k">def</span> <span class="nf">highlightPopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">populationID</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Hightlight a population</span>
 
 <span class="sd">        :param populationID: population ID which to be highlighted</span>
@@ -137,7 +137,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">highlightPopulation</span><span class="p">(</span><span class="n">populationID</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.pullProjections"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.controller.Parser.Parser.pullProjections">[docs]</a>    <span class="k">def</span> <span class="nf">pullProjections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strength</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.pullProjections"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.pullProjections">[docs]</a>    <span class="k">def</span> <span class="nf">pullProjections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strength</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Pull projections between populations into a &quot;sand-clock&quot; form</span>
 
 <span class="sd">        :param strength: Pulling strength</span>
@@ -145,12 +145,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">pullProjectionsAll</span><span class="p">(</span><span class="n">strength</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.rotateCamera"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.controller.Parser.Parser.rotateCamera">[docs]</a>    <span class="k">def</span> <span class="nf">rotateCamera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.rotateCamera"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.rotateCamera">[docs]</a>    <span class="k">def</span> <span class="nf">rotateCamera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Rotate camera around the network</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create path curve</span>
         <span class="n">cam_location</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">location</span>
-        <span class="c1">#TODO fix the radius</span>
         <span class="n">radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cam_location</span><span class="o">.</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cam_location</span><span class="o">.</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">centerOfMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">location</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centerOfMass</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">centerOfMass</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">cam_location</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
@@ -159,7 +158,7 @@
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">path</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">location</span> <span class="o">-=</span> <span class="n">cam_location</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent_set</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;FOLLOW&#39;</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">empty_add</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;PLAIN_AXES&#39;</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">empty_add</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;PLAIN_AXES&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centerOfMass</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">centerOfMass</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">cam_location</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
         <span class="n">empty</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
         <span class="c1"># Rotate camera to the correct position</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;TRACK_TO&#39;</span><span class="p">)</span>

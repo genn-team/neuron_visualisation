@@ -58,5 +58,5 @@ class Population(object):
 
     def removeColor(self):
         """Remove coloring from the population."""
-        for cell in self.cells:
+        for _,cell in self.cells.items():
             cell.blender_obj.active_material = None

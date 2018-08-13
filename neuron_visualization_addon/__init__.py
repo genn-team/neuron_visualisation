@@ -2,7 +2,7 @@ bl_info = {
     "name": "Network Visualization",
     "description": "Converts neural network description files into 3D models",
     "author": "",
-    "blender": (2, 70, 0),
+    "blender": (2, 79, 0),
     "location": "3D View > Tools Props",
     "category": "3D View"
 }
@@ -70,11 +70,21 @@ class PanelSettings(PropertyGroup):
     parser = Parser()
     pullProjections = bpy.props.IntProperty(
         name = "Pull projections",
-        description = "Pull projections together between populations",
+        description = "Pull projections together in a 'sand-clock' form between populations",
         default = 0,
-        min = 0,
-        max = 10,
+        soft_min = 0,
+        soft_max = 10,
+        subtype = 'FACTOR',
         update = pullProjections
+        )
+    modelScale = bpy.props.IntProperty(
+        name = "Model scale:  1 ",
+        description = "How many Blender units correspond to a unit defined in your file",
+        default = 10,
+        step = 10,
+        subtype = 'FACTOR',
+        soft_min = 1,
+        soft_max = 100
         )
 
 
@@ -88,7 +98,7 @@ class ParseOperator(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         inputs = scene.panelSettings
-        file_type = inputs.parser.parse(inputs.networkFileUpload, inputs.colorMapDropdown)
+        file_type = inputs.parser.parse(inputs.networkFileUpload, inputs.modelScale, inputs.colorMapDropdown)
         if file_type == "network":
             self.updateDropdowns(inputs.parser)
             bpy.context.scene['fileParsed'] = True
@@ -153,8 +163,10 @@ class MainPanel(Panel):
 
         # Initial layout with a filepath, parse and clear buttons
         layout.prop(inputs, "networkFileUpload")
-        layout.operator("wm.parser")
-        layout.operator("wm.clear")
+        layout.prop(inputs, "modelScale")
+        row = layout.row()
+        row.operator("wm.parser")
+        row.operator("wm.clear")
         # Unfold the rest, once the network was parsed
         if bpy.context.scene['fileParsed']:
             # --- Model manipulation ---

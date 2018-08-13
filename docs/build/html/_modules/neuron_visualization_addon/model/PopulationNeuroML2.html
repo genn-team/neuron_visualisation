@@ -41,11 +41,15 @@
 <div class="viewcode-block" id="PopulationNeuroML2"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.PopulationNeuroML2.PopulationNeuroML2">[docs]</a><span class="k">class</span> <span class="nc">PopulationNeuroML2</span><span class="p">(</span><span class="n">Population</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class represents a population of brain cells in the network based on NeuroML2&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">,</span> <span class="n">loaded_cells</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">loaded_cells</span><span class="o">=</span><span class="p">{}):</span>
         <span class="sd">&quot;&quot;&quot;The constructor.</span>
 
 <span class="sd">        :param population: Population from the parser</span>
 <span class="sd">        :type population: neuroml.population</span>
+<span class="sd">        :param scale: Scale of a model (DEFAULT: 1:10)</span>
+<span class="sd">        :type scale: int</span>
+<span class="sd">        :param loaded_cells: Dictionary of loaded cell models</span>
+<span class="sd">        :type loaded_cells: dictionary</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Call super constructor</span>
@@ -56,10 +60,11 @@
         <span class="c1"># Create all cells</span>
         <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">population</span><span class="o">.</span><span class="n">instances</span><span class="p">:</span>
             <span class="c1"># Switch coordinates systems</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="mi">10</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">y</span> <span class="o">/</span> <span class="mi">10</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">z</span> <span class="o">/</span> <span class="mi">10</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">scale</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">y</span> <span class="o">/</span> <span class="n">scale</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">scale</span>
             <span class="c1"># Save in a dictionary</span>
+            <span class="c1"># TODO</span>
             <span class="c1">#if population.component in loaded_cells:</span>
             <span class="c1">#    loaded_cells[population.component].location = (x,y,z)</span>
             <span class="c1">#else:</span>

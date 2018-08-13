@@ -10,14 +10,14 @@ class CellNeuroML2(Cell):
     """
     bevel_objects = {}
 
-    def __init__(self, cell):
+    def __init__(self, cell, scale = 10):
         # Call super constructor
         Cell.__init__(self, cell.id)
         # Remove the dummy soma
         self.blender_obj.select = True
         bpy.ops.object.delete()
         # Parse new model
-        self.parse_model(cell)
+        self.parse_model(cell, scale)
 
     @property
     def location(self):
@@ -85,7 +85,7 @@ class CellNeuroML2(Cell):
             bpt = spline_axon.bezier_points[n+1]
             bpt.co = bpt.handle_left = bpt.handle_right = bezier[n+1]
 
-    def parse_model(self, cell):
+    def parse_model(self, cell, scale):
         """Parse cell model
 
         :param cell: Cell description object
@@ -101,8 +101,8 @@ class CellNeuroML2(Cell):
             cell_dict[segment.id] = segment
             # Read parameters
             distal_vector = segment.distal
-            size = distal_vector.diameter / 10.0
-            distal_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / 10.0
+            size = distal_vector.diameter / scale
+            distal_location = mathutils.Vector((distal_vector.x, distal_vector.y, distal_vector.z)) / scale
             if segment.parent == None:
                 # Soma
                 self.make_soma(size, distal_location)
@@ -116,7 +116,7 @@ class CellNeuroML2(Cell):
                     # Get proximal vector
                     vector = segment.proximal
                 # Extract location
-                location = mathutils.Vector((vector.x, vector.y, vector.z)) / 10.0
+                location = mathutils.Vector((vector.x, vector.y, vector.z)) / scale
                 if len(axon) == 0 or axon[-1] != location:
                     axon = [location, distal_location]
                 else:

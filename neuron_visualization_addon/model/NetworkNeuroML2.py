@@ -7,14 +7,14 @@ class NetworkNeuroML2(Network):
     """ This class represents a network read from NeuroML file.
     """
 
-    def __init__(self, network, loaded_cells={}):
+    def __init__(self, network, scale=10, loaded_cells={}):
         """The constructor.
         """
         # Call parent class constructor
         Network.__init__(self, network.id)
         # Create populations
         for population in network.populations:
-            self.populations[population.id] = PopulationNeuroML2(population, loaded_cells)
+            self.populations[population.id] = PopulationNeuroML2(population, scale, loaded_cells)
         # Create projections between populations
         for projection in network.projections:
             firstPopulationID = projection.presynaptic_population
@@ -24,8 +24,6 @@ class NetworkNeuroML2(Network):
                 for connection in projection.connection_wds:
                     # Precell
                     pre_cell_adress = connection.pre_cell_id.split('/')
-                    print(self.populations[firstPopulationID].cells)
-                    print(int(pre_cell_adress[-2]))
                     pre_cell = self.populations[firstPopulationID].cells[int(pre_cell_adress[-2])]
                     # Postcell
                     post_cell_adress = connection.post_cell_id.split('/')
