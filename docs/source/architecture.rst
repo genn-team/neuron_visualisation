@@ -6,7 +6,14 @@ Architecture documentation. The Add-on follows classical model-view-controller p
 Model
 ==========
 
-The model consists of the classes that represent an actual network: Cells, connections between them (Projections), Populations of cells and Networks
+The model consists of the classes that represent an actual network: 
+
+* Cells
+* Connections between them (Projections)
+* Populations of cells
+* Networks
+
+as well as description language specific classes and helper classes, like ColorMap.
 
 High level model
 ---------------------------------------
@@ -63,15 +70,28 @@ Helper classes
 View
 ==========
 
+The view consists of classes that are responsible for generating UI. Currently, the only view that is available is the Blender Panel. It consists of the MainPanel class and helper classes.
+
 Blender Panel
 ---------------------------------------
+.. image:: img\\screen3.png
+   :scale: 75 %
+   :alt: alternate text
+   :align: center
+
+.. autoclass:: neuron_visualization_addon.__init__.MainPanel
+    :members:
+    :undoc-members:
+
 .. autoclass:: neuron_visualization_addon.__init__.PanelSettings
     :members:
     :undoc-members:
 
+
 Controller
 ==========
 
+The controller is responsible for changing the model depending on user input.
 
 Parser
 ---------------------------------------

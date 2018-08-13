@@ -216,6 +216,7 @@ class Projection(object):
             minColor += (1,)
         if len(maxColor) == 3:
             maxColor += (1,)
+            
         bpy.data.scenes['Scene'].render.engine = 'CYCLES'
         material = bpy.data.materials.new('Material')
         material.use_nodes = True

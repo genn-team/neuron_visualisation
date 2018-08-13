@@ -182,7 +182,7 @@
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;FINISHED&#39;</span><span class="p">}</span>
 
-<span class="k">class</span> <span class="nc">MainPanel</span><span class="p">(</span><span class="n">Panel</span><span class="p">):</span>
+<div class="viewcode-block" id="MainPanel"><a class="viewcode-back" href="../../architecture.html#neuron_visualization_addon.__init__.MainPanel">[docs]</a><span class="k">class</span> <span class="nc">MainPanel</span><span class="p">(</span><span class="n">Panel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Main panel that the user sees</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -191,7 +191,7 @@
     <span class="n">bl_space_type</span> <span class="o">=</span> <span class="s2">&quot;VIEW_3D&quot;</span>
     <span class="n">bl_region_type</span> <span class="o">=</span> <span class="s2">&quot;TOOL_PROPS&quot;</span>
 
-    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="MainPanel.draw"><a class="viewcode-back" href="../../architecture.html#neuron_visualization_addon.__init__.MainPanel.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span>
         <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
@@ -213,7 +213,7 @@
             <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;networkFileUpload&quot;</span><span class="p">)</span>
             <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;colorMapDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;cameraRotation&quot;</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;cameraRotation&quot;</span><span class="p">)</span></div></div>
 
 <span class="nd">@persistent</span>
 <span class="k">def</span> <span class="nf">initSceneProperties</span><span class="p">(</span><span class="n">scene</span><span class="p">):</span>

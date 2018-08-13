@@ -109,23 +109,44 @@ class Parser(object):
         """
         self.network.pullProjectionsAll(strength)
 
-    def rotateCamera(self, velocity=1):
+    def rotateCamera(self):
         """Rotate camera around the network
         """
+        cam_obj = bpy.data.objects['Camera']
+        cam_location = cam_obj.location
+
         # Create path curve
-        cam_location = bpy.data.objects['Camera'].location
         radius = math.sqrt(cam_location.y**2 + cam_location.x**2)
         centerOfMass = self.network.location
         bpy.ops.curve.primitive_bezier_circle_add(radius=radius, location=(centerOfMass.x, centerOfMass.y, cam_location.z))
         path = bpy.context.object
+
         # Assign path to camera
-        bpy.data.objects['Camera'].parent = path
-        bpy.data.objects['Camera'].location -= cam_location
-        bpy.ops.object.parent_set(type='FOLLOW')
+        bpy.context.scene.objects.active = cam_obj
+        cam_obj.location -= cam_location
+        follow_constaint = cam_obj.constraints.new('FOLLOW_PATH')
+        follow_constaint.target = path
+        override = {'constraint':follow_constaint,
+                    'window':bpy.context.window,
+                    'area':bpy.context.area,
+                    'scene':bpy.context.scene,
+                    'object':bpy.context.object,
+                    'screen':bpy.context.screen}
+        bpy.ops.constraint.followpath_path_animate(override,constraint='Follow Path')
+
+        # Rotate camera to the correct position
         bpy.ops.object.empty_add(type='PLAIN_AXES', location=(centerOfMass.x, centerOfMass.y, cam_location.z))
         empty = bpy.context.object
-        # Rotate camera to the correct position
-        bpy.data.objects['Camera'].constraints.new(type='TRACK_TO')
-        bpy.data.objects['Camera'].constraints['Track To'].target = empty
-        bpy.data.objects['Camera'].constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'
-        bpy.data.objects['Camera'].constraints['Track To'].up_axis = 'UP_Y'
+        track_constraint = cam_obj.constraints.new(type='TRACK_TO')
+        track_constraint.target = empty
+        track_constraint.track_axis = 'TRACK_NEGATIVE_Z'
+        track_constraint.up_axis = 'UP_Y'
+
+    def adjustCameraSpeed(self, velocity = 100):
+        """Adjust camera rotation velocity
+
+        :param velocity: Rotation speed in frames
+        :type velocity: int
+        """
+        path = bpy.data.objects['Camera'].constraints['Follow Path'].target
+        path.data.path_duration = velocity

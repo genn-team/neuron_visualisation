@@ -41,7 +41,14 @@
 <p>Architecture documentation. The Add-on follows classical model-view-controller pattern.</p>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
-<p>The model consists of the classes that represent an actual network: Cells, connections between them (Projections), Populations of cells and Networks</p>
+<p>The model consists of the classes that represent an actual network:</p>
+<ul class="simple">
+<li>Cells</li>
+<li>Connections between them (Projections)</li>
+<li>Populations of cells</li>
+<li>Networks</li>
+</ul>
+<p>as well as description language specific classes and helper classes, like ColorMap.</p>
 <div class="section" id="high-level-model">
 <h3>High level model<a class="headerlink" href="#high-level-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
@@ -599,7 +606,7 @@ in a specified color map</p>
 
 <dl class="attribute">
 <dt id="neuron_visualization_addon.model.ColorMap.ColorMap.mapsList">
-<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000001A0FD27C598&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000002BB65E5F6A8&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -608,8 +615,41 @@ in a specified color map</p>
 </div>
 <div class="section" id="view">
 <h2>View<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h2>
+<p>The view consists of classes that are responsible for generating UI. Currently, the only view that is available is the Blender Panel. It consists of the MainPanel class and helper classes.</p>
 <div class="section" id="blender-panel">
 <h3>Blender Panel<a class="headerlink" href="#blender-panel" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="_images/screen3.png"><img alt="alternate text" class="align-center" src="_images/screen3.png" style="width: 246.75px; height: 295.5px;" /></a>
+<dl class="class">
+<dt id="neuron_visualization_addon.__init__.MainPanel">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.__init__.</code><code class="descname">MainPanel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#MainPanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.MainPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main panel that the user sees</p>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.MainPanel.bl_idname">
+<code class="descname">bl_idname</code><em class="property"> = 'MainPanel'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.MainPanel.bl_idname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.MainPanel.bl_label">
+<code class="descname">bl_label</code><em class="property"> = 'Network Visualization'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.MainPanel.bl_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.MainPanel.bl_region_type">
+<code class="descname">bl_region_type</code><em class="property"> = 'TOOL_PROPS'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.MainPanel.bl_region_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.MainPanel.bl_space_type">
+<code class="descname">bl_space_type</code><em class="property"> = 'VIEW_3D'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.MainPanel.bl_space_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.__init__.MainPanel.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#MainPanel.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.MainPanel.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="neuron_visualization_addon.__init__.PanelSettings">
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.__init__.</code><code class="descname">PanelSettings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#PanelSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings" title="Permalink to this definition">¶</a></dt>
@@ -677,6 +717,7 @@ in a specified color map</p>
 </div>
 <div class="section" id="controller">
 <h2>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h2>
+<p>The controller is responsible for changing the model depending on user input.</p>
 <div class="section" id="parser">
 <h3>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h3>
 <dl class="class">

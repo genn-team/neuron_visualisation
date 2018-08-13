@@ -1,6 +1,6 @@
 Getting started
 =================
-Once the AddOn is installed, you can locate the panel on the bottom left side of Blender window. Your next step is to upload the relevant network description file and press "Parse". Parsing can take up to several minutes, depending on your file's size. After parsing is complete, additional options for manipulating the model will appear below.
+Once the AddOn is installed, you can locate the panel on the bottom left side of Blender window. Your next step is to upload the relevant network description file, set desired model scaling and press "Parse". Parsing can take up to several minutes, depending on your file's size. After parsing is complete, additional options for manipulating the model will be enabled.
 
 .. image:: img\\screen1.png
    :scale: 25 %

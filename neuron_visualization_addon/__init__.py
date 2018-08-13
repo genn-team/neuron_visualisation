@@ -31,6 +31,12 @@ def rotateCamera(self, context):
     inputs.parser.rotateCamera()
     return None
 
+def adjustCameraSpeed(self, context):
+    scene = context.scene
+    inputs = scene.panelSettings
+    inputs.parser.adjustCameraSpeed(inputs.cameraSpeed)
+    return None
+
 class PanelSettings(PropertyGroup):
     """
     Class of panel elements
@@ -84,6 +90,17 @@ class PanelSettings(PropertyGroup):
         subtype = 'FACTOR',
         soft_min = 1,
         soft_max = 100
+        )
+    animate = bpy.props.BoolProperty(
+        name="Animate",
+        description="Animate the model",
+        default = False
+        )
+    cameraSpeed = bpy.props.IntProperty(
+        name = "Camera Rotation Duration",
+        description = "Adjust duration of a single spin around the model (in frames)",
+        default = 100,
+        update = adjustCameraSpeed
         )
 
 
@@ -167,17 +184,22 @@ class MainPanel(Panel):
         row.operator("wm.parser")
         row.operator("wm.clear")
         # Unfold the rest, once the network was parsed
-        if bpy.context.scene['fileParsed']:
-            # --- Model manipulation ---
-            layout.label(text="Model manipulation")
-            layout.prop(inputs, "populationsDropdown", text="")
-            layout.prop(inputs, "pullProjections")
-            # --- Animation ---
-            layout.label(text="Animation")
-            layout.prop(inputs, "networkFileUpload")
-            layout.prop(inputs, "colorMapDropdown", text="")
-            layout.operator("wm.parser")
-            layout.prop(inputs, "cameraRotation")
+        column1 = layout.column()
+        column1.enabled = bpy.context.scene['fileParsed']
+        column1.label(text="Model manipulation")
+        column1.prop(inputs, "populationsDropdown", text="")
+        column1.prop(inputs, "pullProjections")
+        column1.prop(inputs, "animate")
+        # Unfold animation tools if need be
+        column2 = layout.column()
+        column2.enabled = inputs.animate and column1.enabled
+        column2.prop(inputs, "networkFileUpload")
+        column2.prop(inputs, "colorMapDropdown", text="")
+        column2.operator("wm.parser")
+        column2.prop(inputs, "cameraRotation")
+        column3 = layout.column()
+        column3.enabled = inputs.cameraRotation and column2.enabled
+        column3.prop(inputs, "cameraSpeed")
 
 @persistent
 def initSceneProperties(scene):
