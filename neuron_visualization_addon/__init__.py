@@ -73,8 +73,7 @@ class PanelSettings(PropertyGroup):
         description = "Pull projections together in a 'sand-clock' form between populations",
         default = 0,
         soft_min = 0,
-        soft_max = 10,
-        subtype = 'FACTOR',
+        soft_max = 3,
         update = pullProjections
         )
     modelScale = bpy.props.IntProperty(

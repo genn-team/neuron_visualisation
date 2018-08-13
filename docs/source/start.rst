@@ -54,11 +54,6 @@ These options are available under "Model manipulation" tag in the panel.
    :alt: alternate text
    :align: center
 
-
-.. todo::
-    Allow different pulling
-
-
 Animation
 ---------------------------------------
 

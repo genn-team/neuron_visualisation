@@ -80,7 +80,7 @@ class Network(object):
             middle += p.middle
         # Set the center
         for p in projections:
-            p.pullCenterTo(middle / (len(projections) * strength))
+            p.pullCenterTo(middle / len(projections), strength)
 
     def animateSpikes(self, spikes, colorMap):
         """ Animate network.

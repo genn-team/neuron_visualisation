@@ -183,7 +183,7 @@ class Projection(object):
         """
         return 1/2 * (self.start + self.destination)
 
-    def pullCenterTo(self, destination):
+    def pullCenterTo(self, destination, pull):
         """Pull center of the projection to a specific position
 
         :param destination: Where to pull project to
@@ -195,8 +195,8 @@ class Projection(object):
         start = self.curve.splines[0].bezier_points[0]
         end = point = self.curve.splines[0].bezier_points[-1]
         destination = destination - self.object.parent.location
-        axon = [(start.co, destination, 2*destination-start.co),
-                (end.co, destination, 2*destination-end.co)]
+        axon = [(start.co, start.co, pull * destination + (1 - pull) * start.co),
+                (end.co, pull * destination + (1 - pull) * end.co, end.co)]
         start.handle_left_type = 'VECTOR'
         start.handle_right_type = 'VECTOR'
         self.updateProjectionCurve(axon)
