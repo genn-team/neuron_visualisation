@@ -15,6 +15,7 @@ class Projection(object):
 
         :param parent_object: Parent object - soma
         :type parent_object: Cell
+        :todo: Add possibility to create more 'wabbly' axons that are closer to natural ones
         """
         # --- Axon ---
         # Create curve, curve object and set Cell as a parent
@@ -172,7 +173,6 @@ class Projection(object):
     def destination(self):
         point = self.curve.splines[0].bezier_points[-1]
         destination = destination - self.object.parent.location
-        # TODO fix the handles
         point.co = point.handle_left = point.handle_right = destination
 
     @property
@@ -190,7 +190,6 @@ class Projection(object):
         :type start: Vector|tuple
 
         """
-        # TODO: complex axons
         # Control points for axon
         start = self.curve.splines[0].bezier_points[0]
         end = point = self.curve.splines[0].bezier_points[-1]
@@ -216,7 +215,7 @@ class Projection(object):
             minColor += (1,)
         if len(maxColor) == 3:
             maxColor += (1,)
-            
+
         bpy.data.scenes['Scene'].render.engine = 'CYCLES'
         material = bpy.data.materials.new('Material')
         material.use_nodes = True

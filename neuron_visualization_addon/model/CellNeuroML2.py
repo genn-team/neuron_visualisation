@@ -38,7 +38,7 @@ class CellNeuroML2(Cell):
         self.blender_obj.location = location
 
     def setSpikes(self, spikes, colorMap='jet'):
-        """TODO: Implement"""
+        """:todo: Overwrite this method"""
         pass
 
     def make_soma(self, size, location):
@@ -91,7 +91,6 @@ class CellNeuroML2(Cell):
         :param cell: Cell description object
         :type cell: NeuroML2 Cell
         """
-        # TODO fix measuremt units
         # Dictionary of segment ids and locations
         cell_dict = {}
         axon = []

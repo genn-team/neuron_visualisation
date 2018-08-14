@@ -41,7 +41,8 @@ class Network(object):
         :type population_id: string
 
         """
-        # TODO: Error handling
+        if not population_id in self.populations:
+            raise ValueError('Population ID not found')
         random_color = (random.random(),
                         random.random(),
                         random.random() )
@@ -72,7 +73,6 @@ class Network(object):
         :param strength: Pulling strength
         :type strength: int
         """
-        # TODO: Error handling
         projections = self.projections[(populationID_1,populationID_2)]
         # Calculate the center of mass
         middle = mathutils.Vector((0,0,0))

@@ -543,7 +543,14 @@
 <dl class="method">
 <dt id="neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.setSpikes">
 <code class="descname">setSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap='jet'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/CellNeuroML2.html#CellNeuroML2.setSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.CellNeuroML2.CellNeuroML2.setSpikes" title="Permalink to this definition">¶</a></dt>
-<dd><p>TODO: Implement</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Todo:</th><td class="field-body">Overwrite this method</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -606,7 +613,7 @@ in a specified color map</p>
 
 <dl class="attribute">
 <dt id="neuron_visualization_addon.model.ColorMap.ColorMap.mapsList">
-<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000002BB65E5F6A8&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000001DC15034400&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -671,8 +678,20 @@ in a specified color map</p>
 </tbody>
 </table>
 <dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.animate">
+<code class="descname">animate</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.animate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="neuron_visualization_addon.__init__.PanelSettings.cameraRotation">
 <code class="descname">cameraRotation</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.cameraRotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.cameraSpeed">
+<code class="descname">cameraSpeed</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.cameraSpeed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used by autodoc_mock_imports.</p>
 </dd></dl>
 
@@ -725,6 +744,20 @@ in a specified color map</p>
 <em class="property">class </em><code class="descclassname">neuron_visualization_addon.controller.Parser.</code><code class="descname">Parser</code><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class represents a brain cell in the network</p>
+<dl class="method">
+<dt id="neuron_visualization_addon.controller.Parser.Parser.adjustCameraSpeed">
+<code class="descname">adjustCameraSpeed</code><span class="sig-paren">(</span><em>velocity=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.adjustCameraSpeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.adjustCameraSpeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust camera rotation velocity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>velocity</strong> (<em>int</em>) – Rotation speed in frames</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="neuron_visualization_addon.controller.Parser.Parser.colorMaps">
 <code class="descname">colorMaps</code><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.colorMaps" title="Permalink to this definition">¶</a></dt>
@@ -753,9 +786,15 @@ in a specified color map</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dirpath</strong> (<em>string</em>) – path to include directory</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dirpath</strong> (<em>string</em>) – path to include directory</li>
+<li><strong>includes</strong> (<em>list</em>) – list of included files</li>
+<li><strong>scale</strong> (<em>int</em>) – Scale of a model (DEFAULT: 1:10)</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict – dictionary of Cell objects</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict – dictionary of Cell objects</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -764,14 +803,23 @@ in a specified color map</p>
 <dl class="method">
 <dt id="neuron_visualization_addon.controller.Parser.Parser.parse">
 <code class="descname">parse</code><span class="sig-paren">(</span><em>filepath</em>, <em>scale</em>, <em>colorMap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.parse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses nml files (TODO: extend)</p>
+<dd><p>Parses nml files</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) – file to be parsed</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> (<em>string</em>) – file to be parsed</li>
+<li><strong>scale</strong> (<em>int</em>) – Scale of a model (DEFAULT: 1:10)</li>
+<li><strong>colorMap</strong> (<em>String</em>) – Color map for animation</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">string – indicate what was parsed</td>
+<tr class="field-even field"><th class="field-name">Todo:</th><td class="field-body"><p class="first">Include support for more description languages</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string – indicate what was parsed</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -799,7 +847,7 @@ in a specified color map</p>
 
 <dl class="method">
 <dt id="neuron_visualization_addon.controller.Parser.Parser.rotateCamera">
-<code class="descname">rotateCamera</code><span class="sig-paren">(</span><em>velocity=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.rotateCamera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.rotateCamera" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rotateCamera</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.rotateCamera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.rotateCamera" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate camera around the network</p>
 </dd></dl>
 

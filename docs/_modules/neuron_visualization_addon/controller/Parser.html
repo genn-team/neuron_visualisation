@@ -50,10 +50,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Parser.parse"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">colorMap</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Parses nml files (TODO: extend)</span>
+        <span class="sd">&quot;&quot;&quot;Parses nml files</span>
 
 <span class="sd">        :param filepath: file to be parsed</span>
 <span class="sd">        :type filepath: string</span>
+<span class="sd">        :param scale: Scale of a model (DEFAULT: 1:10)</span>
+<span class="sd">        :type scale: int</span>
+<span class="sd">        :param colorMap: Color map for animation</span>
+<span class="sd">        :type colorMap: String</span>
+
+<span class="sd">        :todo: Include support for more description languages</span>
 
 <span class="sd">        :returns: string -- indicate what was parsed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -63,8 +69,6 @@
             <span class="n">loaded_cells</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">network_file</span><span class="o">.</span><span class="n">includes</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">loaded_cells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadCellsNeuroML2</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">network_file</span><span class="o">.</span><span class="n">includes</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded Cells:&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">loaded_cells</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">NetworkNeuroML2</span><span class="p">(</span><span class="n">network_file</span><span class="o">.</span><span class="n">networks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="p">,</span> <span class="n">loaded_cells</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;network&quot;</span>
         <span class="k">elif</span> <span class="n">filepath</span><span class="p">[</span><span class="o">-</span><span class="mi">9</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;.cell.nml&#39;</span><span class="p">:</span>
@@ -98,6 +102,10 @@
 
 <span class="sd">        :param dirpath: path to include directory</span>
 <span class="sd">        :type dirpath: string</span>
+<span class="sd">        :param includes: list of included files</span>
+<span class="sd">        :type includes: list</span>
+<span class="sd">        :param scale: Scale of a model (DEFAULT: 1:10)</span>
+<span class="sd">        :type scale: int</span>
 
 <span class="sd">        :returns: dict -- dictionary of Cell objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -145,26 +153,48 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">pullProjectionsAll</span><span class="p">(</span><span class="n">strength</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.rotateCamera"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.rotateCamera">[docs]</a>    <span class="k">def</span> <span class="nf">rotateCamera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.rotateCamera"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.rotateCamera">[docs]</a>    <span class="k">def</span> <span class="nf">rotateCamera</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Rotate camera around the network</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cam_obj</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span>
+        <span class="n">cam_location</span> <span class="o">=</span> <span class="n">cam_obj</span><span class="o">.</span><span class="n">location</span>
+
         <span class="c1"># Create path curve</span>
-        <span class="n">cam_location</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">location</span>
         <span class="n">radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cam_location</span><span class="o">.</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cam_location</span><span class="o">.</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">centerOfMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">location</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">primitive_bezier_circle_add</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centerOfMass</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">centerOfMass</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">cam_location</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+
         <span class="c1"># Assign path to camera</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">path</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">location</span> <span class="o">-=</span> <span class="n">cam_location</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">parent_set</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;FOLLOW&#39;</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">empty_add</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;PLAIN_AXES&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centerOfMass</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">centerOfMass</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">cam_location</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
-        <span class="n">empty</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="n">cam_obj</span>
+        <span class="n">cam_obj</span><span class="o">.</span><span class="n">location</span> <span class="o">-=</span> <span class="n">cam_location</span>
+        <span class="n">follow_constaint</span> <span class="o">=</span> <span class="n">cam_obj</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;FOLLOW_PATH&#39;</span><span class="p">)</span>
+        <span class="n">follow_constaint</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="c1"># Override current context</span>
+        <span class="n">override</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;constraint&#39;</span><span class="p">:</span><span class="n">follow_constaint</span><span class="p">,</span>
+                    <span class="s1">&#39;window&#39;</span><span class="p">:</span><span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">window</span><span class="p">,</span>
+                    <span class="s1">&#39;area&#39;</span><span class="p">:</span><span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">area</span><span class="p">,</span>
+                    <span class="s1">&#39;scene&#39;</span><span class="p">:</span><span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">,</span>
+                    <span class="s1">&#39;object&#39;</span><span class="p">:</span><span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span><span class="p">,</span>
+                    <span class="s1">&#39;screen&#39;</span><span class="p">:</span><span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">screen</span><span class="p">}</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">constraint</span><span class="o">.</span><span class="n">followpath_path_animate</span><span class="p">(</span><span class="n">override</span><span class="p">,</span><span class="n">constraint</span><span class="o">=</span><span class="s1">&#39;Follow Path&#39;</span><span class="p">)</span>
+
         <span class="c1"># Rotate camera to the correct position</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;TRACK_TO&#39;</span><span class="p">)</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;Track To&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">empty</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;Track To&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">track_axis</span> <span class="o">=</span> <span class="s1">&#39;TRACK_NEGATIVE_Z&#39;</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;Track To&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">up_axis</span> <span class="o">=</span> <span class="s1">&#39;UP_Y&#39;</span></div></div>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">empty_add</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;PLAIN_AXES&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centerOfMass</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">centerOfMass</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">centerOfMass</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+        <span class="n">empty</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">object</span>
+        <span class="n">track_constraint</span> <span class="o">=</span> <span class="n">cam_obj</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;TRACK_TO&#39;</span><span class="p">)</span>
+        <span class="n">track_constraint</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">empty</span>
+        <span class="n">track_constraint</span><span class="o">.</span><span class="n">track_axis</span> <span class="o">=</span> <span class="s1">&#39;TRACK_NEGATIVE_Z&#39;</span>
+        <span class="n">track_constraint</span><span class="o">.</span><span class="n">up_axis</span> <span class="o">=</span> <span class="s1">&#39;UP_Y&#39;</span></div>
+
+<div class="viewcode-block" id="Parser.adjustCameraSpeed"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.__init__.Parser.adjustCameraSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">adjustCameraSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adjust camera rotation velocity</span>
+
+<span class="sd">        :param velocity: Rotation speed in frames</span>
+<span class="sd">        :type velocity: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;Follow Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">target</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">path_duration</span> <span class="o">=</span> <span class="n">velocity</span></div></div>
 </pre></div>
 
           </div>

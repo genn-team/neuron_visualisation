@@ -67,6 +67,12 @@
     <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">rotateCamera</span><span class="p">()</span>
     <span class="k">return</span> <span class="kc">None</span>
 
+<span class="k">def</span> <span class="nf">adjustCameraSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">scene</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">panelSettings</span>
+    <span class="n">inputs</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">adjustCameraSpeed</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">cameraSpeed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
 <div class="viewcode-block" id="PanelSettings"><a class="viewcode-back" href="../../architecture.html#neuron_visualization_addon.__init__.PanelSettings">[docs]</a><span class="k">class</span> <span class="nc">PanelSettings</span><span class="p">(</span><span class="n">PropertyGroup</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class of panel elements</span>
@@ -120,6 +126,17 @@
         <span class="n">subtype</span> <span class="o">=</span> <span class="s1">&#39;FACTOR&#39;</span><span class="p">,</span>
         <span class="n">soft_min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">soft_max</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="p">)</span>
+    <span class="n">animate</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">BoolProperty</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Animate&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Animate the model&quot;</span><span class="p">,</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="p">)</span>
+    <span class="n">cameraSpeed</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">IntProperty</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Camera Rotation Duration&quot;</span><span class="p">,</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Adjust duration of a single spin around the model (in frames)&quot;</span><span class="p">,</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="n">adjustCameraSpeed</span>
         <span class="p">)</span></div>
 
 
@@ -203,17 +220,22 @@
         <span class="n">row</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
         <span class="n">row</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.clear&quot;</span><span class="p">)</span>
         <span class="c1"># Unfold the rest, once the network was parsed</span>
-        <span class="k">if</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]:</span>
-            <span class="c1"># --- Model manipulation ---</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Model manipulation&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;populationsDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;pullProjections&quot;</span><span class="p">)</span>
-            <span class="c1"># --- Animation ---</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Animation&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;networkFileUpload&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;colorMapDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;cameraRotation&quot;</span><span class="p">)</span></div></div>
+        <span class="n">column1</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="n">column1</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="s1">&#39;fileParsed&#39;</span><span class="p">]</span>
+        <span class="n">column1</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Model manipulation&quot;</span><span class="p">)</span>
+        <span class="n">column1</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;populationsDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">column1</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;pullProjections&quot;</span><span class="p">)</span>
+        <span class="n">column1</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;animate&quot;</span><span class="p">)</span>
+        <span class="c1"># Unfold animation tools if need be</span>
+        <span class="n">column2</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="n">column2</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">animate</span> <span class="ow">and</span> <span class="n">column1</span><span class="o">.</span><span class="n">enabled</span>
+        <span class="n">column2</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;networkFileUpload&quot;</span><span class="p">)</span>
+        <span class="n">column2</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;colorMapDropdown&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">column2</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="s2">&quot;wm.parser&quot;</span><span class="p">)</span>
+        <span class="n">column2</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;cameraRotation&quot;</span><span class="p">)</span>
+        <span class="n">column3</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="n">column3</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">cameraRotation</span> <span class="ow">and</span> <span class="n">column2</span><span class="o">.</span><span class="n">enabled</span>
+        <span class="n">column3</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">&quot;cameraSpeed&quot;</span><span class="p">)</span></div></div>
 
 <span class="nd">@persistent</span>
 <span class="k">def</span> <span class="nf">initSceneProperties</span><span class="p">(</span><span class="n">scene</span><span class="p">):</span>

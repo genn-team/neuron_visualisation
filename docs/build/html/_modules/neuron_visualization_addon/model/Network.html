@@ -77,7 +77,8 @@
 <span class="sd">        :type population_id: string</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Error handling</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">population_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population ID not found&#39;</span><span class="p">)</span>
         <span class="n">random_color</span> <span class="o">=</span> <span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span>
                         <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span>
                         <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="p">)</span>
@@ -108,7 +109,6 @@
 <span class="sd">        :param strength: Pulling strength</span>
 <span class="sd">        :type strength: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Error handling</span>
         <span class="n">projections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projections</span><span class="p">[(</span><span class="n">populationID_1</span><span class="p">,</span><span class="n">populationID_2</span><span class="p">)]</span>
         <span class="c1"># Calculate the center of mass</span>
         <span class="n">middle</span> <span class="o">=</span> <span class="n">mathutils</span><span class="o">.</span><span class="n">Vector</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>

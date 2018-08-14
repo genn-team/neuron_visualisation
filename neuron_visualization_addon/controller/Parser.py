@@ -14,10 +14,16 @@ class Parser(object):
     """
 
     def parse(self, filepath, scale, colorMap):
-        """Parses nml files (TODO: extend)
+        """Parses nml files
 
         :param filepath: file to be parsed
         :type filepath: string
+        :param scale: Scale of a model (DEFAULT: 1:10)
+        :type scale: int
+        :param colorMap: Color map for animation
+        :type colorMap: String
+
+        :todo: Include support for more description languages
 
         :returns: string -- indicate what was parsed
         """
@@ -27,8 +33,6 @@ class Parser(object):
             loaded_cells = {}
             if len(network_file.includes) != 0:
                 loaded_cells = self.loadCellsNeuroML2(os.path.dirname(filepath), network_file.includes, scale)
-            print("Loaded Cells:")
-            print(loaded_cells)
             self.network = NetworkNeuroML2(network_file.networks[0], scale, loaded_cells)
             return "network"
         elif filepath[-9:] == '.cell.nml':
@@ -62,6 +66,10 @@ class Parser(object):
 
         :param dirpath: path to include directory
         :type dirpath: string
+        :param includes: list of included files
+        :type includes: list
+        :param scale: Scale of a model (DEFAULT: 1:10)
+        :type scale: int
 
         :returns: dict -- dictionary of Cell objects
         """
@@ -126,6 +134,7 @@ class Parser(object):
         cam_obj.location -= cam_location
         follow_constaint = cam_obj.constraints.new('FOLLOW_PATH')
         follow_constaint.target = path
+        # Override current context
         override = {'constraint':follow_constaint,
                     'window':bpy.context.window,
                     'area':bpy.context.area,
@@ -135,7 +144,7 @@ class Parser(object):
         bpy.ops.constraint.followpath_path_animate(override,constraint='Follow Path')
 
         # Rotate camera to the correct position
-        bpy.ops.object.empty_add(type='PLAIN_AXES', location=(centerOfMass.x, centerOfMass.y, cam_location.z))
+        bpy.ops.object.empty_add(type='PLAIN_AXES', location=(centerOfMass.x, centerOfMass.y, centerOfMass.z))
         empty = bpy.context.object
         track_constraint = cam_obj.constraints.new(type='TRACK_TO')
         track_constraint.target = empty

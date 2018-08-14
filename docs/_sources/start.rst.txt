@@ -57,15 +57,12 @@ These options are available under "Model manipulation" tag in the panel.
 Animation
 ---------------------------------------
 
-.. todo::
-	* List of materials.
-
 For model **animation**, the following file extensions are supported:
 
 * .st
 * .cmp
 
-These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model.
+These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model. Once you checked the Camera Rotation checkbox, you can adjust the duration of a camera single rotation around the object by using a provided slider in the panel. You can also adjust the radius of the camera trajectory by selecting the path and pressing 'S'.
 
 .. raw:: html
 
