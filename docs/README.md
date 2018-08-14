@@ -1,5 +1,3 @@
-- [ ] Make a cleaner separation into Model-View-Controller pattern
-
 ### Model
 - [X] Initial prototype
 - [X] Fix coordinates transformation
@@ -36,4 +34,4 @@
 - [X] Dynamic dropdown
 - [ ] Cells / Populations / Networks modes
 - [ ] Pop-ups
-- [ ] Add control over sand-clock form
+- [X] Add control over sand-clock form
