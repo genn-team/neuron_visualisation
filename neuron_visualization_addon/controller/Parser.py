@@ -13,7 +13,7 @@ class Parser(object):
     This class represents a brain cell in the network
     """
 
-    def parse(self, filepath, scale, colorMap):
+    def parse(self, filepath, scale, colorMap, animateAxons):
         """Parses nml files
 
         :param filepath: file to be parsed
@@ -50,7 +50,7 @@ class Parser(object):
                     spikes[line[1]] = np.array([[line[0],1.0]])
                 else:
                     spikes[line[1]] = np.append(spikes[line[1]],[[line[0],1.0]],axis=0)
-            self.network.animateSpikes(spikes, colorMap)
+            self.network.animateSpikes(spikes, colorMap, animateAxons)
             return "activation"
         # Parsing of animation file .cmp
         elif filepath[-4:] == '.cmp':

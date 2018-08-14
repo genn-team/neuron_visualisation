@@ -62,10 +62,30 @@ For model **animation**, the following file extensions are supported:
 * .st
 * .cmp
 
-These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model. Once you checked the Camera Rotation checkbox, you can adjust the duration of a camera single rotation around the object by using a provided slider in the panel. You can also adjust the radius of the camera trajectory by selecting the path and pressing 'S'.
+These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model. Once you checked the Camera Rotation checkbox, you can adjust the duration of a camera single rotation around the object by using a provided slider in the panel. You can also adjust the radius of the camera trajectory by selecting the path and pressing 'S'. The camera points to the center of mass of your model. If you wish to change that, you can move the 'Empty' to the desired position and camera will follow.
 
 .. raw:: html
 
 	<div style="margin: auto;width: 60%;">
    		<iframe width="560" height="315" src="https://www.youtube.com/embed/E6RyfPGAklY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 	</div>
+
+Blender console
+---------------------------------
+
+This AddOn can also be used for quick prototyping of a network if you don't have a NeuroML2 file at hand.
+
+Open the Blender Python console and type the following::
+
+	>>> from neuron_visualization_addon.model.Cell import Cell
+	>>> # Create cells
+	>>> cell_1 = Cell('ExampleCell1', location=(1,1,0))
+	>>> cell_2 = Cell('ExampleCell2', location=(-1,1,0))
+	>>> cell_3 = Cell('ExampleCell3', location=(0,0,1))
+	>>> # Create axons
+	>>> cell_1.drawAxon(0.2,cell_2)
+	>>> cell_2.drawAxon(0.2,cell_3)
+	>>> # Animate the cells
+	>>> cell_1.setSpike(10, 1)
+	>>> cell_2.setSpike(20, 1)
+	>>> cell_3.setSpike(20, 0.5)

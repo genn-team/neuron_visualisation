@@ -118,7 +118,7 @@
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projections</span><span class="p">:</span>
             <span class="n">p</span><span class="o">.</span><span class="n">pullCenterTo</span><span class="p">(</span><span class="n">middle</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">projections</span><span class="p">),</span> <span class="n">strength</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Network.animateSpikes"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.Network.Network.animateSpikes">[docs]</a>    <span class="k">def</span> <span class="nf">animateSpikes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">colorMap</span><span class="p">):</span>
+<div class="viewcode-block" id="Network.animateSpikes"><a class="viewcode-back" href="../../../architecture.html#neuron_visualization_addon.model.Network.Network.animateSpikes">[docs]</a>    <span class="k">def</span> <span class="nf">animateSpikes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">colorMap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">animateAxons</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Animate network.</span>
 
 <span class="sd">        :param spikes: Dictionary of cell IDs as keys and a tuple of time and intensity as values</span>

@@ -39,6 +39,12 @@
   <div class="section" id="architecture">
 <h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
 <p>Architecture documentation. The Add-on follows classical model-view-controller pattern.</p>
+<p>ToDo list for the project:</p>
+<ul class="simple">
+<li>Additional support for NeuroML, NineML and SpineML</li>
+<li>Provide additional information about network in the GUI</li>
+<li>Allow for more biologically sound axon curvatures</li>
+</ul>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
 <p>The model consists of the classes that represent an actual network:</p>
@@ -58,7 +64,7 @@
 <p>This class represents a network. Network consists of populations and projections between them.</p>
 <dl class="method">
 <dt id="neuron_visualization_addon.model.Network.Network.animateSpikes">
-<code class="descname">animateSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Network.html#Network.animateSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Network.Network.animateSpikes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">animateSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap='jet'</em>, <em>animateAxons=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Network.html#Network.animateSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Network.Network.animateSpikes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Animate network.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -255,9 +261,31 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="neuron_visualization_addon.model.Cell.Cell.setSpikes">
-<code class="descname">setSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap='jet'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Cell.html#Cell.setSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Cell.Cell.setSpikes" title="Permalink to this definition">¶</a></dt>
+<dt id="neuron_visualization_addon.model.Cell.Cell.setSpike">
+<code class="descname">setSpike</code><span class="sig-paren">(</span><em>time</em>, <em>intensity</em>, <em>colorMap='jet'</em>, <em>animateAxons=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Cell.html#Cell.setSpike"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Cell.Cell.setSpike" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set cell to spike at a time with a specific intensity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong> (<em>float</em>) – Frame of a spike</li>
+<li><strong>intensity</strong> (<em>float</em>) – Intensity of a spike from 0 to 1</li>
+<li><strong>colorMap</strong> (<em>string</em>) – Color map for intensities Visualization</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Todo:</th><td class="field-body"><p class="first last">Neuron swelling without axon</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.model.Cell.Cell.setSpikes">
+<code class="descname">setSpikes</code><span class="sig-paren">(</span><em>spikes</em>, <em>colorMap='jet'</em>, <em>animateAxons=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/model/Cell.html#Cell.setSpikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.model.Cell.Cell.setSpikes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set cell to spike at specific timse with a specific intensities</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -613,7 +641,7 @@ in a specified color map</p>
 
 <dl class="attribute">
 <dt id="neuron_visualization_addon.model.ColorMap.ColorMap.mapsList">
-<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000001DC15034400&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapsList</code><em class="property"> = {'jet': &lt;function ColorMap.jetColor at 0x000002497C725400&gt;}</em><a class="headerlink" href="#neuron_visualization_addon.model.ColorMap.ColorMap.mapsList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -684,6 +712,12 @@ in a specified color map</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.PanelSettings.animateAxons">
+<code class="descname">animateAxons</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.animateAxons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="neuron_visualization_addon.__init__.PanelSettings.cameraRotation">
 <code class="descname">cameraRotation</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.cameraRotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used by autodoc_mock_imports.</p>
@@ -729,6 +763,53 @@ in a specified color map</p>
 <code class="descname">pullProjections</code><a class="headerlink" href="#neuron_visualization_addon.__init__.PanelSettings.pullProjections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used by autodoc_mock_imports.</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="neuron_visualization_addon.__init__.ParseOperator">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.__init__.</code><code class="descname">ParseOperator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#ParseOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.ParseOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operator that parses the file into a model or animation</p>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.ParseOperator.bl_idname">
+<code class="descname">bl_idname</code><em class="property"> = 'wm.parser'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.ParseOperator.bl_idname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.ParseOperator.bl_label">
+<code class="descname">bl_label</code><em class="property"> = 'Parse'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.ParseOperator.bl_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.__init__.ParseOperator.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#ParseOperator.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.ParseOperator.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.__init__.ParseOperator.updateDropdowns">
+<code class="descname">updateDropdowns</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#ParseOperator.updateDropdowns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.ParseOperator.updateDropdowns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="neuron_visualization_addon.__init__.ClearOperator">
+<em class="property">class </em><code class="descclassname">neuron_visualization_addon.__init__.</code><code class="descname">ClearOperator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#ClearOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.ClearOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operator that clears the objects from the scene</p>
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.ClearOperator.bl_idname">
+<code class="descname">bl_idname</code><em class="property"> = 'wm.clear'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.ClearOperator.bl_idname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="neuron_visualization_addon.__init__.ClearOperator.bl_label">
+<code class="descname">bl_label</code><em class="property"> = 'Clear All'</em><a class="headerlink" href="#neuron_visualization_addon.__init__.ClearOperator.bl_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="neuron_visualization_addon.__init__.ClearOperator.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/__init__.html#ClearOperator.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.__init__.ClearOperator.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -802,7 +883,7 @@ in a specified color map</p>
 
 <dl class="method">
 <dt id="neuron_visualization_addon.controller.Parser.Parser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>filepath</em>, <em>scale</em>, <em>colorMap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>filepath</em>, <em>scale</em>, <em>colorMap</em>, <em>animateAxons</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/neuron_visualization_addon/controller/Parser.html#Parser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#neuron_visualization_addon.controller.Parser.Parser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses nml files</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

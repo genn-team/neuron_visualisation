@@ -2,6 +2,12 @@ Architecture
 **************
 Architecture documentation. The Add-on follows classical model-view-controller pattern. 
 
+ToDo list for the project:
+
+* Additional support for NeuroML, NineML and SpineML
+* Provide additional information about network in the GUI
+* Allow for more biologically sound axon curvatures 
+
 
 Model
 ==========
@@ -86,6 +92,15 @@ Blender Panel
 .. autoclass:: neuron_visualization_addon.__init__.PanelSettings
     :members:
     :undoc-members:
+
+.. autoclass:: neuron_visualization_addon.__init__.ParseOperator
+    :members:
+    :undoc-members:
+
+.. autoclass:: neuron_visualization_addon.__init__.ClearOperator
+    :members:
+    :undoc-members:
+
 
 
 Controller

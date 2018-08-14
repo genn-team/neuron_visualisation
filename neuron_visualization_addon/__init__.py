@@ -102,6 +102,12 @@ class PanelSettings(PropertyGroup):
         default = 100,
         update = adjustCameraSpeed
         )
+    animateAxons = bpy.props.BoolProperty(
+        name="Animate Axons",
+        description="Uncheck if you don't want axon animation (e.g., to reduce computation time)",
+        default = True,
+        update = rotateCamera
+        )
 
 
 class ParseOperator(bpy.types.Operator):
@@ -114,7 +120,7 @@ class ParseOperator(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         inputs = scene.panelSettings
-        file_type = inputs.parser.parse(inputs.networkFileUpload, inputs.modelScale, inputs.colorMapDropdown)
+        file_type = inputs.parser.parse(inputs.networkFileUpload, inputs.modelScale, inputs.colorMapDropdown, inputs.animateAxons)
         if file_type == "network":
             self.updateDropdowns(inputs.parser)
             bpy.context.scene['fileParsed'] = True
@@ -194,6 +200,7 @@ class MainPanel(Panel):
         column2 = layout.column()
         column2.enabled = inputs.animate and column1.enabled
         column2.prop(inputs, "networkFileUpload")
+        column2.prop(inputs, "animateAxons")
         column2.prop(inputs, "colorMapDropdown", text="")
         column2.operator("wm.parser")
         column2.prop(inputs, "cameraRotation")

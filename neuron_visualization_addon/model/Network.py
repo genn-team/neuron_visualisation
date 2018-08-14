@@ -82,7 +82,7 @@ class Network(object):
         for p in projections:
             p.pullCenterTo(middle / len(projections), strength)
 
-    def animateSpikes(self, spikes, colorMap):
+    def animateSpikes(self, spikes, colorMap='jet', animateAxons=True):
         """ Animate network.
 
         :param spikes: Dictionary of cell IDs as keys and a tuple of time and intensity as values

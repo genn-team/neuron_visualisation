@@ -79,10 +79,29 @@
 <li>.st</li>
 <li>.cmp</li>
 </ul>
-<p>These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model. Once you checked the Camera Rotation checkbox, you can adjust the duration of a camera single rotation around the object by using a provided slider in the panel. You can also adjust the radius of the camera trajectory by selecting the path and pressing ‘S’.</p>
+<p>These files contain descriptions regarding which neuron fires at which time point. You can customize your animation by picking a color map or rotating the camera around the model. Once you checked the Camera Rotation checkbox, you can adjust the duration of a camera single rotation around the object by using a provided slider in the panel. You can also adjust the radius of the camera trajectory by selecting the path and pressing ‘S’. The camera points to the center of mass of your model. If you wish to change that, you can move the ‘Empty’ to the desired position and camera will follow.</p>
 <div style="margin: auto;width: 60%;">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/E6RyfPGAklY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div></div>
+<div class="section" id="blender-console">
+<h2>Blender console<a class="headerlink" href="#blender-console" title="Permalink to this headline">¶</a></h2>
+<p>This AddOn can also be used for quick prototyping of a network if you don’t have a NeuroML2 file at hand.</p>
+<p>Open the Blender Python console and type the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neuron_visualization_addon.model.Cell</span> <span class="k">import</span> <span class="n">Cell</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create cells</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_1</span> <span class="o">=</span> <span class="n">Cell</span><span class="p">(</span><span class="s1">&#39;ExampleCell1&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_2</span> <span class="o">=</span> <span class="n">Cell</span><span class="p">(</span><span class="s1">&#39;ExampleCell2&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_3</span> <span class="o">=</span> <span class="n">Cell</span><span class="p">(</span><span class="s1">&#39;ExampleCell3&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create axons</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_1</span><span class="o">.</span><span class="n">drawAxon</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="n">cell_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_2</span><span class="o">.</span><span class="n">drawAxon</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="n">cell_3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Animate the cells</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_1</span><span class="o">.</span><span class="n">setSpike</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_2</span><span class="o">.</span><span class="n">setSpike</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell_3</span><span class="o">.</span><span class="n">setSpike</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -97,6 +116,7 @@
 <li><a class="reference internal" href="#generating-your-3d-models">Generating your 3D models</a></li>
 <li><a class="reference internal" href="#model-manipulation">Model manipulation</a></li>
 <li><a class="reference internal" href="#animation">Animation</a></li>
+<li><a class="reference internal" href="#blender-console">Blender console</a></li>
 </ul>
 </li>
 </ul>
